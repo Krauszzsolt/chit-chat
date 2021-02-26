@@ -1,0 +1,17 @@
+<mat-toolbar>
+  <span [routerLink]="['/']">Chit-Chat</span>
+  <span *ngIf="(user | async)" class="user-name">{{(user | async).userName}}</span>
+  <span class="example-spacer"></span>
+  
+  
+  <!-- Bejelentkezett felhasználó esetén -->
+  <mat-search-bar  [(ngModel)]="search" (keyup)='searchEvetn()'></mat-search-bar>
+  <button *ngIf="(user | async)" mat-button (click)="logout()">Logout</button>
+
+  <!-- Anonim felhasználó esetén -->
+  <button *ngIf="!(user | async)" mat-button [routerLink]="['/login']" > Login </button>
+  <button *ngIf="!(user | async)" mat-button [routerLink]="['/registration']">Registration</button>
+
+</mat-toolbar>
+<router-outlet></router-outlet>
+<app-spinner></app-spinner>
