@@ -26,7 +26,7 @@ namespace DAL.Data
                 UserName = "test@test.test",
                 NormalizedUserName = "TEST@TEST.TEST",
                 SecurityStamp = "string",
-                EmailConfirmed = true,
+                PictureUrl =new Guid()
             };
 
             var password = new PasswordHasher<ApplicationUser>();
