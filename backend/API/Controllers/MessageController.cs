@@ -1,5 +1,6 @@
 ﻿using API.Controllers.Base;
 using BLL.DTOs.Message;
+using BLL.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,13 @@ namespace API.Controllers
     [ApiController]
     public class MessageController : BaseController
     {
+        private readonly IMessageService _messageService;
+
+        public MessageController(IMessageService messageService)
+        {
+            _messageService = messageService;
+        }
+
         // GET: api/<MessageController>
         [HttpGet]
         public MessageListDto Get()

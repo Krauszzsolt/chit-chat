@@ -28,7 +28,7 @@ namespace BLL.Services
             var chatroom = await _context.Chatrooms.Include(x => x.OwnerUser).FirstOrDefaultAsync(x => x.Id == id);
             if(chatroom == null)
             {
-                throw new ArgumentException($"Chatroom not Found"); ;
+                throw new ArgumentException($"Chatroom not found"); ;
             }
             return new ChatroomDto()
             {
