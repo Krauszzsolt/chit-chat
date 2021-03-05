@@ -1,6 +1,7 @@
 using Backend.Middlewares;
 using BLL.DTOs.Settings;
 using BLL.Services;
+using BLL.Services.Interfaces;
 using DAL.Data;
 using DAL.Entities;
 using Microsoft.AspNetCore.Builder;
@@ -48,7 +49,9 @@ namespace Backend
             services.AddControllers();
 
             // configure DI for application services
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>(); 
+            services.AddScoped<IChatroomService, ChatroomService>();
+            services.AddScoped<IMessageService, MessageService>();
 
             // configure strongly typed settings object
             services.Configure<JWTSettings>(Configuration.GetSection("JWTSettings"));
