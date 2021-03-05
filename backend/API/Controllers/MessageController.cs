@@ -1,4 +1,6 @@
-﻿using API.Controllers.Base;
+﻿using API.Attributes;
+using API.Controllers.Base;
+using BLL.DTOs.Authentication;
 using BLL.DTOs.Message;
 using BLL.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +15,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MessageController : BaseController
     {
         private readonly IMessageService _messageService;
@@ -33,7 +36,10 @@ namespace API.Controllers
         [HttpPost]
         public async Task Post([FromBody] MessageDto messageDto)
         {
-            messageDto.User.UserId = GetCurrentUser().Id;
+            messageDto.User = new PublicUserDto()
+            {
+                UserId = GetCurrentUser().Id
+            };
             await _messageService.PostMessage(messageDto);
         }
 

@@ -26,7 +26,7 @@ namespace BLL.Services
         public async Task<ChatroomDto> GetChatroom(Guid id)
         {
             var chatroom = await _context.Chatrooms.Include(x => x.OwnerUser).FirstOrDefaultAsync(x => x.Id == id);
-            if(chatroom == null)
+            if (chatroom == null)
             {
                 throw new ArgumentException($"Chatroom not found"); ;
             }
@@ -79,23 +79,28 @@ namespace BLL.Services
                 Date = new DateTime()
             };
 
+            if (chatroomDto.Id != null)
+            {
+                chatroom.Id = chatroomDto.Id.Value;
+            }
+
             _context.Chatrooms.Add(chatroom);
             await _context.SaveChangesAsync();
-            
+
         }
 
         public async Task PutChatRoom(ChatroomDto chatroomDto)
         {
-            var chatroom = await _context.Chatrooms.FirstOrDefaultAsync(x => x.Id == chatroomDto.Id.Value);
+            var chatroom = await _context.Chatrooms.FirstOrDefaultAsync(x => x.Id == chatroomDto.Id);
 
-            if(chatroom == null)
+            if (chatroom == null)
             {
                 throw new ArgumentException($"Chatroom not found");
             }
 
             chatroom.Name = chatroomDto.Name ?? chatroom.Name;
             chatroom.Details = chatroomDto.Details ?? chatroom.Details;
-            chatroom.OwnerUserId = chatroomDto.OwnerUser.UserId ?? chatroom.OwnerUserId;
+            //chatroom.OwnerUserId = chatroomDto.OwnerUser.UserId ?? chatroom.OwnerUserId;
 
             await _context.SaveChangesAsync();
         }

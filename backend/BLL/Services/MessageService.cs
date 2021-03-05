@@ -92,9 +92,9 @@ namespace BLL.Services
 
         public async Task PostMessage(MessageDto messageDto)
         {
-            var isChatroom = await _context.Chatrooms.AnyAsync(x => x.Id == messageDto.ChatroomId.Value);
+            var isChatroom = await _context.Chatrooms.FirstOrDefaultAsync(x => x.Id == messageDto.ChatroomId.Value);
 
-            if (!isChatroom)
+            if (isChatroom == null)
             {
                 throw new ArgumentException($"There is no chatroom yet."); ;
             }

@@ -1,4 +1,5 @@
-﻿using API.Controllers.Base;
+﻿using API.Attributes;
+using API.Controllers.Base;
 using BLL.DTOs.Chatroom;
 using BLL.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ChatroomController : BaseController
     {
 
@@ -44,8 +46,8 @@ namespace API.Controllers
         }
 
         // PUT api/<MessageController>/5
-        [HttpPut("{id}")]
-        public async Task Put(Guid id, [FromBody] ChatroomDto chatroom)
+        [HttpPut]
+        public async Task Put([FromBody] ChatroomDto chatroom)
         {
             await _chatroomService.PutChatRoom(chatroom);
         }
