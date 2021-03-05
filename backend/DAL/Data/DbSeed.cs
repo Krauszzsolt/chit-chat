@@ -38,7 +38,7 @@ namespace DAL.Data
 
         private void chatRoomSeed(ModelBuilder builder)
         {
-            builder.Entity<Chatroom>().HasData(new ChatRoom
+            builder.Entity<Chatroom>().HasData(new Chatroom
             {
                 Id = new Guid("fe1ee058-9e79-4544-bf93-026f477fe843"),
                 Name = "General",

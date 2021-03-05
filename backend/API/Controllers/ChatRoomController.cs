@@ -17,7 +17,7 @@ namespace API.Controllers
 
         private readonly IChatroomService _chatroomService;
 
-        public ChatroomController (IChatroomService chatroomService)
+        public ChatroomController(IChatroomService chatroomService)
         {
             _chatroomService = chatroomService;
         }

@@ -15,7 +15,7 @@ namespace DAL.Entities
 
         #region navigation properties
         public ApplicationUser User { get; set; }
-        public ChatRoom ChatRoom { get; set; }
+        public Chatroom Chatroom { get; set; }
         #endregion
 
 

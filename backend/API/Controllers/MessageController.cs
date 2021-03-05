@@ -23,10 +23,10 @@ namespace API.Controllers
         }
 
         // GET: api/<MessageController>
-        [HttpGet("{id}")]
-        public async Task<MessageListDto> Get(Guid ChatroomId)
+        [HttpGet("{chatroomId}")]
+        public async Task<MessageListDto> Get(Guid chatroomId)
         {
-            return await _messageService.GetMessages(ChatroomId);
+            return await _messageService.GetMessages(chatroomId);
         }
 
         // POST api/<MessageController>
@@ -51,7 +51,6 @@ namespace API.Controllers
         {
             var userid = GetCurrentUser().Id;
             await _messageService.DeleteMessage(messageId, userid);
-
         }
     }
 }
