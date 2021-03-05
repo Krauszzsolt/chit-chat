@@ -23,35 +23,35 @@ namespace API.Controllers
         }
 
         // GET: api/<MessageController>
-        [HttpGet]
-        public MessageListDto Get()
-        {
-            return new MessageListDto();
-        }
-
-        // GET api/<MessageController>/5
         [HttpGet("{id}")]
-        public MessageDto Get(Guid id)
+        public async Task<MessageListDto> Get(Guid ChatroomId)
         {
-            return new MessageDto();
+            return await _messageService.GetMessages(ChatroomId);
         }
 
         // POST api/<MessageController>
         [HttpPost]
-        public void Post([FromBody] MessageDto value)
+        public async Task Post([FromBody] MessageDto messageDto)
         {
+            messageDto.User.UserId = GetCurrentUser().Id;
+            await _messageService.PostMessage(messageDto);
         }
 
         // PUT api/<MessageController>/5
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] MessageDto value)
+        public async Task Put(Guid id, [FromBody] MessageDto messageDto)
         {
+            messageDto.User.UserId = GetCurrentUser().Id;
+            await _messageService.PutMessage(messageDto);
         }
 
         // DELETE api/<MessageController>/5
         [HttpDelete("{id}")]
-        public void Delete(Guid id)
+        public async Task Delete(Guid messageId)
         {
+            var userid = GetCurrentUser().Id;
+            await _messageService.DeleteMessage(messageId, userid);
+
         }
     }
 }
