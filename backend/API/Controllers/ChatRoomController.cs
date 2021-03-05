@@ -1,4 +1,5 @@
-﻿using BLL.DTOs.Chatroom;
+﻿using API.Controllers.Base;
+using BLL.DTOs.Chatroom;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,8 +10,8 @@ using System.Threading.Tasks;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class ChatRoomController : Controller
+    [Route("api/[controller]")]
+    public class ChatroomController : BaseController
     {
         // GET: api/<MessageController>
         [HttpGet]

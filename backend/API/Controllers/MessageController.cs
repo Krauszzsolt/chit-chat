@@ -1,4 +1,5 @@
-﻿using BLL.DTOs.Message;
+﻿using API.Controllers.Base;
+using BLL.DTOs.Message;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MessageController : ControllerBase
+    public class MessageController : BaseController
     {
         // GET: api/<MessageController>
         [HttpGet]
