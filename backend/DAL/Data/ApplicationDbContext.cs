@@ -14,7 +14,7 @@ namespace DAL.Data
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<ChatRoom> Chatrooms { get; set; }
+        public DbSet<Chatroom> Chatrooms { get; set; }
         public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

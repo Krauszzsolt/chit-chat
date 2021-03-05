@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DAL.Entities
 {
-    public class ChatRoom
+    public class Chatroom
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
