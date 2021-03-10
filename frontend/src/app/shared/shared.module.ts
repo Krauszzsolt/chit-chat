@@ -11,8 +11,9 @@ import { MatDialogWrapperComponent } from './dialog/mat-dialog-wrapper.component
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SpinnerComponent } from './component/spinner/spinner.component';
+import { SearchComponent } from './component/search/search.component';
 @NgModule({
-  declarations: [MatDialogWrapperComponent, SpinnerComponent],
+  declarations: [MatDialogWrapperComponent, SpinnerComponent, SearchComponent],
   imports: [
     CommonModule,
     MatSidenavModule,
