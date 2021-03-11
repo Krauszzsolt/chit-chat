@@ -1,5 +1,5 @@
 <mat-toolbar>
-  <span [routerLink]="['/']">Chit-Chat</span>
+  <span [routerLink]="['/chatroom']">Chit-Chat</span>
   <span *ngIf="(user | async)" class="user-name">{{(user | async).userName}}</span>
   <span class="example-spacer"></span>
   
