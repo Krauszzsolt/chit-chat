@@ -1,0 +1,23 @@
+@import "../../../app.component.scss";
+
+mat-grid-list{
+    height: calc(100% - 64px);
+}
+
+.row{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 6rem;
+   
+}
+
+.mat-card{
+    flex: 0 0 30%;
+    background-color: #f5e1fd;
+    color:black;
+    text-align: center;
+    
+}
