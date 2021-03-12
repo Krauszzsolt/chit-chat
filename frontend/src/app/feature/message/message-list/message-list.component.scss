@@ -5,14 +5,50 @@
   max-height: calc(100vh - 64px);
 }
 
-.dark-color {
-  color: black;
-}
-
 .mat-card {
-  // flex: 0 0 30%;
   background-color: #f5e1fd;
   text-align: center;
   margin: 1rem 0;
   cursor: pointer;
+}
+
+.message-box {
+  border-radius: 15px;
+  background-color: $light-grey;
+  padding: 15px;
+  margin: 15px;
+}
+
+.right-side {
+  text-align: end;
+}
+
+
+
+.message-input-box {
+  width: 100%;
+}
+
+.message-input-box-contanier {
+  position: fixed;
+  bottom: 0;
+  background-color: #f5e1fd;
+  width: 57%;
+  height: 5rem;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.message-grid {
+  height: calc(100vh - 185px);
+  max-height: calc(100vh - 185px);
+}
+
+.message-input-field {
+  width: 100%;
+}
+
+.text-area {
+  max-height: 50px;
 }

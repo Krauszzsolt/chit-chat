@@ -6,12 +6,23 @@
       </mat-card>
     </div>
   </mat-grid-tile>
-  <mat-grid-tile [colspan]="3" [style.background]="'#e05a00'">
-    <div *ngIf="messages | async as messageList" class="flex-list column-reverse">
-      <mat-card *ngFor="let message of messageList.messages">
-        <mat-card-title class="dark-color"> {{ message.user.username }} </mat-card-title>
-        <mat-card-subtitle class="dark-color">{{ message.content }} </mat-card-subtitle>
-      </mat-card>
+  <mat-grid-tile [colspan]="3" [style.background]="'#e05a00'" class="message-grid">
+    <div *ngIf="messages | async as messageList" class="flex-list column scroll-bottom-maring">
+      <div class="message-box" *ngFor="let message of messageList.messages">
+        <div class="dark-color">{{ message.content }}</div>
+        <div class="dark-color right-side">
+          /<b>{{ message.user.username }}</b
+          >/
+        </div>
+      </div>
+    </div>
+    <div class="message-input-box-contanier">
+      <div class="message-input-box">
+        <mat-form-field class="message-input-field">
+          <mat-label class="dark-color">Send message!</mat-label>
+          <textarea class="dark-color text-area" matInput placeholder="Chao. Wie geht es Ihnen?"></textarea>
+        </mat-form-field>
+      </div>
     </div>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [style.background]="'#e05a00'"> Search </mat-grid-tile>
