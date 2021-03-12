@@ -1,3 +1,18 @@
-<p>
-  message-list works!
-</p>
+<mat-grid-list cols="5" rowHeight="fit">
+  <mat-grid-tile [colspan]="1" [style.background]="'white'">
+    <div class="flex-list column height scroll-bottom-maring">
+      <mat-card *ngFor="let chatroom of chatrooms | async" (click)="selectChatroom(chatroom.id)">
+        <mat-card-title class="dark-color"> {{ chatroom.name }} </mat-card-title>
+      </mat-card>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="3" [style.background]="'#e05a00'">
+    <div *ngIf="messages | async as messageList" class="flex-list column-reverse">
+      <mat-card *ngFor="let message of messageList.messages">
+        <mat-card-title class="dark-color"> {{ message.user.username }} </mat-card-title>
+        <mat-card-subtitle class="dark-color">{{ message.content }} </mat-card-subtitle>
+      </mat-card>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="1" [style.background]="'#e05a00'"> Search </mat-grid-tile>
+</mat-grid-list>

@@ -1,10 +1,11 @@
 <mat-grid-list cols="8" rowHeight="fit">
   <mat-grid-tile [colspan]="5" [style.background]="'white'">
-    <div class="row" >
-      <mat-card *ngFor="let chatroom of (chatrooms | async)">
+    <div class="row  height scroll-bottom-maring" >
+      <mat-card *ngFor="let chatroom of (chatrooms | async)" (click)="selectChatroom(chatroom.id)">
         <mat-card-title class="title"> {{chatroom.name}} </mat-card-title>
       </mat-card>
+      
     </div>
   </mat-grid-tile>
-  <mat-grid-tile [colspan]="3" [style.background]="'#e05a00'"> red </mat-grid-tile>
+  <mat-grid-tile [colspan]="3" [style.background]="'#e05a00'"> Search </mat-grid-tile>
 </mat-grid-list>
