@@ -23,11 +23,6 @@ export class MessageListComponent implements OnInit, OnChanges {
       this.chatrooms = this.chatroomService.apiChatroomGet();
       this.messages = this.messageService.apiMessageChatroomIdGet(this.roomId);
     });
-
-    // this.roomId = this.route.snapshot.paramMap.get('id');
-    // console.log(this.roomId)
-    // this.chatrooms = this.chatroomService.apiChatroomGet();
-    // this.messages = this.messageService.apiMessageChatroomIdGet(this.roomId);
   }
 
   ngOnChanges() {

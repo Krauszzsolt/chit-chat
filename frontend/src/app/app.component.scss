@@ -24,6 +24,17 @@ $dark-color-1: black;
   }
 }
 
+.scroll-top-maring {
+  &::before {
+    content: '-';
+    color:rgba(0, 0, 0, 0);
+    display: inline-block;
+    // height: 700px;
+    width: 100%;
+  }
+}
+
+
 .flex-list {
   width: 100%;
   display: flex;

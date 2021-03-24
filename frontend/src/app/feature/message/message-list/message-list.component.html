@@ -7,7 +7,7 @@
     </div>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="3" [style.background]="'#e05a00'" class="message-grid">
-    <div *ngIf="messages | async as messageList" class="flex-list column scroll-bottom-maring">
+    <div *ngIf="messages | async as messageList" class="scroll-bottom-maring scroll-top-maring width-90">
       <div class="message-box" *ngFor="let message of messageList.messages">
         <div class="dark-color">{{ message.content }}</div>
         <div class="dark-color right-side">
@@ -20,7 +20,7 @@
       <div class="message-input-box">
         <mat-form-field class="message-input-field">
           <mat-label class="dark-color">Send message!</mat-label>
-          <textarea class="dark-color text-area" matInput placeholder="Chao. Wie geht es Ihnen?"></textarea>
+          <textarea (keyup.enter)="sendMessage($event)" class="dark-color text-area" matInput placeholder="Chao. Wie geht es Ihnen?" [(ngModel)]="messageInput" name="messageInput"></textarea>
         </mat-form-field>
       </div>
     </div>
