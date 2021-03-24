@@ -36,10 +36,12 @@ namespace API.Controllers
         [HttpPost]
         public async Task Post([FromBody] MessageDto messageDto)
         {
-            messageDto.User = new PublicUserDto()
-            {
-                UserId = GetCurrentUser().Id
-            };
+            //messageDto.User = new PublicUserDto()
+            //{
+            //    UserId = GetCurrentUser().Id,
+            //    Username = GetCurrentUser().UserName
+            //};
+            messageDto.User.UserId = GetCurrentUser().Id;
             await _messageService.PostMessage(messageDto);
         }
 

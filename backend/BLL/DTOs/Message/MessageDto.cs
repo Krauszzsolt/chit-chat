@@ -9,8 +9,14 @@ namespace BLL.DTOs.Message
     {
         public Guid? Id { get; set; }
         public Guid? ChatroomId { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
         public string Content { get; set; }
-        public PublicUserDto User { get; set; }
+        public PublicUserDto? User { get; set; }
+
+        public MessageDto()
+        {
+            User = new PublicUserDto();
+        }
+
     }
 }
