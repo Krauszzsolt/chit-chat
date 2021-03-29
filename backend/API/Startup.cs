@@ -1,4 +1,5 @@
 using Backend.Middlewares;
+using BLL.DTOs.Message;
 using BLL.DTOs.Settings;
 using BLL.Services;
 using BLL.Services.Interfaces;
@@ -53,6 +54,7 @@ namespace Backend
             services.AddScoped<IChatroomService, ChatroomService>();
             services.AddScoped<IMessageService, MessageService>();
 
+            services.AddSignalR();
             // configure strongly typed settings object
             services.Configure<JWTSettings>(Configuration.GetSection("JWTSettings"));
 
@@ -92,9 +94,16 @@ namespace Backend
             {
                 endpoints.MapControllers();
             });
+            app.UseSignalR(route =>
+            {
+                route.MapHub<MessageHub>("/messagehub");
+            });
+
 
             // enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
+
+
 
             // enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
