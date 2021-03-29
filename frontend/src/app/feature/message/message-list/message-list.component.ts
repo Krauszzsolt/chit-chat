@@ -1,8 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, NgZone, OnChanges, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ChatroomDto, ChatroomService, MessageListDto, MessageService } from 'src/app/shared/client';
+import { SignalRService } from '../signal-r.service';
 
 @Component({
   selector: 'app-message-list',
@@ -14,7 +16,7 @@ export class MessageListComponent implements OnInit, OnChanges {
   public messages: Observable<MessageListDto>;
   public messageInput = '';
   public roomId;
-  constructor(private chatroomService: ChatroomService, private messageService: MessageService, private route: ActivatedRoute, private router: Router, private zone: NgZone) {}
+  constructor( private http: HttpClient,private signalRService : SignalRService ,private chatroomService: ChatroomService, private messageService: MessageService, private route: ActivatedRoute, private router: Router, private zone: NgZone) {}
 
   ngOnInit() {
 
@@ -23,8 +25,18 @@ export class MessageListComponent implements OnInit, OnChanges {
       this.chatrooms = this.chatroomService.apiChatroomGet();
       this.messages = this.messageService.apiMessageChatroomIdGet(this.roomId);
     });
+    this.signalRService.startConnection()
+    this.signalRService.addDataListener();
+    this.startHttpRequest()
   }
-
+  private startHttpRequest = () => {
+    this.http.get('https://localhost:44364/api/MessageHub')
+      .subscribe(res => {
+        this.messages = null;
+        console.log(res);
+        this.messages = this.messageService.apiMessageChatroomIdGet(this.roomId);
+      },)
+  }
   ngOnChanges() {
   }
 
@@ -35,7 +47,6 @@ export class MessageListComponent implements OnInit, OnChanges {
   }
 
   sendMessage(){
-    console.log(this.messageInput)
     this.messageService.apiMessagePost({content:this.messageInput, chatroomId:this.roomId}).subscribe()
     this.messageInput = ''    
   }

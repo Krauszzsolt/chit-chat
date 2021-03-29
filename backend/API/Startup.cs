@@ -45,7 +45,14 @@ namespace Backend
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             // ass CORS for dev
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                .WithOrigins("http://localhost:4200")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+            });
 
             services.AddControllers();
 
@@ -75,15 +82,12 @@ namespace Backend
             {
                 app.UseDeveloperExceptionPage();
                 // global cors policy
-                app.UseCors(x => x
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
+                app.UseCors("CorsPolicy");
             }
             else
             {
-                app.UseHttpsRedirection();
             }
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -93,10 +97,7 @@ namespace Backend
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
-            app.UseSignalR(route =>
-            {
-                route.MapHub<MessageHub>("/messagehub");
+                endpoints.MapHub<MessageHub>("/MessageHub");
             });
 
 
