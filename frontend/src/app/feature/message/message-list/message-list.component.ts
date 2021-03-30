@@ -16,44 +16,32 @@ export class MessageListComponent implements OnInit, OnChanges {
   public messages: Observable<MessageListDto>;
   public messageInput = '';
   public roomId;
-  constructor( private http: HttpClient,private signalRService : SignalRService ,private chatroomService: ChatroomService, private messageService: MessageService, private route: ActivatedRoute, private router: Router, private zone: NgZone) {}
+  constructor(
+    private http: HttpClient,
+    private signalRService: SignalRService,
+    private chatroomService: ChatroomService,
+    private messageService: MessageService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private zone: NgZone
+  ) {}
 
   ngOnInit() {
-
-    this.route.params.subscribe((routeParams) => {
+    
+    this.route.params.subscribe(() => {
       this.roomId = this.route.snapshot.paramMap.get('id');
       this.chatrooms = this.chatroomService.apiChatroomGet();
       this.messages = this.messageService.apiMessageChatroomIdGet(this.roomId);
     });
-    this.signalRService.startConnection()
-    // this.signalRService.addDataListener();
+
+    this.signalRService.startConnection();
+
     this.signalRService.hubConnection.on('SendMessage', () => {
       this.messages = this.messageService.apiMessageChatroomIdGet(this.roomId);
-
-    console.log('this.messages')
-  });
+    });    
   }
 
-   action = (messasge, messagesetvice) => {
-    console.log(this.messages)
-
-    messasge = messagesetvice.apiMessageChatroomIdGet(this.roomId);
-    console.log('this.messages')
-    console.log(this.messages)
-
-  }
-
-  private startHttpRequest = () => {
-    this.http.get('https://localhost:44364/api/MessageHub')
-      .subscribe(res => {
-        this.messages = null;
-        console.log(res);
-        this.messages = this.messageService.apiMessageChatroomIdGet(this.roomId);
-      },)
-  }
-
-  ngOnChanges() {
-  }
+  ngOnChanges() {}
 
   selectChatroom(id: string) {
     this.zone.run(() => {
@@ -61,8 +49,8 @@ export class MessageListComponent implements OnInit, OnChanges {
     });
   }
 
-  sendMessage(){
-    this.messageService.apiMessagePost({content:this.messageInput, chatroomId:this.roomId}).subscribe()
-    this.messageInput = ''    
+  sendMessage() {
+    this.messageService.apiMessagePost({ content: this.messageInput, chatroomId: this.roomId }).subscribe();
+    this.messageInput = '';
   }
 }
