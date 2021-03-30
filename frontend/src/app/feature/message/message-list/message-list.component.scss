@@ -1,5 +1,9 @@
 @import '../../../app.component.scss';
 
+.contanier{
+  padding: 0 15px;
+}
+
 .height {
   height: calc(100vh - 64px);
   max-height: calc(100vh - 64px);
@@ -33,9 +37,9 @@
   position: fixed;
   bottom: 0;
   background-color: #f5e1fd;
-  width: 57%;
+  width: 56%;
   height: 5rem;
-  margin-bottom: 10px;
+  margin: 10px;
   padding: 10px;
   border-radius: 5px;
 }
@@ -55,4 +59,15 @@
 }
 textarea::-webkit-input-placeholder {
   color: purple;
+}
+
+.height-full{ 
+  height: calc(100vh - 64px);
+  overflow: auto
+}
+
+
+.height-middle{ 
+  height: calc(100vh - 164px);
+  overflow: auto
 }
