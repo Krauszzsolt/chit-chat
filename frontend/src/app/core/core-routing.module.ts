@@ -12,11 +12,6 @@ const routes: Routes = [
     children: [
       {
         path: 'chatroom',
-        loadChildren: () => import('./../feature/chatroom/chatroom.module').then((m) => m.ChatroomModule),
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'chatroom/:id',
         loadChildren: () => import('./../feature/message/message.module').then((m) => m.MessageModule),
         canActivate: [AuthGuard],
       },
