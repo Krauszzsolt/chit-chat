@@ -4,6 +4,7 @@ using BLL.DTOs.Authentication;
 using BLL.DTOs.Message;
 using BLL.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,12 @@ namespace API.Controllers
     public class MessageController : BaseController
     {
         private readonly IMessageService _messageService;
+        private readonly IHubContext<MessageHub> _hub;
 
-        public MessageController(IMessageService messageService)
+        public MessageController(IMessageService messageService, IHubContext<MessageHub> hub)
         {
+            _hub = hub;
+           
             _messageService = messageService;
         }
 
@@ -36,11 +40,15 @@ namespace API.Controllers
         [HttpPost]
         public async Task Post([FromBody] MessageDto messageDto)
         {
-            //messageDto.User = new PublicUserDto()
-            //{
-            //    UserId = GetCurrentUser().Id,
-            //    Username = GetCurrentUser().UserName
-            //};
+            await _hub.Clients.All.SendAsync("SendMessage",
+                new
+                {
+                    val1 = "Teszt",
+                    val2 = "Teszt",
+                    val3 = "Teszt",
+                    val4 = "T"
+                });
+
             messageDto.User.UserId = GetCurrentUser().Id;
             await _messageService.PostMessage(messageDto);
         }

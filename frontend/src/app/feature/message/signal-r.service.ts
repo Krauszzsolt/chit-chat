@@ -13,12 +13,11 @@ export class SignalRService {
   this.basePath  = basePath;
   console.log(basePath)
   }
-  private hubConnection: signalR.HubConnection;
+  public hubConnection: signalR.HubConnection;
 
   public startConnection = () => {
 
     this.hubConnection = new signalR.HubConnectionBuilder()
-      // This url must point to your back-end hub
       .withUrl(this.basePath+'/MessageHub')
       .configureLogging(signalR.LogLevel.Debug)
       .build();  
@@ -30,9 +29,8 @@ export class SignalRService {
   };
 
   public addDataListener = () => {
-    this.hubConnection.on('SendMessage', (data) => {
-      this.data = data;
-      console.log(data);
+    this.hubConnection.on('SendMessage', () => {
+      console.log('sake')
     });
   };
 }

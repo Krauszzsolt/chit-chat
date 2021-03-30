@@ -26,9 +26,23 @@ export class MessageListComponent implements OnInit, OnChanges {
       this.messages = this.messageService.apiMessageChatroomIdGet(this.roomId);
     });
     this.signalRService.startConnection()
-    this.signalRService.addDataListener();
-    this.startHttpRequest()
+    // this.signalRService.addDataListener();
+    this.signalRService.hubConnection.on('SendMessage', () => {
+      this.messages = this.messageService.apiMessageChatroomIdGet(this.roomId);
+
+    console.log('this.messages')
+  });
   }
+
+   action = (messasge, messagesetvice) => {
+    console.log(this.messages)
+
+    messasge = messagesetvice.apiMessageChatroomIdGet(this.roomId);
+    console.log('this.messages')
+    console.log(this.messages)
+
+  }
+
   private startHttpRequest = () => {
     this.http.get('https://localhost:44364/api/MessageHub')
       .subscribe(res => {
@@ -37,6 +51,7 @@ export class MessageListComponent implements OnInit, OnChanges {
         this.messages = this.messageService.apiMessageChatroomIdGet(this.roomId);
       },)
   }
+
   ngOnChanges() {
   }
 
