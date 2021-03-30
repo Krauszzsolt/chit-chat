@@ -1,7 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, NgZone, OnChanges, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ChatroomDto, ChatroomService, MessageListDto, MessageService } from 'src/app/shared/client';
 import { SignalRService } from '../signal-r.service';
@@ -16,21 +13,13 @@ export class MessageListComponent implements OnInit, OnChanges {
   public messages: Observable<MessageListDto>;
   public messageInput = '';
   public roomId;
-  constructor(
-    private http: HttpClient,
-    private signalRService: SignalRService,
-    private chatroomService: ChatroomService,
-    private messageService: MessageService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private zone: NgZone
-  ) {}
+  constructor(private signalRService: SignalRService, private chatroomService: ChatroomService, private messageService: MessageService) {}
 
   ngOnInit() {
-    
-    this.route.params.subscribe(() => {
-      this.roomId = this.route.snapshot.paramMap.get('id');
-      this.chatrooms = this.chatroomService.apiChatroomGet();
+    this.chatrooms = this.chatroomService.apiChatroomGet();
+
+    this.chatrooms.subscribe((repsonse) => {
+      this.roomId = repsonse[0].id;
       this.messages = this.messageService.apiMessageChatroomIdGet(this.roomId);
     });
 
@@ -38,15 +27,14 @@ export class MessageListComponent implements OnInit, OnChanges {
 
     this.signalRService.hubConnection.on('SendMessage', () => {
       this.messages = this.messageService.apiMessageChatroomIdGet(this.roomId);
-    });    
+    });
   }
 
   ngOnChanges() {}
 
   selectChatroom(id: string) {
-    this.zone.run(() => {
-      this.router.navigate(['chatroom/', id]);
-    });
+    this.roomId = id;
+    this.messages = this.messageService.apiMessageChatroomIdGet(id);
   }
 
   sendMessage() {

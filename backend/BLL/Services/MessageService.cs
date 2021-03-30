@@ -46,7 +46,7 @@ namespace BLL.Services
 
         public async Task<MessageListDto> GetMessages(Guid chatroomId)
         {
-            var chatroom = await _context.Chatrooms.FirstOrDefaultAsync(x => x.Id == chatroomId);
+            var chatroom = await _context.Chatrooms.Include(x => x.OwnerUser).FirstOrDefaultAsync(x => x.Id == chatroomId);
 
             if (chatroom == null)
             {

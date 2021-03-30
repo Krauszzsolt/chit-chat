@@ -1,75 +1,40 @@
-<!-- <mat-grid-list cols="5" rowHeight="fit">
-  <mat-grid-tile [colspan]="1" [style.background]="'white'">
-    <div class="flex-list column height scroll-bottom-maring">
+
+<div class="contanier">
+  <div class="row">
+    <div class="col height-full">
       <mat-card *ngFor="let chatroom of chatrooms | async" (click)="selectChatroom(chatroom.id)">
         <mat-card-title class="dark-color"> {{ chatroom.name }} </mat-card-title>
       </mat-card>
     </div>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="3" [style.background]="'#e05a00'" class="message-grid">
-    <div *ngIf="messages | async as messageList" class="scroll-bottom-maring scroll-top-maring width-90">
-      <div class="message-box" *ngFor="let message of messageList.messages">
-        <div class="dark-color">{{ message.content }}</div>
-        <div class="dark-color right-side">
-          /<b>{{ message.user.username }}</b
-          >/
-        </div>
-      </div>
-    </div>
-    <div class="message-input-box-contanier">
-      <div class="message-input-box">
-        <mat-form-field class="message-input-field">
-          <mat-label class="dark-color">Send message!</mat-label>
-          <textarea
-            (keyup.enter)="sendMessage($event)"
-            class="dark-color text-area"
-            matInput
-            placeholder="Chao. Wie geht es Ihnen?"
-            [(ngModel)]="messageInput"
-            name="messageInput"
-          ></textarea>
-        </mat-form-field>
-      </div>
-    </div>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [style.background]="'#e05a00'"> Search </mat-grid-tile>
-</mat-grid-list> -->
-<div class = "contanier">
-<div class="row height ">
-  <div class="col height-full">
-    <mat-card *ngFor="let chatroom of chatrooms | async" (click)="selectChatroom(chatroom.id)">
-      <mat-card-title class="dark-color"> {{ chatroom.name }} </mat-card-title>
-    </mat-card>
-  </div>
 
-  <div class="col-7">
-    <div class="row height-middle" >
-      <div *ngIf="messages | async as messageList" class="scroll-bottom-maring scroll-top-maring width-90">
-        <div class="message-box" *ngFor="let message of messageList.messages">
-          <div class="dark-color">{{ message.content }}</div>
-          <div class="dark-color right-side">
-            /<b>{{ message.user.username }}</b
-            >/
+    <div class="col-7">
+      <div #scrollMe [scrollTop]="scrollMe.scrollHeight"  class="row height-middle ">
+        <div *ngIf="messages | async as messageList" class="width-90">
+          <div class="incoming-message-container" *ngFor="let message of messageList.messages">
+            <div class="dark-color incoming-message-field">{{ message.content }}</div>
+            <div class="dark-color right-side">
+              /<b>{{ message.user.username }}</b
+              >/
+            </div>
+          </div>
+        </div>
+        <div class="message-input-box-contanier">
+          <div class="w-100">
+            <mat-form-field class="w-100">
+              <mat-label class="dark-color">Send message!</mat-label>
+              <textarea
+                (keyup.enter)="sendMessage($event)"
+                class="dark-color text-area"
+                matInput
+                placeholder="Chao. Wie geht es Ihnen?"
+                [(ngModel)]="messageInput"
+                name="messageInput"
+              ></textarea>
+            </mat-form-field>
           </div>
         </div>
       </div>
-      <div class="message-input-box-contanier">
-        <div class="message-input-box">
-          <mat-form-field class="message-input-field">
-            <mat-label class="dark-color">Send message!</mat-label>
-            <textarea
-              (keyup.enter)="sendMessage($event)"
-              class="dark-color text-area"
-              matInput
-              placeholder="Chao. Wie geht es Ihnen?"
-              [(ngModel)]="messageInput"
-              name="messageInput"
-            ></textarea>
-          </mat-form-field>
-        </div>
-      </div>
     </div>
+    <div class="col height-full">Search</div>
   </div>
-  <div class="col height-full ">Search</div>
-</div>
 </div>
