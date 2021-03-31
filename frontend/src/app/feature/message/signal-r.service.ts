@@ -11,7 +11,6 @@ export class SignalRService {
 
   constructor(@Optional() @Inject(BASE_PATH) basePath: string) {
   this.basePath  = basePath;
-  console.log(basePath)
   }
   public hubConnection: signalR.HubConnection;
 
