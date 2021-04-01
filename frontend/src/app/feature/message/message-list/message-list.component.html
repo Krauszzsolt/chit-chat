@@ -1,4 +1,3 @@
-
 <div class="contanier">
   <div class="row">
     <div class="col height-full">
@@ -8,8 +7,8 @@
     </div>
 
     <div class="col-7">
-      <div #scrollMe [scrollTop]="scrollMe.scrollHeight"  class="row height-middle ">
-        <div *ngIf="messages | async as messageList" class="width-90">
+      <div *ngIf="$messages | async as messageList" #scrollMe [scrollTop]="scrollMe.scrollHeight" class="row height-middle">
+        <div class="width-90">
           <div class="incoming-message-container" *ngFor="let message of messageList.messages">
             <div class="dark-color incoming-message-field">{{ message.content }}</div>
             <div class="dark-color right-side">
