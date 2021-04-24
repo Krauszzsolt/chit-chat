@@ -25,7 +25,7 @@ namespace API.Controllers
         public MessageController(IMessageService messageService, IHubContext<MessageHub> hub)
         {
             _hub = hub;
-           
+
             _messageService = messageService;
         }
 
@@ -40,17 +40,9 @@ namespace API.Controllers
         [HttpPost]
         public async Task Post([FromBody] MessageDto messageDto)
         {
-            await _hub.Clients.All.SendAsync("SendMessage",
-                new
-                {
-                    val1 = "Teszt",
-                    val2 = "Teszt",
-                    val3 = "Teszt",
-                    val4 = "T"
-                });
-
             messageDto.User.UserId = GetCurrentUser().Id;
             await _messageService.PostMessage(messageDto);
+            await _hub.Clients.All.SendAsync("SendMessage", messageDto.ChatroomId);
         }
 
         // PUT api/<MessageController>/5
