@@ -5,55 +5,34 @@ import { SignalRService } from '../signal-r.service';
 // import 'rxjs/add/operator/switchMap';
 import { of } from 'rxjs/observable/of';
 import { switchMap, take } from 'rxjs/operators';
+import { MessageManagementService } from '../message-management.service';
 
 @Component({
   selector: 'app-message-list',
   templateUrl: './message-list.component.html',
   styleUrls: ['./message-list.component.scss'],
 })
-export class MessageListComponent implements OnInit, OnChanges, AfterViewInit {
-  public chatrooms: Observable<ChatroomDto[]>;
-  public subject = new BehaviorSubject<string>('');
+export class MessageListComponent implements OnInit, AfterViewInit {
+  public $chatrooms: Observable<ChatroomDto[]>;
   public $messages: Observable<MessageListDto>;
   public messageInput = '';
-  public roomId;
-  constructor(private changeDetectorRef: ChangeDetectorRef,private signalRService: SignalRService, private chatroomService: ChatroomService, private messageService: MessageService) {}
+  constructor(private changeDetectorRef: ChangeDetectorRef, private messageManagementService: MessageManagementService) {}
 
   ngOnInit() {
-    this.chatrooms = this.chatroomService.apiChatroomGet();
-    this.chatrooms.subscribe((repsonse) => {
-      this.roomId = repsonse[0].id;
-      this.subject.next(repsonse[0].id);
-
-      this.$messages = this.subject.pipe(
-        switchMap(
-          (id): Observable<MessageListDto> => {
-            return this.messageService.apiMessageChatroomIdGet(id);
-          }
-        )
-      );
-    });
-
-    this.signalRService.startConnection();
-
-    this.signalRService.hubConnection.on('SendMessage', () => {
-      this.subject.next(this.roomId);
-    });
+    this.$chatrooms = this.messageManagementService.getChatRooms();
+    this.$messages = this.messageManagementService.getMessage();
   }
 
   ngAfterViewInit() {
     this.changeDetectorRef.detectChanges();
-  
-}
-  ngOnChanges() {}
+  }
 
   selectChatroom(id: string) {
-    this.roomId = id;
-    this.$messages = this.messageService.apiMessageChatroomIdGet(id);
+    this.messageManagementService.setChatRoom(id);
   }
 
   sendMessage() {
-    this.messageService.apiMessagePost({ content: this.messageInput, chatroomId: this.roomId }).subscribe();
+    this.messageManagementService.sendMessage(this.messageInput).subscribe();
     this.messageInput = '';
   }
 }

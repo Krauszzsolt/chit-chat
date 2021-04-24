@@ -86,8 +86,9 @@ namespace Backend
             }
             else
             {
+                app.UseHttpsRedirection();
+
             }
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

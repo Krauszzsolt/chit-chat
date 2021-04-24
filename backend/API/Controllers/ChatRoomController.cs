@@ -26,9 +26,10 @@ namespace API.Controllers
 
         // GET: api/<MessageController>
         [HttpGet]
-        public async Task<List<ChatroomDto>> Get()
+        public async Task<ActionResult<List<ChatroomDto>>> Get()
         {
-            return await _chatroomService.GetChatrooms();
+            var chatrooms = await _chatroomService.GetChatrooms();
+            return Ok(chatrooms);
         }
 
         // GET api/<MessageController>/5
