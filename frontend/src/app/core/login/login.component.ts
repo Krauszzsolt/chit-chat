@@ -12,8 +12,8 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   loginDto: LoginDto = {
-    username: '',
-    password: ''
+    username: 'admin',
+    password: 'password123'
   };
 
   errorMessage: string = undefined;
