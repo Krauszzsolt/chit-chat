@@ -12,6 +12,8 @@ namespace BLL.Services.ES
         public Task SaveManyAsync(MessageES[] products);
         public Task DeleteAsync(MessageES message);
         public Task SaveSingleAsync(MessageES message);
+        public Task UpdateSingleAsync(MessageES message);
+
         public Task SaveBulkAsync(MessageES[] messages);
 
 

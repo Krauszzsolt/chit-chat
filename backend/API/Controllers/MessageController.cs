@@ -24,14 +24,12 @@ namespace API.Controllers
     public class MessageController : BaseController
     {
         private readonly IMessageService _messageService;
-        private readonly IElasticClient _elasticClient;
         private readonly IElasticsearchService _elasticsearchService;
         private readonly IHubContext<MessageHub> _hub;
 
-        public MessageController(IMessageService messageService, IHubContext<MessageHub> hub, IElasticClient elasticClient, IElasticsearchService elasticsearchService)
+        public MessageController(IMessageService messageService, IHubContext<MessageHub> hub, IElasticsearchService elasticsearchService)
         {
             _hub = hub;
-            _elasticClient = elasticClient;
             _elasticsearchService = elasticsearchService;
             _messageService = messageService;
         }
