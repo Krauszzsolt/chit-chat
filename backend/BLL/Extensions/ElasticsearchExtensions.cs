@@ -31,17 +31,13 @@ namespace ProductElasticSearch.Utility
         private static void AddDefaultMappings(ConnectionSettings settings)
         {
             settings
-                .DefaultMappingFor<Product>(m => m
-                    .Ignore(p => p.Price)
-                    .Ignore(p => p.Quantity)
-                    .Ignore(p => p.Rating)
-                );
+                .DefaultMappingFor<MessageES>(m => m);
         }
 
         private static void CreateIndex(IElasticClient client, string indexName)
         {
             var createIndexResponse = client.Indices.Create(indexName,
-                index => index.Map<Product>(x => x.AutoMap())
+                index => index.Map<MessageES>(x => x.AutoMap())
             );
         }
     }

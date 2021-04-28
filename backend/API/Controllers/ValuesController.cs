@@ -18,14 +18,44 @@ namespace API.Controllers
     {
         private readonly IElasticClient _elasticClient;
         private readonly IProductService _productService;
+        private readonly IElasticsearchService _elasticsearchService;
 
-        public ValuesController(IElasticClient elasticClient, IProductService productService)
+        public ValuesController(IElasticClient elasticClient, IProductService productService, IElasticsearchService elasticsearchService)
         {
             _elasticClient = elasticClient;
             _productService = productService;
-
+            _elasticsearchService = elasticsearchService;
 
         }
+
+        [HttpGet("GetMessages")]
+        public async Task<IReadOnlyCollection<MessageES>> GetMessages([FromQuery] string query)
+        {
+            var response = await _elasticsearchService.GetMessages(query);
+            return response;
+        }
+
+        [HttpGet("fakeimportmessages/{count}")]
+        public async Task<ActionResult> Import(int count = 0)
+        {
+            var messageFaker = new Faker<MessageES>()
+                   .CustomInstantiator(f => new MessageES())
+                   .RuleFor(p => p.Id, f => Guid.NewGuid())
+                   .RuleFor(p => p.ChatRoomId, f => Guid.NewGuid())
+                   .RuleFor(p => p.UserId, f => f.Commerce.ProductName())
+                   .RuleFor(p => p.UserName, f => f.Commerce.ProductName())
+                   .RuleFor(p => p.ChatRoomName, f => f.Commerce.ProductName())
+                   .RuleFor(p => p.Content, f => f.Lorem.Sentence(f.Random.Int(5, 20)))
+                   .RuleFor(p => p.Date, f => f.Date.Past(2));
+
+
+            var products = messageFaker.Generate(count);
+            await _elasticsearchService.SaveManyAsync(products.ToArray());
+
+            return Ok();
+        }
+
+
         [HttpGet("Find")]
         public async Task<IReadOnlyCollection<Product>> Find([FromQuery]string query, [FromQuery] int page = 1, [FromQuery] int pageSize = 5)
         {
@@ -106,7 +136,7 @@ namespace API.Controllers
         }
 
         [HttpGet("fakeimport/{count}")]
-        public async Task<ActionResult> Import(int count = 0)
+        public async Task<ActionResult> ImportProduct(int count = 0)
         {
             var productFaker = new Faker<Product>()
                    .CustomInstantiator(f => new Product())

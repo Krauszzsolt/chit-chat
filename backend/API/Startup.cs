@@ -18,8 +18,6 @@ using ProductElasticSearch.Utility;
 using System;
 using System.IO;
 using System.Reflection;
-using System.Threading.Tasks;
-
 namespace Backend
 {
     public class Startup
@@ -64,6 +62,7 @@ namespace Backend
             services.AddScoped<IChatroomService, ChatroomService>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddSingleton<IProductService, ProductService>();
+            services.AddSingleton<IElasticsearchService, ElasticsearchService>();
             //services.AddSingleton<IElasticClient, ElasticClient>();
             services.AddSignalR();
             // configure strongly typed settings object
