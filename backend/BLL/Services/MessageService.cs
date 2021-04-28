@@ -1,9 +1,11 @@
 ﻿using BLL.DTOs.Authentication;
 using BLL.DTOs.Chatroom;
 using BLL.DTOs.Message;
+using BLL.Services.ES;
 using BLL.Services.Interfaces;
 using DAL.Data;
 using DAL.Entities;
+using DAL.Entities.ES;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,10 +18,13 @@ namespace BLL.Services
     public class MessageService : IMessageService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IElasticsearchService _elasticsearchService;
 
-        public MessageService(ApplicationDbContext context)
+        public MessageService(ApplicationDbContext context, IElasticsearchService elasticsearchService)
         {
             _context = context;
+            _elasticsearchService = elasticsearchService;
+
         }
 
         public async Task<MessageDto> GetMessage(Guid id)
@@ -109,6 +114,24 @@ namespace BLL.Services
 
             _context.Messages.Add(message);
             await _context.SaveChangesAsync();
+
+            #region ES Service
+
+            var messageEntity = await _context.Messages.FirstOrDefaultAsync(x => x.Id == message.Id);
+
+            var messageES = new MessageES()
+            {
+                Id = messageEntity.Id,
+                ChatRoomId = messageEntity.ChatRoomId,
+                Content = messageEntity.Content,
+                UserId = messageEntity.UserId,
+                Date = messageEntity.Date,
+                ChatRoomName = messageEntity.Chatroom.Name
+            };
+
+            await _elasticsearchService.SaveSingleAsync(messageES);
+            #endregion
+
         }
 
         public async Task PutMessage(MessageDto messageDto)
@@ -128,6 +151,25 @@ namespace BLL.Services
             message.Content = messageDto.Content ?? message.Content;
 
             await _context.SaveChangesAsync();
+
+            #region ES Service
+
+            var messageEntity = await _context.Messages.FirstOrDefaultAsync(x => x.Id == message.Id);
+
+            var messageES = new MessageES()
+            {
+                Id = messageEntity.Id,
+                ChatRoomId = messageEntity.ChatRoomId,
+                Content = messageEntity.Content,
+                UserId = messageEntity.UserId,
+                Date = messageEntity.Date,
+                ChatRoomName = messageEntity.Chatroom.Name
+            };
+
+            await _elasticsearchService.UpdateSingleAsync(messageES);
+
+            #endregion
+
         }
 
         public async Task DeleteMessage(Guid id, string userId)
@@ -144,8 +186,25 @@ namespace BLL.Services
                 throw new ArgumentException($"Permisson denied");
             }
 
+            #region ES Service
+
+            var messageES = new MessageES()
+            {
+                Id = message.Id,
+                ChatRoomId = message.ChatRoomId,
+                Content = message.Content,
+                UserId = message.UserId,
+                Date = message.Date,
+                ChatRoomName = message.Chatroom.Name
+            };
+
+            await _elasticsearchService.DeleteAsync(messageES);
+            #endregion
+
+
             _context.Messages.Remove(message);
             await _context.SaveChangesAsync();
+            
         }
     }
 }

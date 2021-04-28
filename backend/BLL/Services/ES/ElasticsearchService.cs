@@ -51,6 +51,10 @@ namespace BLL.Services.ES
         {
             await _elasticClient.IndexDocumentAsync<MessageES>(message);
         }
+        public async Task UpdateSingleAsync(MessageES message)
+        {
+            await _elasticClient.UpdateAsync<MessageES>(message, u => u.Doc(message));
+        }
 
 
         public async Task SaveBulkAsync(MessageES[] messages)
