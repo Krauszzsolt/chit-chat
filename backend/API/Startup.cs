@@ -61,7 +61,6 @@ namespace Backend
             services.AddScoped<IAuthenticationService, AuthenticationService>(); 
             services.AddScoped<IChatroomService, ChatroomService>();
             services.AddScoped<IMessageService, MessageService>();
-            services.AddSingleton<IProductService, ProductService>();
             services.AddSingleton<IElasticsearchService, ElasticsearchService>();
             //services.AddSingleton<IElasticClient, ElasticClient>();
             services.AddSignalR();

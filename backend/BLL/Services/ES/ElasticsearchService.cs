@@ -3,19 +3,16 @@ using Microsoft.Extensions.Logging;
 using Nest;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services.ES
 {
-    public class ElasticsearchService: IElasticsearchService
+    public class ElasticsearchService : IElasticsearchService
     {
         private readonly ILogger _logger;
-        //private List<MessageES> _cache = new List<MessageES>();
         private IElasticClient _elasticClient;
 
-        public ElasticsearchService(IElasticClient elasticClient, ILogger<Product> logger)
+        public ElasticsearchService(IElasticClient elasticClient, ILogger<MessageES> logger)
         {
             _logger = logger;
             _elasticClient = elasticClient;
@@ -33,8 +30,32 @@ namespace BLL.Services.ES
 
         public async Task SaveManyAsync(MessageES[] messages)
         {
-            //_cache.AddRange(products);
             var result = await _elasticClient.IndexManyAsync(messages);
+            if (result.Errors)
+            {
+                // the response can be inspected for errors
+                foreach (var itemWithError in result.ItemsWithErrors)
+                {
+                    _logger.LogError("Failed to index document {0}: {1}",
+                        itemWithError.Id, itemWithError.Error);
+                }
+            }
+        }
+
+        public async Task DeleteAsync(MessageES message)
+        {
+            await _elasticClient.DeleteAsync<MessageES>(message);
+        }
+
+        public async Task SaveSingleAsync(MessageES message)
+        {
+            await _elasticClient.IndexDocumentAsync<MessageES>(message);
+        }
+
+
+        public async Task SaveBulkAsync(MessageES[] messages)
+        {
+            var result = await _elasticClient.BulkAsync(b => b.Index("messages").IndexMany(messages));
             if (result.Errors)
             {
                 // the response can be inspected for errors

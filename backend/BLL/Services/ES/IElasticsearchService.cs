@@ -10,6 +10,9 @@ namespace BLL.Services.ES
     {
         public Task<IReadOnlyCollection<MessageES>> GetMessages(string searchTerm, int size = 100);
         public Task SaveManyAsync(MessageES[] products);
+        public Task DeleteAsync(MessageES message);
+        public Task SaveSingleAsync(MessageES message);
+        public Task SaveBulkAsync(MessageES[] messages);
 
 
     }
