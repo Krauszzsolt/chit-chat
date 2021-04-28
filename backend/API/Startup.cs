@@ -2,6 +2,7 @@ using Backend.Middlewares;
 using BLL.DTOs.Message;
 using BLL.DTOs.Settings;
 using BLL.Services;
+using BLL.Services.ES;
 using BLL.Services.Interfaces;
 using DAL.Data;
 using DAL.Entities;
@@ -12,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Nest;
+using ProductElasticSearch.Utility;
 using System;
 using System.IO;
 using System.Reflection;
@@ -60,7 +63,8 @@ namespace Backend
             services.AddScoped<IAuthenticationService, AuthenticationService>(); 
             services.AddScoped<IChatroomService, ChatroomService>();
             services.AddScoped<IMessageService, MessageService>();
-
+            services.AddSingleton<IProductService, ProductService>();
+            //services.AddSingleton<IElasticClient, ElasticClient>();
             services.AddSignalR();
             // configure strongly typed settings object
             services.Configure<JWTSettings>(Configuration.GetSection("JWTSettings"));
@@ -73,6 +77,7 @@ namespace Backend
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+            services.AddElasticsearch(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
