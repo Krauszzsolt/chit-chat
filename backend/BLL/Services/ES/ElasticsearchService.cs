@@ -1,7 +1,6 @@
 ﻿using DAL.Entities.ES;
 using Microsoft.Extensions.Logging;
 using Nest;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

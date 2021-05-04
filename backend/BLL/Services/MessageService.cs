@@ -8,9 +8,7 @@ using DAL.Entities;
 using DAL.Entities.ES;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services
@@ -117,7 +115,7 @@ namespace BLL.Services
 
             #region ES Service
 
-            var messageEntity = await _context.Messages.FirstOrDefaultAsync(x => x.Id == message.Id);
+            var messageEntity = await _context.Messages.Include(x => x.User).FirstOrDefaultAsync(x => x.Id == message.Id);
 
             var messageES = new MessageES()
             {
@@ -125,6 +123,7 @@ namespace BLL.Services
                 ChatRoomId = messageEntity.ChatRoomId,
                 Content = messageEntity.Content,
                 UserId = messageEntity.UserId,
+                UserName = messageEntity.User.UserName,
                 Date = messageEntity.Date,
                 ChatRoomName = messageEntity.Chatroom.Name
             };
@@ -136,7 +135,7 @@ namespace BLL.Services
 
         public async Task PutMessage(MessageDto messageDto)
         {
-            var message = await _context.Messages.FirstOrDefaultAsync(x => x.Id == messageDto.Id.Value);
+            var message = await _context.Messages.Include(x => x.User).FirstOrDefaultAsync(x => x.Id == messageDto.Id.Value);
 
             if (message == null)
             {
@@ -162,6 +161,7 @@ namespace BLL.Services
                 ChatRoomId = messageEntity.ChatRoomId,
                 Content = messageEntity.Content,
                 UserId = messageEntity.UserId,
+                UserName = messageEntity.User.UserName,
                 Date = messageEntity.Date,
                 ChatRoomName = messageEntity.Chatroom.Name
             };
@@ -174,7 +174,7 @@ namespace BLL.Services
 
         public async Task DeleteMessage(Guid id, string userId)
         {
-            var message = await _context.Messages.FirstOrDefaultAsync(x => x.Id == id);
+            var message = await _context.Messages.Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
 
             if (message == null)
             {
@@ -194,6 +194,7 @@ namespace BLL.Services
                 ChatRoomId = message.ChatRoomId,
                 Content = message.Content,
                 UserId = message.UserId,
+                UserName = message.User.UserName,
                 Date = message.Date,
                 ChatRoomName = message.Chatroom.Name
             };
