@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, from, merge, Observable, of } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { ChatroomService, MessageService } from 'src/app/shared/client';
 import { SignalRService } from './signal-r.service';
 
@@ -38,7 +38,12 @@ export class MessageManagementService {
     this.roomId.next(id);
   }
 
-  public sendMessage(messageInput) {
+  public sendMessage(messageInput: string) {
     return this.messageService.apiMessagePost({ content: messageInput, chatroomId: this.roomId.value });
+  }
+
+  public search(searchTerm: string) {
+    if(searchTerm.length > 3)
+    return this.messageService.apiMessageSearchGet(searchTerm).pipe(map(result => (result.slice(0,10))));
   }
 }
