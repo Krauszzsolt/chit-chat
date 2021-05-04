@@ -18,6 +18,9 @@ export class MessageListComponent implements OnInit, AfterViewInit {
   public messageInput = '';
   constructor(private changeDetectorRef: ChangeDetectorRef, private messageManagementService: MessageManagementService) {}
 
+
+  typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
+  
   ngOnInit() {
     this.$chatrooms = this.messageManagementService.getChatRooms();
     this.$messages = this.messageManagementService.getMessage();
