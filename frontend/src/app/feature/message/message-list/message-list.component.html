@@ -34,6 +34,18 @@
         </div>
       </div>
     </div>
-    <div class="col height-full">Search</div>
+    <div class="col height-full">      
+      <mat-search-bar></mat-search-bar>
+
+      <mat-selection-list [multiple]="false" #shoes >
+        <mat-list-option class="dark-color" *ngFor="let shoe of typesOfShoes" [value]="shoe">
+          {{shoe}}
+        </mat-list-option>
+      </mat-selection-list>
+      
+      <p>
+        Option selected: {{shoes.selectedOptions.selected[0]?.value}}
+      </p>
+    </div>
   </div>
 </div>
