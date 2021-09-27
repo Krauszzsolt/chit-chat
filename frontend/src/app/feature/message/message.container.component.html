@@ -1,0 +1,13 @@
+<div class="contanier">
+  <div class="row">
+    <div class="col height-full">
+      <app-chatroom-list [chatrooms]="$chatrooms | async" (selectedChatroomEmit)="selectChatroom($event)"></app-chatroom-list>
+    </div>
+
+    <div class="col-7">
+      <app-message-list [messageList]="$messages | async" (messageInputEmit)="sendMessage($event)"></app-message-list>
+    </div>
+    <div class="col height-full"></div>
+    <app-message-search [searchResults]="$searchResult | async" (searchTermEmit)="search($event)"></app-message-search>
+  </div>
+</div>

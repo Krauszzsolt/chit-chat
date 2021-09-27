@@ -1,0 +1,3 @@
+<mat-card *ngFor="let chatroom of chatrooms" (click)="selectChatroom(chatroom.id)">
+  <mat-card-title class="dark-color"> {{ chatroom.name }} </mat-card-title>
+</mat-card>

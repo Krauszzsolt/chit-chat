@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MessageListComponent } from './message-list/message-list.component';
+import { MessageContainerComponent } from './message.container.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MessageListComponent,
+    component: MessageContainerComponent,
   },
 ];
 
