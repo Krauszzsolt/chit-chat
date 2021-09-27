@@ -8,14 +8,11 @@ namespace BLL.Services.ES
 {
     public interface IElasticsearchService
     {
-        public Task<IReadOnlyCollection<MessageES>> GetMessages(string searchTerm, int size = 100);
+        public Task<IReadOnlyCollection<MessageES>> GetMessages(string searchTerm, int size);
         public Task SaveManyAsync(MessageES[] products);
         public Task DeleteAsync(MessageES message);
         public Task SaveSingleAsync(MessageES message);
         public Task UpdateSingleAsync(MessageES message);
-
         public Task SaveBulkAsync(MessageES[] messages);
-
-
     }
 }

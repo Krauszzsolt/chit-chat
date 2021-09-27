@@ -13,7 +13,6 @@ namespace DAL.Entities
         public string OwnerUserId { get; set; }
 
 
-
         #region navigation properties
 
         public ApplicationUser OwnerUser { get; set; }

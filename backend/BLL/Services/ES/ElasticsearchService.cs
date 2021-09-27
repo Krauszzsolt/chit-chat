@@ -17,7 +17,7 @@ namespace BLL.Services.ES
             _elasticClient = elasticClient;
         }
 
-        public async Task<IReadOnlyCollection<MessageES>> GetMessages(string searchTerm, int size = 100)
+        public async Task<IReadOnlyCollection<MessageES>> GetMessages(string searchTerm, int size)
         {
             var messages = await _elasticClient.SearchAsync<MessageES>
             (
