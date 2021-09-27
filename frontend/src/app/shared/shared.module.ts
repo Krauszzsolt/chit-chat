@@ -13,6 +13,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { SpinnerComponent } from './component/spinner/spinner.component';
 import { SearchComponent } from './component/search/search.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatListModule} from '@angular/material/list';
 @NgModule({
   declarations: [MatDialogWrapperComponent, SpinnerComponent, SearchComponent],
   imports: [
@@ -31,7 +32,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatSelectModule,
     FlexLayoutModule,
     MatProgressSpinnerModule,
-    MatGridListModule
+    MatGridListModule,
+    MatListModule
   ],
   exports: [
     MatSidenavModule,
@@ -50,7 +52,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     FlexLayoutModule,
     MatProgressSpinnerModule,
     SpinnerComponent,
-    MatGridListModule
+    MatGridListModule,
+    MatListModule
   ],
   entryComponents: [MatDialogWrapperComponent],
 })
