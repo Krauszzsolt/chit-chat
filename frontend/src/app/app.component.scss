@@ -26,30 +26,6 @@ $dark-color-1: black;
   flex-direction: column-reverse;
 }
 
-mat-grid-list {
-  height: calc(100vh - 64px);
-  background-color: #800080;
-  padding-bottom: 0 !important;
-}
-
-mat-grid-tile {
-  height: calc(100vh - 64px);
-  overflow-y: scroll;
-  overflow-x: hidden;
-  scroll-margin-bottom: 20px;
-  border-radius: 2px;
-  &::-webkit-scrollbar {
-    width: 0.625rem;
-    background: rgba(196, 196, 196, 0.5);
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #c4c4c4;
-  }
-  &::-webkit-scrollbar-button {
-    background: rgba(0, 0, 0, 0);
-  }
-}
-
 .dark-color {
   color: $dark-color-1;
 }
