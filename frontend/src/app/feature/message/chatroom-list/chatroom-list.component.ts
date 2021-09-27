@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ChatroomDto } from 'src/app/shared/client';
 
 @Component({
@@ -12,6 +12,7 @@ export class ChatroomListComponent implements OnInit {
   @Input()
   public chatrooms: ChatroomDto[];
 
+  @Output()
   public selectedChatroomEmit: EventEmitter<string> = new EventEmitter();
 
   ngOnInit() {}

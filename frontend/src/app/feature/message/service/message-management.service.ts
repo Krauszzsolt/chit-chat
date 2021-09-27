@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 import { MessageService } from 'src/app/shared/client';
 import { ChatroomManagementService } from './chatroom-management.service';
 import { SignalRService } from './signal-r.service';
@@ -26,7 +26,13 @@ export class MessageManagementService {
   public getMessage() {
     return combineLatest(this.newMessage, this.chatroomManagementService.getSelectedChatRooms()).pipe(
       switchMap(([message, roomid]) => {
-        return roomid !== '' ? this.messageService.apiMessageChatroomIdGet(roomid) : of({});
+        return roomid !== ''
+          ? this.messageService.apiMessageChatroomIdGet(roomid).pipe(
+              catchError((error) => {
+                return of({});
+              })
+            )
+          : of({});
       })
     );
   }

@@ -1,9 +1,12 @@
-<mat-search-bar class="search-bar" [(ngModel)]="searchTerm" (keyup.enter)="search()"></mat-search-bar>
+<div>
+  <div class="search-bar-container color-primary">
+    <mat-search-bar class="search-bar" [(ngModel)]="searchTerm" (keyup.enter)="search()"></mat-search-bar>
+  </div>
+  <mat-selection-list #result>
+    <mat-list-option class="color-primary" *ngFor="let searchResult of searchResults" [value]="searchResult.content">
+      {{ searchResult.content }} - FROM: {{ searchResult.userName }}
+    </mat-list-option>
+  </mat-selection-list>
 
-<mat-selection-list #result>
-  <mat-list-option class="dark-color" *ngFor="let searchResult of searchResults" [value]="searchResult.content">
-    {{ searchResult.content }} - FROM: {{ searchResult.userName }}
-  </mat-list-option>
-</mat-selection-list>
-
-<p>Option selected: {{ result.selectedOptions.selected[0]?.value }}</p>
+  <p>Option selected: {{ result.selectedOptions.selected[0]?.value }}</p>
+</div>

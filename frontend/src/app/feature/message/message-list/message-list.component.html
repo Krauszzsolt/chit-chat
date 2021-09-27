@@ -1,5 +1,5 @@
-<div *ngIf="messageList" #scrollMe [scrollTop]="scrollMe.scrollHeight" class="row height-middle">
-  <div class="width-90">
+<div #scrollMe [scrollTop]="scrollMe.scrollHeight" class="row height-middle">
+  <div *ngIf="messageList.messages; else noMessage" class="width-90">
     <div class="incoming-message-container color-primary" *ngFor="let message of messageList.messages">
       <div class="incoming-message-field">{{ message.content }}</div>
       <div class="right-side">
@@ -8,6 +8,7 @@
       </div>
     </div>
   </div>
+
   <div class="message-input-box-contanier color-primary">
     <div class="w-100">
       <mat-form-field class="w-100">
@@ -17,3 +18,6 @@
     </div>
   </div>
 </div>
+<ng-template #noMessage>
+  <div class="d-flex justify-content-center w-100 m-5"><div class="h3">There is no message yet.</div></div>
+</ng-template>
