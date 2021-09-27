@@ -4,7 +4,7 @@
       <app-chatroom-list [chatrooms]="$chatrooms | async" (selectedChatroomEmit)="selectChatroom($event)"></app-chatroom-list>
     </div>
 
-    <div class="col-7">
+    <div class="col-7 height-middle">
       <app-message-list [messageList]="$messages | async" (messageInputEmit)="sendMessage($event)"></app-message-list>
     </div>
     <div class="col height-full">
