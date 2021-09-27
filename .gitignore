@@ -351,3 +351,7 @@ MigrationBackup/
 
 # Client generated files
 frontend/src/app/shared/client/*
+
+
+# Elasticsearch libary 
+elasticsearch/
