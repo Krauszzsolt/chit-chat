@@ -2,7 +2,6 @@
 
 .incoming-message-container {
   border-radius: 15px;
-  background-color: $light-grey;
   padding: 15px;
   margin: 15px;
 }
@@ -14,7 +13,7 @@
 .message-input-box-contanier {
   position: fixed;
   bottom: 0;
-  background-color: #f5e1fd;
+  // background-color: #f5e1fd;
   width: 56%;
   height: 5rem;
   margin: 10px;
@@ -24,9 +23,27 @@
     max-height: 45px;
   }
   textarea::-webkit-input-placeholder {
-    color: purple;
+    color: grey;
   }
+}
+
+input.mat-input-element {
+  color: white;
 }
 .right-side {
   text-align: end;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: white !important;
+}
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: white !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: white !important;
 }

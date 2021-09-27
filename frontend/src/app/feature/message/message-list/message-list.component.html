@@ -1,18 +1,18 @@
-<div *ngIf="messageList" #scrollMe [scrollTop]="scrollMe.scrollHeight" class="row">
+<div *ngIf="messageList" #scrollMe [scrollTop]="scrollMe.scrollHeight" class="row height-middle">
   <div class="width-90">
-    <div class="incoming-message-container" *ngFor="let message of messageList.messages">
-      <div class="dark-color incoming-message-field">{{ message.content }}</div>
-      <div class="dark-color right-side">
+    <div class="incoming-message-container color-primary" *ngFor="let message of messageList.messages">
+      <div class="incoming-message-field">{{ message.content }}</div>
+      <div class="right-side">
         /<b>{{ message.user.username }}</b
         >/
       </div>
     </div>
   </div>
-  <div class="message-input-box-contanier">
+  <div class="message-input-box-contanier color-primary">
     <div class="w-100">
       <mat-form-field class="w-100">
-        <mat-label class="dark-color">Send message!</mat-label>
-        <textarea (keyup.enter)="sendMessage()" class="dark-color text-area" matInput placeholder="Say something!" [(ngModel)]="messageInput" name="messageInput"></textarea>
+        <mat-label>Send message!</mat-label>
+        <textarea (keyup.enter)="sendMessage()" class="text-area" matInput placeholder="Say something!" [(ngModel)]="messageInput" name="messageInput"></textarea>
       </mat-form-field>
     </div>
   </div>
