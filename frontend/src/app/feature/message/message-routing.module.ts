@@ -4,13 +4,13 @@ import { MessageListComponent } from './message-list/message-list.component';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: MessageListComponent,
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class MessageRoutingModule { }
+export class MessageRoutingModule {}

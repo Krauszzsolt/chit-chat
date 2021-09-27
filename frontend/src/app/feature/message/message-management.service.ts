@@ -43,7 +43,6 @@ export class MessageManagementService {
   }
 
   public search(searchTerm: string) {
-    if(searchTerm.length > 3)
-    return this.messageService.apiMessageSearchGet(searchTerm).pipe(map(result => (result.slice(0,10))));
+    if (searchTerm.length > 3) return this.messageService.apiMessageSearchGet(searchTerm).pipe(map((result) => result.slice(0, 10)));
   }
 }

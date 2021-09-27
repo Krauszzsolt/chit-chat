@@ -7,24 +7,22 @@ import { BASE_PATH } from 'src/app/shared/client';
 })
 export class SignalRService {
   public data: any[];
-  public basePath ;
+  public basePath;
 
   constructor(@Optional() @Inject(BASE_PATH) basePath: string) {
-  this.basePath  = basePath;
+    this.basePath = basePath;
   }
   public hubConnection: signalR.HubConnection;
 
   public startConnection = () => {
-
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(this.basePath+'/MessageHub')
+      .withUrl(this.basePath + '/MessageHub')
       .configureLogging(signalR.LogLevel.Debug)
-      .build();  
-     
+      .build();
+
     this.hubConnection
       .start()
       .then(() => console.log('Connection started'))
       .catch((err) => console.log('Error while starting connection: ' + err));
   };
-
 }

@@ -1,11 +1,11 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed } from '@angular/core/testing';
 
-import { JwtInerceptorService } from "./jwt-inerceptor.service";
+import { JwtInerceptorService } from './jwt-inerceptor.service';
 
-describe("JwtInerceptorService", () => {
+describe('JwtInerceptorService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
-  it("should be created", () => {
+  it('should be created', () => {
     const service: JwtInerceptorService = TestBed.get(JwtInerceptorService);
     expect(service).toBeTruthy();
   });

@@ -9,6 +9,6 @@ import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [LoginComponent, LayoutComponent, RegistrationComponent],
-  imports: [CommonModule, CoreRoutingModule, SharedModule]
+  imports: [CommonModule, CoreRoutingModule, SharedModule],
 })
 export class CoreModule {}

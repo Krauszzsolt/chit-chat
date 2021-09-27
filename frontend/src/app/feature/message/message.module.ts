@@ -7,10 +7,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [MessageListComponent],
-  imports: [
-    CommonModule,
-    MessageRoutingModule,
-    SharedModule
-  ]
+  imports: [CommonModule, MessageRoutingModule, SharedModule],
 })
-export class MessageModule { }
+export class MessageModule {}

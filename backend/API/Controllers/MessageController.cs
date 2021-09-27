@@ -67,9 +67,9 @@ namespace API.Controllers
         }
 
         [HttpGet("Search")]
-        public async Task<IReadOnlyCollection<MessageES>> GetMessages([FromQuery] string searchTerm, [FromQuery] int size = 100)
+        public async Task<IReadOnlyCollection<MessageES>> GetMessages([FromQuery] string searchTerm, [FromQuery] int? size)
         {
-            var response = await _elasticsearchService.GetMessages(searchTerm, size);
+            var response = await _elasticsearchService.GetMessages(searchTerm, size ?? 100);
             return response;
         }
 

@@ -24,14 +24,14 @@ export class MessageListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSelectionList)
   private selectionList: MatSelectionList;
-  
+
   // typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
-  
+
   ngOnInit() {
     this.selectionList.selectedOptions = new SelectionModel<MatListOption>(false);
     this.$chatrooms = this.messageManagementService.getChatRooms();
     this.$messages = this.messageManagementService.getMessage();
-    this.$searchResult = this.messageManagementService.search(this.searchTerm)
+    this.$searchResult = this.messageManagementService.search(this.searchTerm);
   }
 
   ngAfterViewInit() {
@@ -48,6 +48,6 @@ export class MessageListComponent implements OnInit, AfterViewInit {
   }
 
   search() {
-    this.$searchResult = this.messageManagementService.search(this.searchTerm)
+    this.$searchResult = this.messageManagementService.search(this.searchTerm);
   }
 }
