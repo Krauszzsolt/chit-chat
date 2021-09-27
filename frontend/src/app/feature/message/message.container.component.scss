@@ -2,16 +2,12 @@
 
 .contanier {
   padding: 0 15px;
-
+  background-color: $background-color;
   .mat-card {
     background-color: #f5e1fd;
     text-align: center;
     margin: 1rem 0;
     cursor: pointer;
-  }
-
-  .right-side {
-    text-align: end;
   }
 
   .height-full {

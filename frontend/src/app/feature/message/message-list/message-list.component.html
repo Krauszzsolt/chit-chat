@@ -12,14 +12,7 @@
     <div class="w-100">
       <mat-form-field class="w-100">
         <mat-label class="dark-color">Send message!</mat-label>
-        <textarea
-          (keyup.enter)="sendMessage($event)"
-          class="dark-color text-area"
-          matInput
-          placeholder="Chao. Wie geht es Ihnen?"
-          [(ngModel)]="messageInput"
-          name="messageInput"
-        ></textarea>
+        <textarea (keyup.enter)="sendMessage()" class="dark-color text-area" matInput placeholder="Say something!" [(ngModel)]="messageInput" name="messageInput"></textarea>
       </mat-form-field>
     </div>
   </div>

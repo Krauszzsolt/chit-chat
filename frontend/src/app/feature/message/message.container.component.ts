@@ -24,15 +24,16 @@ export class MessageContainerComponent implements OnInit {
     this.$searchResult = this.searchService.search('');
   }
 
-  selectChatroom(id: string) {
+  public selectChatroom(id: string) {
     this.chatroomManagementService.setChatRoom(id);
   }
 
-  sendMessage(message) {
+  public sendMessage(message) {
+    console.log(message);
     this.messageManagementService.sendMessage(message).subscribe();
   }
 
-  search(searchTerm) {
+  public search(searchTerm) {
     this.$searchResult = this.searchService.search(searchTerm);
   }
 }

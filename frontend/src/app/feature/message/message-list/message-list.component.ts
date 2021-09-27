@@ -22,8 +22,8 @@ export class MessageListComponent implements OnInit, AfterViewInit {
     this.changeDetectorRef.detectChanges();
   }
 
-  public sendMessage(message) {
-    this.messageInputEmit.emit(message);
+  public sendMessage() {
+    this.messageInputEmit.emit(this.messageInput);
     this.messageInput = '';
   }
 }
