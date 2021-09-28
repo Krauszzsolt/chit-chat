@@ -1,13 +1,16 @@
 ﻿using BLL.DTOs.Authentication;
 using BLL.DTOs.Chatroom;
+using BLL.DTOs.Generics;
 using BLL.DTOs.Message;
 using BLL.Services.ES;
+using BLL.Services.Helper;
 using BLL.Services.Interfaces;
 using DAL.Data;
 using DAL.Entities;
 using DAL.Entities.ES;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,11 +20,13 @@ namespace BLL.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly IElasticsearchService _elasticsearchService;
+        private readonly IPageService _pageService;
 
-        public MessageService(ApplicationDbContext context, IElasticsearchService elasticsearchService)
+        public MessageService(ApplicationDbContext context, IElasticsearchService elasticsearchService, IPageService pageService)
         {
             _context = context;
             _elasticsearchService = elasticsearchService;
+            _pageService = pageService;
 
         }
 
@@ -47,7 +52,7 @@ namespace BLL.Services
             };
         }
 
-        public async Task<MessageListDto> GetMessages(Guid chatroomId)
+        public async Task<MessageListDto> GetMessages(Guid chatroomId, int pageNumber, int pageSize)
         {
             var chatroom = await _context.Chatrooms.Include(x => x.OwnerUser).FirstOrDefaultAsync(x => x.Id == chatroomId);
 
@@ -63,6 +68,18 @@ namespace BLL.Services
                 throw new ArgumentException($"There is no message yet.");
             }
 
+            var messagesDto = new List<MessageDto>(messages.Select(message => new MessageDto()
+            {
+                Id = message.Id,
+                Content = message.Content,
+                Date = message.Date,
+                User = new PublicUserDto()
+                {
+                    UserId = message.User.Id,
+                    Username = message.User.UserName
+                }
+            }).ToList());
+
             return new MessageListDto()
             {
                 ChatRoom = new ChatroomDto()
@@ -77,18 +94,7 @@ namespace BLL.Services
                         Username = chatroom.OwnerUser.UserName
                     }
                 },
-                Messages = messages.Select(message =>
-                new MessageDto()
-                {
-                    Id = message.Id,
-                    Content = message.Content,
-                    Date = message.Date,
-                    User = new PublicUserDto()
-                    {
-                        UserId = message.User.Id,
-                        Username = message.User.UserName
-                    }
-                }).ToList()
+                Messages = _pageService.PagingList(messagesDto, 1, 5)
             };
 
         }
@@ -205,7 +211,7 @@ namespace BLL.Services
 
             _context.Messages.Remove(message);
             await _context.SaveChangesAsync();
-            
+
         }
     }
 }

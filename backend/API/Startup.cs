@@ -3,6 +3,7 @@ using BLL.DTOs.Message;
 using BLL.DTOs.Settings;
 using BLL.Services;
 using BLL.Services.ES;
+using BLL.Services.Helper;
 using BLL.Services.Interfaces;
 using DAL.Data;
 using DAL.Entities;
@@ -62,6 +63,7 @@ namespace Backend
             services.AddScoped<IChatroomService, ChatroomService>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddSingleton<IElasticsearchService, ElasticsearchService>();
+            services.AddSingleton<IPageService, PageService>();
             //services.AddSingleton<IElasticClient, ElasticClient>();
             services.AddSignalR();
             // configure strongly typed settings object
