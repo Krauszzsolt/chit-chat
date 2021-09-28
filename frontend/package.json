@@ -34,6 +34,7 @@
     "jwt-decode": "^3.0.0",
     "moment": "2.24.0",
     "ng-mat-search-bar": "^10.0.0-beta.3",
+    "ngx-infinite-scroll": "^10.0.1",
     "node-sass": "^4.14.1",
     "popper.js": "^1.16.1",
     "rxjs": "~6.3.3",

@@ -12,8 +12,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SpinnerComponent } from './component/spinner/spinner.component';
 import { SearchComponent } from './component/search/search.component';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatListModule} from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatListModule } from '@angular/material/list';
+
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 @NgModule({
   declarations: [MatDialogWrapperComponent, SpinnerComponent, SearchComponent],
   imports: [
@@ -33,7 +35,8 @@ import {MatListModule} from '@angular/material/list';
     FlexLayoutModule,
     MatProgressSpinnerModule,
     MatGridListModule,
-    MatListModule
+    MatListModule,
+    InfiniteScrollModule,
   ],
   exports: [
     MatSidenavModule,
@@ -53,7 +56,8 @@ import {MatListModule} from '@angular/material/list';
     MatProgressSpinnerModule,
     SpinnerComponent,
     MatGridListModule,
-    MatListModule
+    MatListModule,
+    InfiniteScrollModule,
   ],
   entryComponents: [MatDialogWrapperComponent],
 })
