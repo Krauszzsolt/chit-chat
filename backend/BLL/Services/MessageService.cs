@@ -94,7 +94,7 @@ namespace BLL.Services
                         Username = chatroom.OwnerUser.UserName
                     }
                 },
-                Messages = _pageService.PagingList(messagesDto, 1, 5)
+                Messages = _pageService.PagingList(messagesDto, pageNumber, pageSize)
             };
 
         }

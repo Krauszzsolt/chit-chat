@@ -9,7 +9,10 @@ namespace BLL.Services.Helper
     {
         public PagedResult<T> PagingList<T>(List<T> list, int pageNumber, int pageSize)
         {
-            return new PagedResult<T>(list.GetRange(pageNumber * pageSize, pageSize), pageNumber, pageSize, list.Count);
+            var maxPageSize = (int)Math.Ceiling(list.Count / (double)pageSize);
+            var normPageNumber = maxPageSize > pageNumber ? pageNumber : maxPageSize;
+            var normPageSize = list.Count > pageSize * normPageNumber ? pageSize : list.Count - pageSize * (normPageNumber - 1);
+            return new PagedResult<T>(list.GetRange((normPageNumber - 1) * normPageSize, normPageSize), normPageNumber, normPageSize, list.Count);
         }
     }
 }
