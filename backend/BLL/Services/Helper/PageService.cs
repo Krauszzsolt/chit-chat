@@ -9,6 +9,14 @@ namespace BLL.Services.Helper
     {
         public PagedResult<T> PagingList<T>(List<T> list, int pageNumber, int pageSize)
         {
+            if (pageNumber < 1)
+            {
+                throw new ArgumentException($"PageNumber lower than 1");
+            }
+            if (pageSize < 1)
+            {
+                throw new ArgumentException($"PageSize lower than 1");
+            }
             var maxPageSize = (int)Math.Ceiling(list.Count / (double)pageSize);
             var normPageNumber = maxPageSize > pageNumber ? pageNumber : maxPageSize;
             var normPageSize = list.Count > pageSize * normPageNumber ? pageSize : list.Count - pageSize * (normPageNumber - 1);
