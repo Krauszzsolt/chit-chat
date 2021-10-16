@@ -17,12 +17,15 @@ export class MessagePagingService {
   private scrollStateSubject: BehaviorSubject<ScrollState> = new BehaviorSubject(ScrollState.init);
   private currenRoomId = '';
   private maxPage = 1;
-  newMessage;
+  private newMessage = new BehaviorSubject<string>('');
 
   constructor(private signalRService: SignalRService, private messageManagementService: MessageManagementService, private chatroomManagementService: ChatroomManagementService) {
     this.signalRService.startConnection();
     this.signalRService.hubConnection.on('SendMessage', (chatroomId) => {
-      if (chatroomId == this.currenRoomId) this.newMessage.next('');
+      if (chatroomId == this.currenRoomId && this.currentPages.includes(this.maxPage)) {
+        this.scrollStateSubject.next(ScrollState.down);
+        this.newMessage.next('');
+      }
     });
 
     chatroomManagementService.getSelectedChatRooms().subscribe((roomId) => {
@@ -35,7 +38,7 @@ export class MessagePagingService {
       switchMap(([message, roomid, scrollState]): Observable<unknown> => {
         switch (scrollState) {
           case ScrollState.init: {
-            return this.messageManagementService.getMessage(roomid, this.maxPage).pipe(
+            return this.messageManagementService.getMessage(roomid).pipe(
               map((newMessages) => {
                 return this.mappingMessages(newMessages, scrollState);
               })
@@ -62,21 +65,19 @@ export class MessagePagingService {
 
   private mappingMessages(newMessages: MessageListDto, scrollState: ScrollState) {
     const oldMessageList = this.messagesListModelSubject.value;
-
-    // if (roomid != oldMessageList.chatRoom.id) { // ez nem is kell csak initre állítjuk másik chatszobánál lol
-    //   //kidobjuk a listát
-    //   this.messagesListModelSubject.next({ chatRoom: newMessages.chatRoom, messages: newMessages.messages.results });
-    // }
-
+    this.maxPage = newMessages.messages.pagingInfo.totalPages;
     switch (scrollState) {
       case ScrollState.init: {
         this.currentPages = [newMessages.messages.pagingInfo.pageNumber];
         this.messagesListModelSubject.next({ chatRoom: newMessages.chatRoom, messages: newMessages.messages.results });
+        this.scrollStateSubject.next(ScrollState.up);
       }
       case ScrollState.down: {
+        this.currentPages.push(newMessages.messages.pagingInfo.pageNumber);
         this.messagesListModelSubject.next({ chatRoom: newMessages.chatRoom, messages: oldMessageList.messages.concat(newMessages.messages.results) });
       }
       case ScrollState.up: {
+        this.currentPages.push(newMessages.messages.pagingInfo.pageNumber);
         this.messagesListModelSubject.next({ chatRoom: newMessages.chatRoom, messages: newMessages.messages.results.concat(oldMessageList.messages) });
       }
     }
