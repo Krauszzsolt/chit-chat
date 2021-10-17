@@ -52,7 +52,7 @@ namespace BLL.Services
             };
         }
 
-        public async Task<MessageListDto> GetMessages(Guid chatroomId, int pageNumber, int pageSize)
+        public async Task<MessageListDto> GetMessages(Guid chatroomId, int? pageNumber, int pageSize)
         {
             var chatroom = await _context.Chatrooms.Include(x => x.OwnerUser).FirstOrDefaultAsync(x => x.Id == chatroomId);
 
@@ -68,17 +68,7 @@ namespace BLL.Services
                 throw new ArgumentException($"There is no message yet.");
             }
 
-            var messagesDto = new List<MessageDto>(messages.Select(message => new MessageDto()
-            {
-                Id = message.Id,
-                Content = message.Content,
-                Date = message.Date,
-                User = new PublicUserDto()
-                {
-                    UserId = message.User.Id,
-                    Username = message.User.UserName
-                }
-            }).ToList());
+            var pageMessages = await _pageService.PagingList(_context.Messages.Where(x => x.ChatRoomId == chatroomId), pageNumber, pageSize);
 
             return new MessageListDto()
             {
@@ -94,7 +84,21 @@ namespace BLL.Services
                         Username = chatroom.OwnerUser.UserName
                     }
                 },
-                Messages = _pageService.PagingList(messagesDto, pageNumber, pageSize)
+                Messages = {
+                PagingInfo = pageMessages.PagingInfo,
+                Results = new List<MessageDto>(pageMessages.Results.Select(message => new MessageDto()
+                {
+                    Id = message.Id,
+                    Content = message.Content,
+                    Date = message.Date,
+                    User = new PublicUserDto()
+                    {
+                        UserId = message.User.Id,
+                        Username = message.User.UserName
+                    }
+                }).ToList())
+
+                }
             };
 
         }
@@ -113,7 +117,7 @@ namespace BLL.Services
                 ChatRoomId = messageDto.ChatroomId.Value,
                 Content = messageDto.Content,
                 UserId = messageDto.User.UserId,
-                Date = new DateTime()
+                Date = DateTime.Now
             };
 
             _context.Messages.Add(message);

@@ -1,13 +1,14 @@
 ﻿using BLL.DTOs.Generics;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Services.Helper
 {
     public class PageService : IPageService
     {
-        public PagedResult<T> PagingList<T>(List<T> list, int pageNumber, int pageSize)
+        public async Task<PagedResult<T>> PagingList<T>(IQueryable<T> list, int? pageNumber, int pageSize)
         {
             if (pageNumber < 1)
             {
@@ -17,10 +18,15 @@ namespace BLL.Services.Helper
             {
                 throw new ArgumentException($"PageSize lower than 1");
             }
-            var maxPageSize = (int)Math.Ceiling(list.Count / (double)pageSize);
-            var normPageNumber = maxPageSize > pageNumber ? pageNumber : maxPageSize;
-            var normPageSize = list.Count > pageSize * normPageNumber ? pageSize : list.Count - pageSize * (normPageNumber - 1);
-            return new PagedResult<T>(list.GetRange((normPageNumber - 1) * normPageSize, normPageSize), normPageNumber, normPageSize, list.Count);
+
+            var count = await list.CountAsync();
+            var maxPageSize = (int)Math.Ceiling(count / (double)pageSize);
+            var normPageNumber = pageNumber.HasValue && maxPageSize > pageNumber ? pageNumber.Value : maxPageSize ;
+            var normPageSize = count > pageSize * normPageNumber ? pageSize : count - pageSize * (normPageNumber - 1);
+
+            var result = await list.Skip((normPageNumber - 1) * normPageSize).Take(normPageSize).ToListAsync();
+
+            return new PagedResult<T>(result, normPageNumber, normPageSize, count);
         }
     }
 }

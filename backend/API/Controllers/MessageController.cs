@@ -36,7 +36,7 @@ namespace API.Controllers
 
         // GET: api/<MessageController>
         [HttpGet("{chatroomId}")]
-        public async Task<MessageListDto> Get(Guid chatroomId, int PageNumber, int PageSize)
+        public async Task<MessageListDto> Get(Guid chatroomId, int? PageNumber, int PageSize)
         {
             return await _messageService.GetMessages(chatroomId, PageNumber, PageSize);
         }

@@ -25,7 +25,7 @@ namespace BLL.DTOs.Generics
                 TotalRecords = totalRecords,
             };
         }
-        public List<T> Results { get; private set; }
+        public List<T> Results { get;  set; }
         public PaginationViewModel PagingInfo { get; set; }
     }
 }
