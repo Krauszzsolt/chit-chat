@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ChatroomDto, MessageES, MessageListDto } from 'src/app/shared/client';
+import { MessageListModel } from './model/message-list.model';
 import { ChatroomManagementService } from './service/chatroom-management.service';
 import { MessageManagementService } from './service/message-management.service';
 import { MessagePagingService } from './service/message-paging.service';
@@ -13,7 +14,7 @@ import { SearchService } from './service/search.service';
 })
 export class MessageContainerComponent implements OnInit, AfterViewInit {
   public $chatrooms: Observable<ChatroomDto[]>;
-  public $messages: Observable<MessageListDto>;
+  public $messages: Observable<MessageListModel>;
   public $searchResult: Observable<MessageES[]>;
   public messageInput = '';
 
@@ -27,7 +28,7 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.$chatrooms = this.chatroomManagementService.getChatRooms();
-    // this.$messages = this.messagePagingService.getMessage();
+    this.$messages = this.messagePagingService.getMessages();
     this.$searchResult = this.searchService.search('');
   }
   ngAfterViewInit() {

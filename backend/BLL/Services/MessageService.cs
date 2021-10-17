@@ -68,7 +68,23 @@ namespace BLL.Services
                 throw new ArgumentException($"There is no message yet.");
             }
 
-            var pageMessages = await _pageService.PagingList(_context.Messages.Where(x => x.ChatRoomId == chatroomId), pageNumber, pageSize);
+            var pageMessagesEntity = await _pageService.PagingList(_context.Messages.Where(x => x.ChatRoomId == chatroomId), pageNumber, pageSize);
+        
+
+            var results = new List<MessageDto>(pageMessagesEntity.Results.Select(message => new MessageDto()
+            {
+                Id = message.Id,
+                Content = message.Content,
+                Date = message.Date,
+                User = new PublicUserDto()
+                {
+                    UserId = message.User.Id,
+                    Username = message.User.UserName
+                }
+            }).ToList());
+
+            var pageMessagesDto = new PagedResult<MessageDto>(results, pageMessagesEntity.PagingInfo.PageNumber, pageMessagesEntity.PagingInfo.PageSize,
+               pageMessagesEntity.PagingInfo.TotalRecords);
 
             return new MessageListDto()
             {
@@ -84,21 +100,7 @@ namespace BLL.Services
                         Username = chatroom.OwnerUser.UserName
                     }
                 },
-                Messages = {
-                PagingInfo = pageMessages.PagingInfo,
-                Results = new List<MessageDto>(pageMessages.Results.Select(message => new MessageDto()
-                {
-                    Id = message.Id,
-                    Content = message.Content,
-                    Date = message.Date,
-                    User = new PublicUserDto()
-                    {
-                        UserId = message.User.Id,
-                        Username = message.User.UserName
-                    }
-                }).ToList())
-
-                }
+                Messages = pageMessagesDto
             };
 
         }

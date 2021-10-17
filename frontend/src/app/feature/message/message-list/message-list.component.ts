@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
-import { MessageListDto } from 'src/app/shared/client';
+import { MessageListModel } from '../model/message-list.model';
 
 @Component({
   selector: 'app-message-list',
@@ -10,7 +10,7 @@ export class MessageListComponent implements OnInit, AfterViewInit {
   public messageInput = '';
 
   @Input()
-  public messageList: MessageListDto;
+  public messageList: MessageListModel;
   @Output()
   public messageInputEmit: EventEmitter<string> = new EventEmitter();
 

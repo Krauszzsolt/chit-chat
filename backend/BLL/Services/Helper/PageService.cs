@@ -20,8 +20,8 @@ namespace BLL.Services.Helper
             }
 
             var count = await list.CountAsync();
-            var maxPageSize = (int)Math.Ceiling(count / (double)pageSize);
-            var normPageNumber = pageNumber.HasValue && maxPageSize > pageNumber ? pageNumber.Value : maxPageSize ;
+            var maxPage = (int)Math.Ceiling(count / (double)pageSize);
+            var normPageNumber = pageNumber.HasValue && maxPage > pageNumber ? pageNumber.Value : maxPage ;
             var normPageSize = count > pageSize * normPageNumber ? pageSize : count - pageSize * (normPageNumber - 1);
 
             var result = await list.Skip((normPageNumber - 1) * normPageSize).Take(normPageSize).ToListAsync();
