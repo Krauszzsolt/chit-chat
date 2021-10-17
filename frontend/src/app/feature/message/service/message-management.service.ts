@@ -15,7 +15,7 @@ export class MessageManagementService {
 
   constructor(private chatroomManagementService: ChatroomManagementService, private messageService: MessageService) {}
 
-  public getMessage(chatroomId, pageNumber): Observable<MessageListDto> {
+  public getMessage(chatroomId: string, pageNumber?: number): Observable<MessageListDto> {
     return this.messageService.apiMessageChatroomIdGet(chatroomId, pageNumber, 10).pipe(
       catchError((error) => {
         return of({});

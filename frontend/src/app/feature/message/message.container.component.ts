@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { ChatroomDto, MessageES, MessageListDto } from 'src/app/shared/client';
 import { ChatroomManagementService } from './service/chatroom-management.service';
 import { MessageManagementService } from './service/message-management.service';
+import { MessagePagingService } from './service/message-paging.service';
 import { SearchService } from './service/search.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
+    private messagePagingService: MessagePagingService,
     private messageManagementService: MessageManagementService,
     private chatroomManagementService: ChatroomManagementService,
     private searchService: SearchService
@@ -25,7 +27,7 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.$chatrooms = this.chatroomManagementService.getChatRooms();
-    this.$messages = this.messageManagementService.getMessage();
+    // this.$messages = this.messagePagingService.getMessage();
     this.$searchResult = this.searchService.search('');
   }
   ngAfterViewInit() {
