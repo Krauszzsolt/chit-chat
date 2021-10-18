@@ -36,7 +36,7 @@ namespace API.Controllers
 
         // GET: api/<MessageController>
         [HttpGet("{chatroomId}")]
-        public async Task<MessageListDto> Get(Guid chatroomId, int? PageNumber, int PageSize)
+        public async Task<MessageListDto> Get([FromQuery] Guid chatroomId, [FromQuery] int? PageNumber, [FromQuery] int PageSize)
         {
             return await _messageService.GetMessages(chatroomId, PageNumber, PageSize);
         }
@@ -52,7 +52,7 @@ namespace API.Controllers
 
         // PUT api/<MessageController>/5
         [HttpPut("{id}")]
-        public async Task Put(Guid id, [FromBody] MessageDto messageDto)
+        public async Task Put([FromRoute] Guid id, [FromBody] MessageDto messageDto)
         {
             messageDto.User.UserId = GetCurrentUser().Id;
             await _messageService.PutMessage(messageDto);
@@ -60,16 +60,23 @@ namespace API.Controllers
 
         // DELETE api/<MessageController>/5
         [HttpDelete("{id}")]
-        public async Task Delete(Guid messageId)
+        public async Task Delete([FromRoute] Guid messageId)
         {
             var userid = GetCurrentUser().Id;
             await _messageService.DeleteMessage(messageId, userid);
         }
 
         [HttpGet("Search")]
-        public async Task<IReadOnlyCollection<MessageES>> GetMessages([FromQuery] string searchTerm, [FromQuery] int? size)
+        public async Task<IReadOnlyCollection<MessageES>> SearchMessages([FromQuery] string searchTerm, [FromQuery] int? size)
         {
             var response = await _elasticsearchService.GetMessages(searchTerm, size ?? 100);
+            return response;
+        }
+
+        [HttpGet("SearchResult")]
+        public async Task<MessageListDto> GetMessage([FromQuery] Guid messageId, [FromQuery] Guid? chatroomId, [FromQuery] int PageSize)
+        {
+            var response = await _messageService.GetSearchResultMessages(messageId, chatroomId, PageSize);
             return response;
         }
 

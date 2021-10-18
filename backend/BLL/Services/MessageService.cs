@@ -61,49 +61,48 @@ namespace BLL.Services
                 throw new ArgumentException($"Chatroom not found");
             }
 
-            var messages = await _context.Messages.Include(x => x.User).Where(x => x.ChatRoomId == chatroomId).ToListAsync();
+            var messagesCount = await _context.Messages.Include(x => x.User).Where(x => x.ChatRoomId == chatroomId).CountAsync();
 
-            if (!messages.Any())
+            if (messagesCount == 0)
             {
                 throw new ArgumentException($"There is no message yet.");
             }
 
             var pageMessagesEntity = await _pageService.PagingList(_context.Messages.Where(x => x.ChatRoomId == chatroomId), pageNumber, pageSize);
 
-
-            var results = new List<MessageDto>(pageMessagesEntity.Results.Select(message => new MessageDto()
-            {
-                Id = message.Id,
-                Content = message.Content,
-                Date = message.Date,
-                User = new PublicUserDto()
-                {
-                    UserId = message.User.Id,
-                    Username = message.User.UserName
-                }
-            }).ToList());
-
-            var pageMessagesDto = new PagedResult<MessageDto>(results, pageMessagesEntity.PagingInfo.PageNumber, pageMessagesEntity.PagingInfo.PageSize,
-               pageMessagesEntity.PagingInfo.TotalRecords, pageMessagesEntity.PagingInfo.TotalPages);
-
-            return new MessageListDto()
-            {
-                ChatRoom = new ChatroomDto()
-                {
-                    Id = chatroom.Id,
-                    Name = chatroom.Name,
-                    Date = chatroom.Date,
-                    Details = chatroom.Details,
-                    OwnerUser = new PublicUserDto()
-                    {
-                        UserId = chatroom.OwnerUser.Id,
-                        Username = chatroom.OwnerUser.UserName
-                    }
-                },
-                Messages = pageMessagesDto
-            };
-
+            return mapMessageEntityToDto(chatroom, pageMessagesEntity);
         }
+
+        public async Task<MessageListDto> GetSearchResultMessages(Guid messageId, Guid? chatroomId, int pageSize)
+        {
+
+
+            var chatroom = await _context.Chatrooms.Include(x => x.OwnerUser).FirstOrDefaultAsync(x => x.Id == chatroomId);
+
+            if (chatroom == null)
+            {
+                throw new ArgumentException($"Chatroom not found");
+            }
+
+            var messagesCount = await _context.Messages.Where(x => x.ChatRoomId == chatroomId).CountAsync();
+
+            if (messagesCount == 0)
+            {
+                throw new ArgumentException($"There is no message yet.");
+            }
+
+            var messageEntity = await _context.Messages.Where(x => x.Id == messageId).FirstAsync();
+
+            var place = await _context.Messages.Where(x => x.ChatRoomId == chatroomId && x.Date <= messageEntity.Date).CountAsync();
+
+            var pageNumber = (int)Math.Ceiling(place / (double)pageSize);
+
+            var pageMessagesEntity = await _pageService.PagingList(_context.Messages.Where(x => x.ChatRoomId == chatroomId), pageNumber, pageSize);
+
+            return mapMessageEntityToDto(chatroom, pageMessagesEntity);
+        }
+
+
 
         public async Task PostMessage(MessageDto messageDto)
         {
@@ -217,7 +216,42 @@ namespace BLL.Services
 
             _context.Messages.Remove(message);
             await _context.SaveChangesAsync();
+        }
+        private MessageListDto mapMessageEntityToDto(Chatroom chatroom, PagedResult<Message> pageMessagesEntity)
+        {
+            var results = new List<MessageDto>(pageMessagesEntity.Results.Select(message => new MessageDto()
+            {
+                Id = message.Id,
+                Content = message.Content,
+                Date = message.Date,
+                User = new PublicUserDto()
+                {
+                    UserId = message.User.Id,
+                    Username = message.User.UserName
+                }
+            }).ToList());
+
+            var pageMessagesDto = new PagedResult<MessageDto>(results, pageMessagesEntity.PagingInfo.PageNumber, pageMessagesEntity.PagingInfo.PageSize,
+               pageMessagesEntity.PagingInfo.TotalRecords, pageMessagesEntity.PagingInfo.TotalPages);
+
+            return new MessageListDto()
+            {
+                ChatRoom = new ChatroomDto()
+                {
+                    Id = chatroom.Id,
+                    Name = chatroom.Name,
+                    Date = chatroom.Date,
+                    Details = chatroom.Details,
+                    OwnerUser = new PublicUserDto()
+                    {
+                        UserId = chatroom.OwnerUser.Id,
+                        Username = chatroom.OwnerUser.UserName
+                    }
+                },
+                Messages = pageMessagesDto
+            };
 
         }
+
     }
 }

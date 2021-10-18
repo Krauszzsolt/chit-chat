@@ -11,6 +11,7 @@ namespace BLL.Services.Interfaces
         public Task<MessageDto> GetMessage(Guid id);
 
         public Task<MessageListDto> GetMessages(Guid chatroomId, int? pageNumber, int pageSize);
+        public Task<MessageListDto> GetSearchResultMessages(Guid messageId, Guid? chatroomId, int pageSize);
 
         public Task PostMessage(MessageDto messageDto);
 
