@@ -16,15 +16,13 @@ export class MessagePagingService {
   private messagesListModelSubject: BehaviorSubject<MessageListModel> = new BehaviorSubject(new MessageListModel());
   private scrollStateSubject: BehaviorSubject<ScrollState> = new BehaviorSubject(ScrollState.init);
   private currenRoomId = '';
-  private maxPage;
-  private newMessage = new BehaviorSubject<string>('');
+  private maxPage: number;
 
   constructor(private signalRService: SignalRService, private messageManagementService: MessageManagementService, private chatroomManagementService: ChatroomManagementService) {
     this.signalRService.startConnection();
     this.signalRService.hubConnection.on('SendMessage', (chatroomId) => {
       if (chatroomId == this.currenRoomId && this.currentPages.includes(this.maxPage)) {
         this.scrollStateSubject.next(ScrollState.down);
-        this.newMessage.next('');
       }
     });
 
@@ -37,8 +35,8 @@ export class MessagePagingService {
   }
 
   private getMessagesInit() {
-    return combineLatest(this.newMessage, this.chatroomManagementService.getSelectedChatRooms(), this.scrollStateSubject).pipe(
-      switchMap(([message, roomid, scrollState]): Observable<unknown> => {
+    return combineLatest(this.chatroomManagementService.getSelectedChatRooms(), this.scrollStateSubject).pipe(
+      switchMap(([roomid, scrollState]): Observable<unknown> => {
         switch (scrollState) {
           case ScrollState.init: {
             return this.messageManagementService.getMessage(roomid).pipe(
@@ -79,19 +77,19 @@ export class MessagePagingService {
           this.currentPages = [newMessages.messages.pagingInfo.pageNumber];
           this.messagesListModelSubject.next({ chatRoom: newMessages.chatRoom, messages: newMessages.messages.results });
           this.scrollStateSubject.next(ScrollState.up);
-          console.log('init');
           break;
         }
         case ScrollState.down: {
           this.currentPages.push(newMessages.messages.pagingInfo.pageNumber);
-          this.messagesListModelSubject.next({ chatRoom: newMessages.chatRoom, messages: oldMessageList.messages.concat(newMessages.messages.results) });
-          console.log('down');
+          this.messagesListModelSubject.next({
+            chatRoom: newMessages.chatRoom,
+            messages: oldMessageList.messages.concat(newMessages.messages.results).filter((message, index, self) => index === self.findIndex((m) => m.id === message.id)),
+          });
           break;
         }
         case ScrollState.up: {
           this.currentPages.push(newMessages.messages.pagingInfo.pageNumber);
           this.messagesListModelSubject.next({ chatRoom: newMessages.chatRoom, messages: newMessages.messages.results.concat(oldMessageList.messages) });
-          console.log('up');
           break;
         }
       }

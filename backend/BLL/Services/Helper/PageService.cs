@@ -21,12 +21,12 @@ namespace BLL.Services.Helper
 
             var count = await list.CountAsync();
             var maxPage = (int)Math.Ceiling(count / (double)pageSize);
-            var normPageNumber = pageNumber.HasValue && maxPage > pageNumber ? pageNumber.Value : maxPage ;
+            var normPageNumber = pageNumber.HasValue && maxPage > pageNumber ? pageNumber.Value : maxPage;
             var normPageSize = count > pageSize * normPageNumber ? pageSize : count - pageSize * (normPageNumber - 1);
 
-            var result = await list.Skip((normPageNumber - 1) * normPageSize).Take(normPageSize).ToListAsync();
+            var result = await list.Skip((normPageNumber - 1) * pageSize).Take(normPageSize).ToListAsync();
 
-            return new PagedResult<T>(result, normPageNumber, normPageSize, count);
+            return new PagedResult<T>(result, normPageNumber, normPageSize, count, maxPage);
         }
     }
 }

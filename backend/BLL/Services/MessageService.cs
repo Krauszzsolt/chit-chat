@@ -69,7 +69,7 @@ namespace BLL.Services
             }
 
             var pageMessagesEntity = await _pageService.PagingList(_context.Messages.Where(x => x.ChatRoomId == chatroomId), pageNumber, pageSize);
-        
+
 
             var results = new List<MessageDto>(pageMessagesEntity.Results.Select(message => new MessageDto()
             {
@@ -84,7 +84,7 @@ namespace BLL.Services
             }).ToList());
 
             var pageMessagesDto = new PagedResult<MessageDto>(results, pageMessagesEntity.PagingInfo.PageNumber, pageMessagesEntity.PagingInfo.PageSize,
-               pageMessagesEntity.PagingInfo.TotalRecords);
+               pageMessagesEntity.PagingInfo.TotalRecords, pageMessagesEntity.PagingInfo.TotalPages);
 
             return new MessageListDto()
             {

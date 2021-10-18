@@ -9,13 +9,13 @@ namespace BLL.DTOs.Generics
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public int? TotalRecords { get; set; }
-        public int? TotalPages => TotalRecords.HasValue ? (int)Math.Ceiling(TotalRecords.Value / (double)PageSize) : (int?)null;
+        public int? TotalPages { get; set; }
 
     }
 
     public class PagedResult<T>
     {
-        public PagedResult(IEnumerable<T> results, int pageNumber, int pageSize, int? totalRecords)
+        public PagedResult(IEnumerable<T> results, int pageNumber, int pageSize, int? totalRecords, int? totalPages)
         {
             Results = new List<T>(results);
             PagingInfo = new PaginationViewModel
@@ -23,9 +23,10 @@ namespace BLL.DTOs.Generics
                 PageNumber = pageNumber,
                 PageSize = pageSize,
                 TotalRecords = totalRecords,
+                TotalPages = totalPages
             };
         }
-        public List<T> Results { get;  set; }
+        public List<T> Results { get; set; }
         public PaginationViewModel PagingInfo { get; set; }
     }
 }
