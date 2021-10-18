@@ -48,14 +48,14 @@ export class MessagePagingService {
             );
           }
           case ScrollState.down: {
-            return this.messageManagementService.getMessage(roomid, Math.min(...this.currentPages) + 1).pipe(
+            return this.messageManagementService.getMessage(roomid, Math.max(...this.currentPages) + 1).pipe(
               map((newMessages) => {
                 return this.mappingMessages(newMessages, scrollState);
               })
             );
           }
           case ScrollState.up: {
-            return this.messageManagementService.getMessage(roomid, Math.max(...this.currentPages) - 1).pipe(
+            return this.messageManagementService.getMessage(roomid, Math.min(...this.currentPages) - 1).pipe(
               map((newMessages) => {
                 return this.mappingMessages(newMessages, scrollState);
               })
@@ -95,11 +95,30 @@ export class MessagePagingService {
           break;
         }
       }
+    } else if (this.messagesListModelSubject.value.chatRoom && this.messagesListModelSubject.value.chatRoom.id !== this.currenRoomId) {
+      this.messagesListModelSubject.next(new MessageListModel());
     }
   }
 
   public setScrollState(scrollState: ScrollState) {
-    this.scrollStateSubject.next(scrollState);
+    switch (scrollState) {
+      case ScrollState.init: {
+        this.scrollStateSubject.next(scrollState);
+        break;
+      }
+      case ScrollState.down: {
+        if (!this.currentPages.includes(this.maxPage)) {
+          this.scrollStateSubject.next(scrollState);
+        }
+        break;
+      }
+      case ScrollState.up: {
+        if (!this.currentPages.includes(1)) {
+          this.scrollStateSubject.next(scrollState);
+        }
+        break;
+      }
+    }
   }
 
   public getMessages() {

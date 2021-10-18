@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/co
 import { Observable } from 'rxjs';
 import { ChatroomDto, MessageES, MessageListDto } from 'src/app/shared/client';
 import { MessageListModel } from './model/message-list.model';
+import { ScrollState } from './model/scroll-state.model';
 import { ChatroomManagementService } from './service/chatroom-management.service';
 import { MessageManagementService } from './service/message-management.service';
 import { MessagePagingService } from './service/message-paging.service';
@@ -47,9 +48,9 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
     this.$searchResult = this.searchService.search(searchTerm);
   }
   onScrollDown() {
-    console.log('onScrollDown');
+    this.messagePagingService.setScrollState(ScrollState.down);
   }
   onScrollUp() {
-    console.log('onScrollUp');
+    this.messagePagingService.setScrollState(ScrollState.up);
   }
 }
