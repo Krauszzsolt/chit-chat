@@ -39,14 +39,19 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
     this.chatroomManagementService.setChatRoom(id);
   }
 
-  public sendMessage(message) {
+  public sendMessage(message: string) {
     console.log(message);
     this.messageManagementService.sendMessage(message).subscribe();
   }
 
-  public search(searchTerm) {
+  public search(searchTerm: string) {
     this.$searchResult = this.searchService.search(searchTerm);
   }
+
+  public searchResult(selectedMessage: MessageES) {
+    this.messagePagingService.getSearchResult(selectedMessage);
+  }
+
   onScrollDown() {
     this.messagePagingService.setScrollState(ScrollState.down);
   }

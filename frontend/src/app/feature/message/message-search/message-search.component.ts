@@ -16,6 +16,9 @@ export class MessageSearchComponent implements OnInit {
 
   @Output()
   public searchTermEmit: EventEmitter<string> = new EventEmitter();
+  @Output()
+  public selectedMessage: EventEmitter<MessageES> = new EventEmitter();
+
   public searchTerm: '';
 
   @ViewChild(MatSelectionList)
@@ -27,5 +30,9 @@ export class MessageSearchComponent implements OnInit {
 
   public search() {
     this.searchTermEmit.emit(this.searchTerm);
+  }
+
+  public selectMessage(selectedMessage: MessageES) {
+    this.selectedMessage.emit(selectedMessage);
   }
 }

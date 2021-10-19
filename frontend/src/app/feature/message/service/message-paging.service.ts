@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { MessageListDto } from 'src/app/shared/client';
+import { MessageES, MessageListDto } from 'src/app/shared/client';
 import { MessageListModel } from '../model/message-list.model';
 import { ScrollState } from '../model/scroll-state.model';
 import { ChatroomManagementService } from './chatroom-management.service';
 import { MessageManagementService } from './message-management.service';
+import { SearchService } from './search.service';
 import { SignalRService } from './signal-r.service';
 
 @Injectable({
@@ -18,7 +19,12 @@ export class MessagePagingService {
   private currenRoomId = '';
   private maxPage: number;
 
-  constructor(private signalRService: SignalRService, private messageManagementService: MessageManagementService, private chatroomManagementService: ChatroomManagementService) {
+  constructor(
+    private signalRService: SignalRService,
+    private messageManagementService: MessageManagementService,
+    private chatroomManagementService: ChatroomManagementService,
+    private searchService: SearchService
+  ) {
     this.signalRService.startConnection();
     this.signalRService.hubConnection.on('SendMessage', (chatroomId) => {
       if (chatroomId == this.currenRoomId && this.currentPages.includes(this.maxPage)) {
@@ -117,6 +123,17 @@ export class MessagePagingService {
         break;
       }
     }
+  }
+
+  public getSearchResult(selectedMessage: MessageES) {
+    // this.chatroomManagementService.setChatRoom(selectedMessage.chatRoomId);
+    this.searchService.getSearchResult(selectedMessage.id, selectedMessage.chatRoomId, 10).subscribe((newMessages) => {
+      this.maxPage = newMessages.messages.pagingInfo.totalPages;
+      this.currentPages = [newMessages.messages.pagingInfo.pageNumber];
+      this.messagesListModelSubject.next({ chatRoom: newMessages.chatRoom, messages: newMessages.messages.results });
+      // this.scrollStateSubject.next(ScrollState.down);
+      // this.scrollStateSubject.next(ScrollState.up);
+    });
   }
 
   public getMessages() {
