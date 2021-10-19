@@ -15,6 +15,7 @@ import { SearchService } from './service/search.service';
 })
 export class MessageContainerComponent implements OnInit, AfterViewInit {
   public $chatrooms: Observable<ChatroomDto[]>;
+  public $selectedChatroom: Observable<string>;
   public $messages: Observable<MessageListModel>;
   public $searchResult: Observable<MessageES[]>;
   public messageInput = '';
@@ -31,6 +32,7 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
     this.$chatrooms = this.chatroomManagementService.getChatRooms();
     this.$messages = this.messagePagingService.getMessages();
     this.$searchResult = this.searchService.search('');
+    this.$selectedChatroom = this.chatroomManagementService.getSelectedChatRooms();
   }
   ngAfterViewInit() {
     this.changeDetectorRef.detectChanges();

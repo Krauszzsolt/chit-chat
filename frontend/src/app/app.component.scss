@@ -5,6 +5,8 @@ $background-color: #fff;
 $orange: #ff6600;
 $primary-backgorund: #5f260080;
 $primary: #ffffffe7;
+$secondary-backgorund: #3a170080;
+$secondary: #ffffffe7;
 $dark-grey: #212121;
 $dark-grey-1: #424242;
 $dark-grey-2: #656565;
@@ -34,6 +36,11 @@ $dark-color-1: black;
 .color-primary {
   background-color: $primary-backgorund;
   color: $primary;
+}
+
+.color-secondary {
+  background-color: $secondary-backgorund;
+  color: $secondary;
 }
 
 .width-90 {

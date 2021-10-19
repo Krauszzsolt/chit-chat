@@ -21,12 +21,7 @@ export class MessageSearchComponent implements OnInit {
 
   public searchTerm: '';
 
-  @ViewChild(MatSelectionList)
-  private selectionList: MatSelectionList;
-
-  ngOnInit() {
-    this.selectionList.selectedOptions = new SelectionModel<MatListOption>(false);
-  }
+  ngOnInit() {}
 
   public search() {
     this.searchTermEmit.emit(this.searchTerm);

@@ -12,6 +12,9 @@ export class ChatroomListComponent implements OnInit {
   @Input()
   public chatrooms: ChatroomDto[];
 
+  @Input()
+  public SelectedChatroomId: string = '';
+
   @Output()
   public selectedChatroomEmit: EventEmitter<string> = new EventEmitter();
 
