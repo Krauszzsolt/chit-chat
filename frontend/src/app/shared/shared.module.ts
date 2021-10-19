@@ -6,7 +6,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule, MatDialogModule, MatProgressSpinnerModule, MatSelectModule, MatToolbarModule } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
-import { NgMatSearchBarModule } from 'ng-mat-search-bar';
 import { MatDialogWrapperComponent } from './dialog/mat-dialog-wrapper.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -25,7 +24,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     MatFormFieldModule,
     MatButtonModule,
     MatToolbarModule,
-    NgMatSearchBarModule,
     MatCardModule,
     LayoutModule,
     MatDialogModule,
@@ -44,7 +42,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     MatFormFieldModule,
     MatButtonModule,
     MatToolbarModule,
-    NgMatSearchBarModule,
     MatCardModule,
     LayoutModule,
     MatDialogModule,

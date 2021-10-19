@@ -1,7 +1,6 @@
 import { HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { tokenNotExpired } from 'angular2-jwt';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ApplicationUserDto, LoginDto, RegisterDto, UsersService } from 'src/app/shared/client';
