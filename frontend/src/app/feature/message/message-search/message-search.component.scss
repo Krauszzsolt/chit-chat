@@ -21,3 +21,13 @@
 ::ng-deep .mat-form-field-wrapper {
   margin-bottom: -1.25em;
 }
+
+.mat-button-toggle {
+  background-color: $primary-backgorund;
+  color: $primary;
+}
+
+.mat-button-toggle-checked {
+  background-color: $secondary-backgorund;
+  color: $secondary;
+}

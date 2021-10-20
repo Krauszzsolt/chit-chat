@@ -15,6 +15,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 @NgModule({
   declarations: [MatDialogWrapperComponent, SpinnerComponent, SearchComponent],
   imports: [
@@ -36,6 +37,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     MatListModule,
     InfiniteScrollModule,
     MatIconModule,
+    MatButtonToggleModule,
   ],
   exports: [
     MatSidenavModule,
@@ -57,6 +59,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     MatListModule,
     InfiniteScrollModule,
     MatIconModule,
+    MatButtonToggleModule,
   ],
   entryComponents: [MatDialogWrapperComponent],
 })

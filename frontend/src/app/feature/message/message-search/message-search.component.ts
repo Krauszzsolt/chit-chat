@@ -21,7 +21,7 @@ export class MessageSearchComponent implements OnInit {
 
   public searchTerm = '';
   public selectedMessageId = '';
-
+  public isGlobal: boolean = true;
   ngOnInit() {}
 
   public search() {
@@ -30,6 +30,7 @@ export class MessageSearchComponent implements OnInit {
 
   public selectMessage(selectedMessage: MessageES) {
     this.selectedMessageId = selectedMessage.id;
+    if (!this.isGlobal) selectedMessage.chatRoomId = null;
     this.selectedMessageEmit.emit(selectedMessage);
   }
 }

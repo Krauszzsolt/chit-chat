@@ -1,4 +1,8 @@
 <div>
+  <mat-button-toggle-group class="w-100 m-1" [(ngModel)]="isGlobal">
+    <mat-button-toggle class="w-100 m-1" [value]="false">Search this chatroom</mat-button-toggle>
+    <mat-button-toggle class="w-100 m-1" [value]="true">Search globally</mat-button-toggle>
+  </mat-button-toggle-group>
   <mat-card class="m-2 color-primary">
     <mat-form-field class="search-bar" appearance="fill">
       <mat-label>Search</mat-label>
