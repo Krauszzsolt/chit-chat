@@ -6,14 +6,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule, MatDialogModule, MatProgressSpinnerModule, MatSelectModule, MatToolbarModule } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
-import { NgMatSearchBarModule } from 'ng-mat-search-bar';
 import { MatDialogWrapperComponent } from './dialog/mat-dialog-wrapper.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SpinnerComponent } from './component/spinner/spinner.component';
 import { SearchComponent } from './component/search/search.component';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatListModule} from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 @NgModule({
   declarations: [MatDialogWrapperComponent, SpinnerComponent, SearchComponent],
   imports: [
@@ -23,7 +25,6 @@ import {MatListModule} from '@angular/material/list';
     MatFormFieldModule,
     MatButtonModule,
     MatToolbarModule,
-    NgMatSearchBarModule,
     MatCardModule,
     LayoutModule,
     MatDialogModule,
@@ -33,7 +34,10 @@ import {MatListModule} from '@angular/material/list';
     FlexLayoutModule,
     MatProgressSpinnerModule,
     MatGridListModule,
-    MatListModule
+    MatListModule,
+    InfiniteScrollModule,
+    MatIconModule,
+    MatButtonToggleModule,
   ],
   exports: [
     MatSidenavModule,
@@ -41,7 +45,6 @@ import {MatListModule} from '@angular/material/list';
     MatFormFieldModule,
     MatButtonModule,
     MatToolbarModule,
-    NgMatSearchBarModule,
     MatCardModule,
     LayoutModule,
     MatDialogModule,
@@ -53,7 +56,10 @@ import {MatListModule} from '@angular/material/list';
     MatProgressSpinnerModule,
     SpinnerComponent,
     MatGridListModule,
-    MatListModule
+    MatListModule,
+    InfiniteScrollModule,
+    MatIconModule,
+    MatButtonToggleModule,
   ],
   entryComponents: [MatDialogWrapperComponent],
 })

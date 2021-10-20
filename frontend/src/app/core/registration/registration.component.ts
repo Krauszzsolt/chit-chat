@@ -12,7 +12,7 @@ export class RegistrationComponent implements OnInit {
   registerDto: RegisterDto = {
     username: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
   };
 
   errorMessage: string = undefined;
@@ -24,7 +24,7 @@ export class RegistrationComponent implements OnInit {
   registration() {
     this.authService.register(this.registerDto).subscribe(
       (resp) => {
-        this.router.navigateByUrl('/')
+        this.router.navigateByUrl('/');
       },
       (error) => {
         console.log(error);

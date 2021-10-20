@@ -1,60 +1,48 @@
-@import '../../../app.component.scss';
+@import 'src/app/app.component.scss';
 
-.contanier {
-  padding: 0 15px;
+.incoming-message-container {
+  border-radius: 15px;
+  padding: 15px;
+  margin: 15px;
+}
 
-  .mat-card {
-    background-color: #f5e1fd;
-    text-align: center;
-    margin: 1rem 0;
-    cursor: pointer;
+.incoming-message-field {
+  word-break: break-all;
+}
+
+.message-input-box-contanier {
+  position: fixed;
+  bottom: 0;
+  width: 56%;
+  height: 5rem;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  .text-area {
+    max-height: 45px;
   }
-
-  .incoming-message-container {
-    border-radius: 15px;
-    background-color: $light-grey;
-    padding: 15px;
-    margin: 15px;
+  textarea::-webkit-input-placeholder {
+    color: grey;
   }
+}
 
-  .incoming-message-field {
-    word-break: break-all;
-  }
+input.mat-input-element {
+  color: white;
+}
+.right-side {
+  text-align: end;
+}
 
-  .right-side {
-    text-align: end;
-  }
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: white !important;
+}
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: white !important;
+}
 
-  .message-input-box-contanier {
-    position: fixed;
-    bottom: 0;
-    background-color: #f5e1fd;
-    width: 56%;
-    height: 5rem;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    .text-area {
-      max-height: 45px;
-    }
-    textarea::-webkit-input-placeholder {
-      color: purple;
-    }
-  }
-
-  .height-full {
-    height: calc(100vh - 64px);
-    overflow: auto;
-  }
-
-  .height-middle {
-    height: calc(100vh - 164px);
-    overflow: auto;
-  }
-
-  .search-bar{
-    padding-right: 30px;
-    width: 100%;
-    margin: 10px;
-  }
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: white !important;
 }

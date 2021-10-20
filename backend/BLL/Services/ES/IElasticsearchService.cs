@@ -8,7 +8,7 @@ namespace BLL.Services.ES
 {
     public interface IElasticsearchService
     {
-        public Task<IReadOnlyCollection<MessageES>> GetMessages(string searchTerm, int size);
+        public Task<IReadOnlyCollection<MessageES>> GetMessages(string searchTerm, string? chatroomId, int size);
         public Task SaveManyAsync(MessageES[] products);
         public Task DeleteAsync(MessageES message);
         public Task SaveSingleAsync(MessageES message);

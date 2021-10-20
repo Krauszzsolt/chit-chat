@@ -1,51 +1,23 @@
-<div class="contanier">
-  <div class="row">
-    <div class="col height-full">
-      <mat-card *ngFor="let chatroom of $chatrooms | async" (click)="selectChatroom(chatroom.id)">
-        <mat-card-title class="dark-color"> {{ chatroom.name }} </mat-card-title>
-      </mat-card>
-    </div>
-
-    <div class="col-7">
-      <div *ngIf="$messages | async as messageList" #scrollMe [scrollTop]="scrollMe.scrollHeight" class="row height-middle">
-        <div class="width-90">
-          <div class="incoming-message-container" *ngFor="let message of messageList.messages">
-            <div class="dark-color incoming-message-field">{{ message.content }}</div>
-            <div class="dark-color right-side">
-              /<b>{{ message.user.username }}</b
-              >/
-            </div>
-          </div>
-        </div>
-        <div class="message-input-box-contanier">
-          <div class="w-100">
-            <mat-form-field class="w-100">
-              <mat-label class="dark-color">Send message!</mat-label>
-              <textarea
-                (keyup.enter)="sendMessage($event)"
-                class="dark-color text-area"
-                matInput
-                placeholder="Chao. Wie geht es Ihnen?"
-                [(ngModel)]="messageInput"
-                name="messageInput"
-              ></textarea>
-            </mat-form-field>
-          </div>
-        </div>
+<div #scrollMe [scrollTop]="scrollMe.scrollHeight" class="row height-middle">
+  <div *ngIf="messageList.messages; else noMessage" class="width-90">
+    <div class="incoming-message-container color-primary" *ngFor="let message of messageList.messages">
+      <div class="incoming-message-field">{{ message.content }}</div>
+      <div class="right-side">
+        /<b>{{ message.user.username }}</b
+        >/
       </div>
     </div>
-    <div class="col height-full">      
-      <mat-search-bar class="search-bar" [(ngModel)]="searchTerm"  (keyup.enter)="search()" ></mat-search-bar>
+  </div>
 
-      <mat-selection-list  #result >
-        <mat-list-option class="dark-color" *ngFor="let searchResult of $searchResult | async" [value]="searchResult.content">
-          {{searchResult.content}} - FROM: {{searchResult.userName}}
-        </mat-list-option>
-      </mat-selection-list>
-      
-      <p>
-        Option selected: {{result.selectedOptions.selected[0]?.value}}
-      </p>
+  <div class="message-input-box-contanier color-primary">
+    <div class="w-100">
+      <mat-form-field class="w-100">
+        <mat-label>Send message!</mat-label>
+        <textarea (keyup.enter)="sendMessage()" class="text-area" matInput placeholder="Say something!" [(ngModel)]="messageInput" name="messageInput"></textarea>
+      </mat-form-field>
     </div>
   </div>
 </div>
+<ng-template #noMessage>
+  <div class="d-flex justify-content-center w-100 m-5"><div class="h3">There is no message yet.</div></div>
+</ng-template>

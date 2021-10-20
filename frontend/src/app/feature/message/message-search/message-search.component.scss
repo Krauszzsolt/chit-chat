@@ -1,0 +1,33 @@
+@import 'src/app/app.component.scss';
+
+.search-bar-container {
+  display: flex;
+  padding: 15px 30px;
+  width: 80%;
+  margin: 30px;
+  border-radius: 15px;
+  justify-content: end;
+}
+
+.search-bar {
+  width: 100%;
+}
+
+.mat-card {
+  text-align: center;
+  cursor: pointer;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  margin-bottom: -1.25em;
+}
+
+.mat-button-toggle {
+  background-color: $primary-backgorund;
+  color: $primary;
+}
+
+.mat-button-toggle-checked {
+  background-color: $secondary-backgorund;
+  color: $secondary;
+}

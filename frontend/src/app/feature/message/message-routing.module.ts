@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MessageListComponent } from './message-list/message-list.component';
+import { MessageContainerComponent } from './message.container.component';
 
 const routes: Routes = [
   {
-    path: "",
-    component: MessageListComponent,
+    path: '',
+    component: MessageContainerComponent,
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class MessageRoutingModule { }
+export class MessageRoutingModule {}

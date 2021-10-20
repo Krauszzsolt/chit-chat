@@ -1,0 +1,24 @@
+@import 'src/app/app.component.scss';
+
+.contanier {
+  padding: 0 15px;
+  background-color: $background-color;
+  margin-top: -25px;
+
+  .mat-card {
+    background-color: #f5e1fd;
+    text-align: center;
+    margin: 1rem 0;
+    cursor: pointer;
+  }
+
+  .height-full {
+    height: calc(100vh - 64px);
+    overflow: auto;
+  }
+
+  .height-middle {
+    height: calc(100vh - 164px);
+    overflow: auto;
+  }
+}

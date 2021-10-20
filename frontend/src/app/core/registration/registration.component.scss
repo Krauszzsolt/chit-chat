@@ -1,4 +1,4 @@
-@import "../../app.component.scss";
+@import '../../app.component.scss';
 
 .container {
   display: flex;
@@ -16,13 +16,12 @@
     border-radius: 20px;
     .title {
       display: flex;
-      justify-content: center;    
-        img{
-          width: 6rem;
-          margin-top: 3rem;
-        }  
+      justify-content: center;
+      img {
+        width: 6rem;
+        margin-top: 3rem;
+      }
     }
-    
   }
   .form {
     display: flex;
@@ -37,5 +36,3 @@
     }
   }
 }
-
-

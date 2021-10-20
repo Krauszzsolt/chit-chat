@@ -1,0 +1,23 @@
+<div class="contanier">
+  <div class="row">
+    <div class="col height-full">
+      <app-chatroom-list [chatrooms]="$chatrooms | async" [SelectedChatroomId]="$selectedChatroom | async" (selectedChatroomEmit)="selectChatroom($event)"></app-chatroom-list>
+    </div>
+
+    <div
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollUpDistance]="1.5"
+      [infiniteScrollThrottle]="10"
+      [scrollWindow]="false"
+      (scrolled)="onScrollDown()"
+      (scrolledUp)="onScrollUp()"
+      class="col-7 height-middle search-results"
+    >
+      <app-message-list (messageInputEmit)="sendMessage($event)" [messageList]="$messages | async"></app-message-list>
+    </div>
+    <div class="col height-full">
+      <app-message-search [searchResults]="$searchResult | async" (searchTermEmit)="search($event)" (selectedMessageEmit)="searchResult($event)"></app-message-search>
+    </div>
+  </div>
+</div>

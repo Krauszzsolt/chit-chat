@@ -1,0 +1,21 @@
+<div>
+  <mat-button-toggle-group class="w-100 m-1" [(ngModel)]="isGlobal">
+    <mat-button-toggle class="w-100 m-1" [value]="false">Search this chatroom</mat-button-toggle>
+    <mat-button-toggle class="w-100 m-1" [value]="true">Search globally</mat-button-toggle>
+  </mat-button-toggle-group>
+  <mat-card class="m-2 color-primary">
+    <mat-form-field class="search-bar" appearance="fill">
+      <mat-label>Search</mat-label>
+      <mat-icon matSuffix>search</mat-icon>
+      <input matInput [(ngModel)]="searchTerm" (keyup.enter)="search()" />
+    </mat-form-field>
+  </mat-card>
+  <mat-card
+    class="m-2 color-primary"
+    [ngClass]="{ 'color-secondary': selectedMessageId === searchResult.id }"
+    *ngFor="let searchResult of searchResults"
+    (click)="selectMessage(searchResult)"
+  >
+    <mat-card-title> {{ searchResult.content }} - FROM: {{ searchResult.userName }} </mat-card-title>
+  </mat-card>
+</div>

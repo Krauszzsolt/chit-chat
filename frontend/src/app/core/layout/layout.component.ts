@@ -17,9 +17,7 @@ export class LayoutComponent implements OnInit {
     this.user = this.authService.getUser();
   }
 
-  public searchEvetn() {
-    
-  }
+  public searchEvetn() {}
 
   public logout() {
     this.authService.logout();

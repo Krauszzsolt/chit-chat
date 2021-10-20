@@ -1,18 +1,18 @@
-body {
-  background: #f1f1f1;
-}
 //variables
 $white: #fff;
 $light-grey: #f1f1f1;
+$background-color: #fff;
 $orange: #ff6600;
-$orange-2: #ff66005e;
+$primary-backgorund: #5f260080;
+$primary: #ffffffe7;
+$secondary-backgorund: #3a020280;
+$secondary: #ffffffe7;
 $dark-grey: #212121;
 $dark-grey-1: #424242;
 $dark-grey-2: #656565;
 $dark-grey-3: #858585;
 $dark-grey-4: #515151;
 $dark-color-1: black;
-
 
 .flex-list {
   width: 100%;
@@ -29,34 +29,20 @@ $dark-color-1: black;
   flex-direction: column-reverse;
 }
 
-mat-grid-list {
-  height: calc(100vh - 64px);
-  background-color: #800080;
-  padding-bottom: 0 !important;
-}
-
-mat-grid-tile {
-  height: calc(100vh - 64px);
-  overflow-y: scroll;
-  overflow-x: hidden;
-  scroll-margin-bottom: 20px;
-  border-radius: 2px;
-  &::-webkit-scrollbar {
-    width: 0.625rem;
-    background: rgba(196, 196, 196, 0.5);
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #c4c4c4;
-  }
-  &::-webkit-scrollbar-button {
-    background: rgba(0, 0, 0, 0);
-  }
-}
-
 .dark-color {
   color: $dark-color-1;
 }
 
+.color-primary {
+  background-color: $primary-backgorund;
+  color: $primary;
+}
+
+.color-secondary {
+  background-color: $secondary-backgorund;
+  color: $secondary;
+}
+
 .width-90 {
-  width:90%;
+  width: 90%;
 }
