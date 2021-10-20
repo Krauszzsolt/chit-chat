@@ -67,14 +67,14 @@ namespace API.Controllers
         }
 
         [HttpGet("Search")]
-        public async Task<IReadOnlyCollection<MessageES>> SearchMessages([FromQuery] string searchTerm, [FromQuery] int? size)
+        public async Task<IReadOnlyCollection<MessageES>> SearchMessages([FromQuery] string searchTerm, [FromQuery] int? size, [FromQuery] string? chatroomId)
         {
-            var response = await _elasticsearchService.GetMessages(searchTerm, size ?? 100);
+            var response = await _elasticsearchService.GetMessages(searchTerm, chatroomId, size ?? 100);
             return response;
         }
 
         [HttpGet("SearchResult")]
-        public async Task<MessageListDto> GetMessage([FromQuery] Guid messageId, [FromQuery] Guid? chatroomId, [FromQuery] int PageSize)
+        public async Task<MessageListDto> GetMessage([FromQuery] Guid messageId, [FromQuery] Guid chatroomId, [FromQuery] int PageSize)
         {
             var response = await _messageService.GetSearchResultMessages(messageId, chatroomId, PageSize);
             return response;

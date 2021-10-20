@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { ChatroomDto, MessageES, MessageListDto } from 'src/app/shared/client';
 import { MessageListModel } from './model/message-list.model';
 import { ScrollState } from './model/scroll-state.model';
+import { searchtermEmit } from './model/search.model';
 import { ChatroomManagementService } from './service/chatroom-management.service';
 import { MessageManagementService } from './service/message-management.service';
 import { MessagePagingService } from './service/message-paging.service';
@@ -46,8 +47,8 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
     this.messageManagementService.sendMessage(message).subscribe();
   }
 
-  public search(searchTerm: string) {
-    this.$searchResult = this.searchService.search(searchTerm);
+  public search(event: searchtermEmit) {
+    this.$searchResult = this.searchService.search(event.searchterm, event.isGlobal);
   }
 
   public searchResult(selectedMessage: MessageES) {

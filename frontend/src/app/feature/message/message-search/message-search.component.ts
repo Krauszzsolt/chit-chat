@@ -2,6 +2,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatListOption, MatSelectionList } from '@angular/material';
 import { MessageES } from 'src/app/shared/client';
+import { searchtermEmit } from '../model/search.model';
 
 @Component({
   selector: 'app-message-search',
@@ -15,7 +16,7 @@ export class MessageSearchComponent implements OnInit {
   public searchResults: MessageES[];
 
   @Output()
-  public searchTermEmit: EventEmitter<string> = new EventEmitter();
+  public searchTermEmit: EventEmitter<searchtermEmit> = new EventEmitter();
   @Output()
   public selectedMessageEmit: EventEmitter<MessageES> = new EventEmitter();
 
@@ -25,12 +26,11 @@ export class MessageSearchComponent implements OnInit {
   ngOnInit() {}
 
   public search() {
-    this.searchTermEmit.emit(this.searchTerm);
+    this.searchTermEmit.emit({ searchterm: this.searchTerm, isGlobal: this.isGlobal });
   }
 
   public selectMessage(selectedMessage: MessageES) {
     this.selectedMessageId = selectedMessage.id;
-    if (!this.isGlobal) selectedMessage.chatRoomId = null;
     this.selectedMessageEmit.emit(selectedMessage);
   }
 }

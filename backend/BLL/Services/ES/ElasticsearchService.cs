@@ -1,6 +1,7 @@
 ﻿using DAL.Entities.ES;
 using Microsoft.Extensions.Logging;
 using Nest;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,12 +18,19 @@ namespace BLL.Services.ES
             _elasticClient = elasticClient;
         }
 
-        public async Task<IReadOnlyCollection<MessageES>> GetMessages(string searchTerm, int size)
+        public async Task<IReadOnlyCollection<MessageES>> GetMessages(string searchTerm, string? chatroomId, int size)
         {
             var messages = await _elasticClient.SearchAsync<MessageES>
             (
-               s => s.Query(q => q.QueryString(d => d.Query(searchTerm)))
-                   .Size(size));
+               s => s.Query(q => q
+                    .Bool(b => b
+                        .Must(mu => mu
+                            .Match(m => m
+                                .Field(f => f.ChatRoomId)
+                                .Query(chatroomId)
+                            ),
+                            mu => mu.QueryString(d => d.Query(searchTerm))))).Size(size)
+                        );
 
             return messages.Documents;
         }

@@ -7,10 +7,15 @@ import { ChatroomManagementService } from './chatroom-management.service';
   providedIn: 'root',
 })
 export class SearchService {
-  constructor(private messageService: MessageService, private chartroomService: ChatroomManagementService) {}
+  private currenRoomId = '';
+  constructor(private messageService: MessageService, private chartroomService: ChatroomManagementService) {
+    this.chartroomService.getSelectedChatRooms().subscribe((id) => {
+      this.currenRoomId = id;
+    });
+  }
 
-  public search(searchTerm: string) {
-    if (searchTerm.length > 1) return this.messageService.apiMessageSearchGet(searchTerm).pipe(map((result) => result.slice(0, 10)));
+  public search(searchTerm: string, isGlobal?: boolean) {
+    if (searchTerm.length > 1) return this.messageService.apiMessageSearchGet(searchTerm, 100, isGlobal ? undefined : this.currenRoomId).pipe(map((result) => result.slice(0, 15)));
   }
 
   public getSearchResult(messageId: string, chatroomId: string, pageSize: number) {

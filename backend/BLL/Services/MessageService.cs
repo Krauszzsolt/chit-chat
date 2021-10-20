@@ -73,7 +73,7 @@ namespace BLL.Services
             return mapMessageEntityToDto(chatroom, pageMessagesEntity);
         }
 
-        public async Task<MessageListDto> GetSearchResultMessages(Guid messageId, Guid? chatroomId, int pageSize)
+        public async Task<MessageListDto> GetSearchResultMessages(Guid messageId, Guid chatroomId, int pageSize)
         {
 
 
