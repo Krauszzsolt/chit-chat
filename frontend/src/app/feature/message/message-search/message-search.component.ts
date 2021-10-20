@@ -17,9 +17,10 @@ export class MessageSearchComponent implements OnInit {
   @Output()
   public searchTermEmit: EventEmitter<string> = new EventEmitter();
   @Output()
-  public selectedMessage: EventEmitter<MessageES> = new EventEmitter();
+  public selectedMessageEmit: EventEmitter<MessageES> = new EventEmitter();
 
-  public searchTerm: '';
+  public searchTerm = '';
+  public selectedMessageId = '';
 
   ngOnInit() {}
 
@@ -28,6 +29,7 @@ export class MessageSearchComponent implements OnInit {
   }
 
   public selectMessage(selectedMessage: MessageES) {
-    this.selectedMessage.emit(selectedMessage);
+    this.selectedMessageId = selectedMessage.id;
+    this.selectedMessageEmit.emit(selectedMessage);
   }
 }

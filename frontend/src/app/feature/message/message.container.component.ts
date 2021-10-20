@@ -29,7 +29,7 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.$chatrooms = this.chatroomManagementService.getChatRooms();
+    this.$chatrooms = this.messagePagingService.getChatRooms();
     this.$messages = this.messagePagingService.getMessages();
     this.$searchResult = this.searchService.search('');
     this.$selectedChatroom = this.chatroomManagementService.getSelectedChatRooms();
@@ -39,10 +39,10 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
   }
   public selectChatroom(id: string) {
     this.chatroomManagementService.setChatRoom(id);
+    this.messagePagingService.setScrollState(ScrollState.init);
   }
 
   public sendMessage(message: string) {
-    console.log(message);
     this.messageManagementService.sendMessage(message).subscribe();
   }
 

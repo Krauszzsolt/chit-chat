@@ -17,3 +17,7 @@
   text-align: center;
   cursor: pointer;
 }
+
+::ng-deep .mat-form-field-wrapper {
+  margin-bottom: -1.25em;
+}

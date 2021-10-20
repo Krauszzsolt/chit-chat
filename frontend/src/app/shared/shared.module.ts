@@ -13,7 +13,7 @@ import { SpinnerComponent } from './component/spinner/spinner.component';
 import { SearchComponent } from './component/search/search.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
-
+import { MatIconModule } from '@angular/material/icon';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 @NgModule({
   declarations: [MatDialogWrapperComponent, SpinnerComponent, SearchComponent],
@@ -35,6 +35,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     MatGridListModule,
     MatListModule,
     InfiniteScrollModule,
+    MatIconModule,
   ],
   exports: [
     MatSidenavModule,
@@ -55,6 +56,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     MatGridListModule,
     MatListModule,
     InfiniteScrollModule,
+    MatIconModule,
   ],
   entryComponents: [MatDialogWrapperComponent],
 })

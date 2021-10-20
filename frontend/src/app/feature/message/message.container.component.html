@@ -17,7 +17,7 @@
       <app-message-list (messageInputEmit)="sendMessage($event)" [messageList]="$messages | async"></app-message-list>
     </div>
     <div class="col height-full">
-      <app-message-search [searchResults]="$searchResult | async" (searchTermEmit)="search($event)" (selectedMessage)="searchResult($event)"></app-message-search>
+      <app-message-search [searchResults]="$searchResult | async" (searchTermEmit)="search($event)" (selectedMessageEmit)="searchResult($event)"></app-message-search>
     </div>
   </div>
 </div>
