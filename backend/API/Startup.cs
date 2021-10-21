@@ -43,7 +43,7 @@ namespace Backend
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
-                
+
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             // ass CORS for dev
@@ -59,12 +59,13 @@ namespace Backend
             services.AddControllers();
 
             // configure DI for application services
-            services.AddScoped<IAuthenticationService, AuthenticationService>(); 
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IChatroomService, ChatroomService>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddSingleton<IElasticsearchService, ElasticsearchService>();
             services.AddSingleton<IPageService, PageService>();
-            //services.AddSingleton<IElasticClient, ElasticClient>();
+            services.AddSingleton<IEmailSenderService, EmailSenderService>();
+
             services.AddSignalR();
             // configure strongly typed settings object
             services.Configure<JWTSettings>(Configuration.GetSection("JWTSettings"));
