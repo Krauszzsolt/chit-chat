@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
+import { InviteDialogComponent } from 'src/app/feature/profile/invite-dialog/invite-dialog.component';
 import { ApplicationUserDto } from 'src/app/shared/client';
 import { AuthService } from '../service/auth.service';
-
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, public dialog: MatDialog) {}
   public user: Observable<ApplicationUserDto> = new Observable();
   public showFiller = false;
   public search = '';
@@ -17,8 +18,13 @@ export class LayoutComponent implements OnInit {
     this.user = this.authService.getUser();
   }
 
-  public searchEvetn() {}
+  public invite() {
+    const dialogRef = this.dialog.open(InviteDialogComponent);
 
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
   public logout() {
     this.authService.logout();
   }

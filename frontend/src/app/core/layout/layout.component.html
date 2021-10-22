@@ -4,7 +4,7 @@
   <span class="example-spacer"></span>
 
   <!-- Bejelentkezett felhasználó esetén -->
-  <mat-search-bar [(ngModel)]="search" (keyup)="searchEvetn()"></mat-search-bar>
+  <button *ngIf="user | async" mat-button (click)="invite()">Invite a Friend</button>
   <button *ngIf="user | async" mat-button (click)="logout()">Logout</button>
 
   <!-- Anonim felhasználó esetén -->

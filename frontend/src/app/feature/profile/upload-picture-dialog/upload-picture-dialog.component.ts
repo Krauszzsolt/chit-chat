@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./upload-picture-dialog.component.scss'],
 })
 export class UploadPictureDialogComponent implements OnInit {
-  constructor() {}
+  constructor(public dialogRef: MatDialogRef<UploadPictureDialogComponent>) {}
 
   ngOnInit(): void {}
 }
