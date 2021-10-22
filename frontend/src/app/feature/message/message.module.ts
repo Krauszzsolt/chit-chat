@@ -7,9 +7,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MessageSearchComponent } from './message-search/message-search.component';
 import { ChatroomListComponent } from './chatroom-list/chatroom-list.component';
 import { MessageContainerComponent } from './message.container.component';
+import { ProfileModule } from '../profile/profile.module';
 
 @NgModule({
   declarations: [MessageListComponent, MessageSearchComponent, ChatroomListComponent, MessageContainerComponent],
-  imports: [CommonModule, MessageRoutingModule, SharedModule],
+  imports: [CommonModule, MessageRoutingModule, SharedModule, ProfileModule],
 })
 export class MessageModule {}

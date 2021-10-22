@@ -17,13 +17,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatRippleModule } from '@angular/material/core';
 @NgModule({
   declarations: [SpinnerComponent, SearchComponent],
   imports: [
     CommonModule,
     MatDialogModule,
     MatSidenavModule,
-    MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
     LayoutModule,
@@ -37,6 +37,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatCardModule,
     MatMenuModule,
     MatToolbarModule,
+    MatRippleModule,
+    MatInputModule,
   ],
   exports: [
     MatSidenavModule,
@@ -56,6 +58,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatCardModule,
     MatMenuModule,
     MatToolbarModule,
+    MatRippleModule,
   ],
 })
 export class SharedModule {}
