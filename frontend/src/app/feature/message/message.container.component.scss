@@ -21,4 +21,10 @@
     height: calc(100vh - 164px);
     overflow: auto;
   }
+
+  .add-chatroom {
+    position: fixed;
+    left: 16.5vw;
+    bottom: 30px;
+  }
 }

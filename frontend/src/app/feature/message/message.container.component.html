@@ -2,6 +2,7 @@
   <div class="row">
     <div class="col height-full">
       <app-chatroom-list [chatrooms]="$chatrooms | async" [SelectedChatroomId]="$selectedChatroom | async" (selectedChatroomEmit)="selectChatroom($event)"></app-chatroom-list>
+      <button class="color-secondary add-chatroom" mat-fab (click)="addChatroom()"><mat-icon>add</mat-icon></button>
     </div>
 
     <div

@@ -1,6 +1,8 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { ChatroomDto, MessageES, MessageListDto } from 'src/app/shared/client';
+import { AddChatroomDialogComponent } from './add-chatroom-dialog/add-chatroom-dialog.component';
 import { MessageListModel } from './model/message-list.model';
 import { ScrollState } from './model/scroll-state.model';
 import { searchtermEmit } from './model/search.model';
@@ -26,7 +28,8 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
     private messagePagingService: MessagePagingService,
     private messageManagementService: MessageManagementService,
     private chatroomManagementService: ChatroomManagementService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -55,10 +58,19 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
     this.messagePagingService.getSearchResult(selectedMessage);
   }
 
-  onScrollDown() {
+  public onScrollDown() {
     this.messagePagingService.setScrollState(ScrollState.down);
   }
-  onScrollUp() {
+
+  public onScrollUp() {
     this.messagePagingService.setScrollState(ScrollState.up);
+  }
+
+  public addChatroom() {
+    const dialogRef = this.dialog.open(AddChatroomDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }
