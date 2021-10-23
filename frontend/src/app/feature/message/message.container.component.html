@@ -1,7 +1,7 @@
 <div class="contanier">
   <div class="row">
     <div class="col height-full">
-      <app-chatroom-list [chatrooms]="$chatrooms | async" [SelectedChatroomId]="$selectedChatroom | async" (selectedChatroomEmit)="selectChatroom($event)"></app-chatroom-list>
+      <app-chatroom-list [chatrooms]="$chatrooms | async" [SelectedChatroom]="$selectedChatroom | async" (selectedChatroomEmit)="selectChatroom($event)"></app-chatroom-list>
       <button class="color-secondary add-chatroom" mat-fab (click)="addChatroom()"><mat-icon>add</mat-icon></button>
     </div>
 
@@ -18,6 +18,10 @@
       <app-message-list (messageInputEmit)="sendMessage($event)" [messageList]="$messages | async"></app-message-list>
     </div>
     <div class="col height-full">
+      <div *ngIf="$selectedChatroom | async as chatroom" class="color-primary m-2 chatroom-desc">
+        <h1>Chatroom details</h1>
+        {{ chatroom.details }}
+      </div>
       <app-message-search [searchResults]="$searchResult | async" (searchTermEmit)="search($event)" (selectedMessageEmit)="searchResult($event)"></app-message-search>
     </div>
   </div>

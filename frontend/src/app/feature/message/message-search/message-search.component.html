@@ -6,7 +6,7 @@
   <mat-card class="m-2 color-primary">
     <mat-form-field class="search-bar" appearance="fill">
       <mat-label>Search</mat-label>
-      <mat-icon matSuffix>search</mat-icon>
+      <mat-icon matSuffix (click)="search()">search</mat-icon>
       <input matInput [(ngModel)]="searchTerm" (keyup.enter)="search()" />
     </mat-form-field>
   </mat-card>

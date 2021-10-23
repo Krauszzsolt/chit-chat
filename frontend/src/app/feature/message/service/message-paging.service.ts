@@ -32,8 +32,8 @@ export class MessagePagingService {
       }
     });
 
-    chatroomManagementService.getSelectedChatRooms().subscribe((roomId) => {
-      this.currenRoomId = roomId;
+    chatroomManagementService.getSelectedChatRooms().subscribe((chatroom) => {
+      this.currenRoomId = chatroom.id;
     });
 
     this.getMessagesInit().subscribe();
@@ -62,7 +62,7 @@ export class MessagePagingService {
 
   public getSearchResult(selectedMessage: MessageES) {
     this.searchService.getSearchResult(selectedMessage.id, selectedMessage.chatRoomId, 10).subscribe((newMessages) => {
-      this.chatroomManagementService.setChatRoom(selectedMessage.chatRoomId);
+      this.chatroomManagementService.setChatRoom(newMessages.chatRoom);
       this.maxPage = newMessages.messages.pagingInfo.totalPages;
       this.currentPages = [newMessages.messages.pagingInfo.pageNumber];
       this.messagesListModelSubject.next({ chatRoom: newMessages.chatRoom, messages: newMessages.messages.results });

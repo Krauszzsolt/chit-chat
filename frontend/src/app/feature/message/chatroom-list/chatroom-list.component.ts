@@ -13,10 +13,10 @@ export class ChatroomListComponent implements OnInit {
   public chatrooms: ChatroomDto[];
 
   @Input()
-  public SelectedChatroomId: string = '';
+  public SelectedChatroom: ChatroomDto;
 
   @Output()
-  public selectedChatroomEmit: EventEmitter<string> = new EventEmitter();
+  public selectedChatroomEmit: EventEmitter<ChatroomDto> = new EventEmitter();
 
   ngOnInit() {}
 

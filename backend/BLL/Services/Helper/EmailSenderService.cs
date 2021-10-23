@@ -15,7 +15,7 @@ namespace BLL.Services.Helper
             email.From.Add(MailboxAddress.Parse("tesztchitchat@gmail.com"));
             email.To.Add(MailboxAddress.Parse(emailAdress));
             email.Subject = "Chit-Chat invention";
-            email.Body = new TextPart(TextFormat.Html) { Text = "<p>Hey " + name + "<p> <p> <b>Seems like one of your friends wanna chat with you here</b></p> <p>Have a good day, <br> The %0D0A Chit-Chat team</p>" };
+            email.Body = new TextPart(TextFormat.Html) { Text = "<p>Hey " + name + "<p> <p> <b>Seems like one of your friends wanna chat with you here</b></p> <p>Have a good day, <br> The Chit-Chat team</p>" };
 
             // send email
             using var smtp = new SmtpClient();

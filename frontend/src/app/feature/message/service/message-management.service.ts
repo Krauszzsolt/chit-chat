@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MessageListDto, MessageService } from 'src/app/shared/client';
+import { ChatroomDto, MessageListDto, MessageService } from 'src/app/shared/client';
 import { ChatroomManagementService } from './chatroom-management.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessageManagementService {
-  private currenRoomId = '';
+  private currenRoom: ChatroomDto;
 
   constructor(private messageService: MessageService, private chatroomService: ChatroomManagementService) {
-    chatroomService.getSelectedChatRooms().subscribe((chatroomid) => {
-      this.currenRoomId = chatroomid;
+    chatroomService.getSelectedChatRooms().subscribe((chatroom) => {
+      this.currenRoom = chatroom;
     });
   }
 
@@ -26,6 +26,6 @@ export class MessageManagementService {
   }
 
   public sendMessage(messageInput: string) {
-    return this.messageService.apiMessagePost({ content: messageInput, chatroomId: this.currenRoomId });
+    return this.messageService.apiMessagePost({ content: messageInput, chatroomId: this.currenRoom.id });
   }
 }
