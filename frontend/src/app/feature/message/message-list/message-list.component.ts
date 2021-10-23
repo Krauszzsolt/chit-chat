@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
-import { MessageListModel } from '../model/message-list.model';
+import { MessageListModel } from '../../../shared/model/message-list.model';
 
 @Component({
   selector: 'app-message-list',

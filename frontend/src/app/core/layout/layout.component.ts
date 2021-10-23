@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { InviteManagementService } from '@src/app/feature/profile/service/invite-management.service';
+import { InviteDto } from '@src/app/shared/model/invite.model';
 import { Observable } from 'rxjs';
 import { InviteDialogComponent } from 'src/app/feature/profile/invite-dialog/invite-dialog.component';
 import { UploadPictureDialogComponent } from 'src/app/feature/profile/upload-picture-dialog/upload-picture-dialog.component';
@@ -11,7 +13,7 @@ import { AuthService } from '../service/auth.service';
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
-  constructor(private authService: AuthService, public dialog: MatDialog) {}
+  constructor(private authService: AuthService, public dialog: MatDialog, private inviteManagementService: InviteManagementService) {}
   public user: Observable<ApplicationUserDto> = new Observable();
   public showFiller = false;
   public search = '';
@@ -22,8 +24,9 @@ export class LayoutComponent implements OnInit {
   public invite() {
     const dialogRef = this.dialog.open(InviteDialogComponent);
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: InviteDto) => {
       console.log(`Dialog result: ${result}`);
+      this.inviteManagementService.invite(result.email, result.name).subscribe();
     });
   }
   public logout() {

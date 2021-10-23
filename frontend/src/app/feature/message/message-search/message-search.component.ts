@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MessageES } from 'src/app/shared/client';
-import { searchtermEmit } from '../model/search.model';
+import { searchtermEmit } from '../../../shared/model/search.model';
 
 @Component({
   selector: 'app-message-search',
