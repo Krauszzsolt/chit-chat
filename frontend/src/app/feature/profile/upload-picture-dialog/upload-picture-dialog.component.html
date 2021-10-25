@@ -1,1 +1,9 @@
-<p>upload-picture-dialog works!</p>
+<div class="d-flex flex-column wrapper">
+  <h2>Profilkép feltöltés</h2>
+  <form class="d-flex flex-column align-items-center" [formGroup]="picture">
+    <img class="w-100" [src]="url" />
+    <button class="w-25" mat-button (click)="fileInput.click()">Válassza ki a fájlt</button>
+    <input hidden type="file" #fileInput (change)="onFileChange($event)" />
+    <button class="w-25" *ngIf="!loading" [disabled]="loading" mat-button (click)="upload()">Feltöltés</button>
+  </form>
+</div>

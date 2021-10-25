@@ -30,4 +30,7 @@ export class ChatroomManagementService {
   public addChatroom(chatroom: ChatroomDto) {
     return this.chatroomService.apiChatroomPost(chatroom);
   }
+  public deleteChatroom(chatroomId: string) {
+    return this.chatroomService.apiChatroomIdDelete(chatroomId);
+  }
 }

@@ -18,6 +18,7 @@
       <app-message-list (messageInputEmit)="sendMessage($event)" [messageList]="$messages | async"></app-message-list>
     </div>
     <div class="col height-full">
+      <button *ngIf="$selectedChatroom | async as chatroom" mat-button class="color-secondary w-100 m-2 py-1" (click)="deleteChatroom(chatroom.id)">Delete this chatroom</button>
       <div *ngIf="$selectedChatroom | async as chatroom" class="color-primary m-2 chatroom-desc">
         <h1>Chatroom details</h1>
         {{ chatroom.details }}

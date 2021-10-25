@@ -113,6 +113,7 @@ export class MessagePagingService {
   private mappingMessages(newMessages: MessageListDto, scrollState: ScrollState) {
     if (newMessages.messages) {
       const oldMessageList = this.messagesListModelSubject.value;
+      if (!oldMessageList.messages) oldMessageList.messages = [];
       this.maxPage = newMessages.messages.pagingInfo.totalPages;
       switch (scrollState) {
         case ScrollState.init: {

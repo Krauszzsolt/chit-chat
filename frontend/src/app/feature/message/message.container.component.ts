@@ -21,7 +21,7 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
   public $selectedChatroom: Observable<ChatroomDto>;
   public $messages: Observable<MessageListModel>;
   public $searchResult: Observable<MessageES[]>;
-  public messageInput = '';
+  // public messageInput = '';
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -73,5 +73,9 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
       this.chatroomManagementService.addChatroom(chatroom).subscribe();
       console.log(`Dialog result: ${chatroom}`);
     });
+  }
+
+  public deleteChatroom(id: string) {
+    this.chatroomManagementService.deleteChatroom(id).subscribe();
   }
 }
