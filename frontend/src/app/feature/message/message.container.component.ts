@@ -69,8 +69,9 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
   public addChatroom() {
     const dialogRef = this.dialog.open(AddChatroomDialogComponent);
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+    dialogRef.afterClosed().subscribe((chatroom: ChatroomDto) => {
+      this.chatroomManagementService.addChatroom(chatroom).subscribe();
+      console.log(`Dialog result: ${chatroom}`);
     });
   }
 }

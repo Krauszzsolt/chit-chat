@@ -26,4 +26,8 @@ export class ChatroomManagementService {
   public setChatRoom(chatroom: ChatroomDto) {
     this.roomIdSubject.next(chatroom);
   }
+
+  public addChatroom(chatroom: ChatroomDto) {
+    return this.chatroomService.apiChatroomPost(chatroom);
+  }
 }

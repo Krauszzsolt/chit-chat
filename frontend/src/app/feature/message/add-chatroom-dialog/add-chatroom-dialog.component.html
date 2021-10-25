@@ -4,12 +4,14 @@
   <form class="w-100 d-flex flex-column my-3">
     <mat-form-field class="my-1 mr-5 w-100" appearance="fill">
       <mat-label>Name</mat-label>
-      <input matInput />
+      <input matInput [formControl]="nameFormControl" />
+      <mat-error *ngIf="nameFormControl.hasError('required')"> Name is <strong>required</strong> </mat-error>
     </mat-form-field>
     <mat-form-field class="my-1 mr-5 w-100" appearance="fill">
       <mat-label>Details</mat-label>
-      <textarea matInput></textarea>
+      <textarea [formControl]="detailsFormControl" matInput></textarea>
+      <mat-error *ngIf="detailsFormControl.hasError('required')"> Details is <strong>required</strong> </mat-error>
     </mat-form-field>
   </form>
-  <button mat-button class="w-50 mx-auto">Create</button>
+  <button mat-button class="w-50 mx-auto" (click)="addChatroom()">Create</button>
 </div>

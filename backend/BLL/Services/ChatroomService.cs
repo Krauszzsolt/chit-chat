@@ -69,13 +69,13 @@ namespace BLL.Services
             return chatrooms;
         }
 
-        public async Task PostChatRoom(ChatroomDto chatroomDto)
+        public async Task PostChatRoom(ChatroomDto chatroomDto, Guid UserId)
         {
             var chatroom = new Chatroom()
             {
                 Name = chatroomDto.Name,
                 Details = chatroomDto.Details,
-                OwnerUserId = chatroomDto.OwnerUser.UserId,
+                OwnerUserId = UserId.ToString(),
                 Date = new DateTime()
             };
 

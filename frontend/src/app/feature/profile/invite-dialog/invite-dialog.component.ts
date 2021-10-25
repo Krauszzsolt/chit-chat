@@ -14,13 +14,10 @@ export class InviteDialogComponent implements OnInit {
   ngOnInit(): void {}
 
   private inviteDto: InviteDto;
-
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   nameFormControl = new FormControl('', [Validators.required]);
 
   public invite() {
-    console.log(this.emailFormControl.valid);
-    console.log(this.nameFormControl.valid);
     if (this.emailFormControl.valid && this.nameFormControl.valid) {
       this.inviteDto = { email: this.emailFormControl.value, name: this.nameFormControl.value };
       this.dialogRef.close(this.inviteDto);

@@ -43,7 +43,8 @@ namespace API.Controllers
         [HttpPost]
         public async Task Post([FromBody] ChatroomDto chatroom)
         {
-            await _chatroomService.PostChatRoom(chatroom);
+            var userId = new Guid(GetCurrentUser().Id);
+            await _chatroomService.PostChatRoom(chatroom, userId);
         }
 
         // PUT api/<MessageController>/5
