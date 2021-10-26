@@ -1,12 +1,8 @@
 ﻿using API.Controllers.Base;
+using BLL.DTOs.Authentication;
 using BLL.DTOs.Generics;
-using BLL.Services.Helper;
 using BLL.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -24,13 +20,19 @@ namespace API.Controllers
             _profileService = profileService;
         }
 
-        [HttpPost("invite")]
+        [HttpGet("User")]
+        public ApplicationUserDto GetUser()
+        {
+            return GetCurrentUser();
+        }
+
+        [HttpPost("Invite")]
         public async Task Invite([FromQuery] string emailAdress, [FromQuery] string name)
         {
             await _profileService.SendInvite(emailAdress, name);
         }
 
-        [HttpPost("upload")]
+        [HttpPost("Upload")]
         public async Task Upload([FromForm] FileDTO fileDTO)
         {
             //var userId = GetCurrentUser().Id;

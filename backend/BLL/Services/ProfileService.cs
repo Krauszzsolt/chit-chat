@@ -1,8 +1,11 @@
 ﻿using BLL.Services.Helper;
 using BLL.Services.Interfaces;
+using DAL.Data;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,10 +13,12 @@ namespace BLL.Services
 {
     public class ProfileService : IProfileService
     {
+        private readonly ApplicationDbContext _context;
         private readonly IEmailSenderService _emailSenderService;
         private readonly IFileService _fileService;
-        public ProfileService(IEmailSenderService emailSenderService, IFileService fileService)
+        public ProfileService(ApplicationDbContext context, IEmailSenderService emailSenderService, IFileService fileService)
         {
+            _context = context;
             _emailSenderService = emailSenderService;
             _fileService = fileService;
         }
@@ -25,7 +30,14 @@ namespace BLL.Services
         }
         public async Task Upload(IFormFile file, string id)
         {
-            await _fileService.Upload(file, id.ToString());
+            var user = await _context.Users.FirstAsync(user => user.Id == id);
+            var fileName = await _fileService.Upload(file, id.ToString());
+            var picture = "https://localhost:44364/profilepicture" + fileName;
+            //user.PictureUrl = "dasf";
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+
+
         }
     }
 }

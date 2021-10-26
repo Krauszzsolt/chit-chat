@@ -20,12 +20,7 @@ namespace API.Controllers
             _authenticationService = authenticationService;
         }
 
-        /// <summary>
-        /// Authenticate user with username and password
-        /// </summary>
-        /// <param name="model">Username and password</param>
-        /// <returns>User DTO with JWT token</returns>
-        [HttpPost("authenticate")]
+        [HttpPost("Authenticate")]
         public async Task<ActionResult<ApplicationUserDto>> Authenticate(LoginDto model)
         {
             var response = await _authenticationService.AuthenticateAsync(model);
@@ -38,12 +33,8 @@ namespace API.Controllers
             return Ok(response);
         }
 
-        /// <summary>
-        /// Register new user
-        /// </summary>
-        /// <param name="model">New user</param>
-        /// <returns>User DTO with JWT token</returns>
-        [HttpPost("register")]
+
+        [HttpPost("Register")]
         public async Task<ActionResult<ApplicationUserDto>> Register(RegisterDto model)
         {
             try

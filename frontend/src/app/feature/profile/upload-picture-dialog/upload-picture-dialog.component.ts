@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { PictureUploadService } from '../service/picture-upload.service';
+import { ProfileManagementService } from '../service/profile-management.service';
 
 @Component({
   selector: 'app-upload-picture-dialog',
@@ -14,11 +14,11 @@ export class UploadPictureDialogComponent implements OnInit {
   public url: string | ArrayBuffer = '';
   public succes = false;
 
-  constructor(public dialogRef: MatDialogRef<UploadPictureDialogComponent>, private formBuilder: FormBuilder, private uploadService: PictureUploadService) {}
+  constructor(public dialogRef: MatDialogRef<UploadPictureDialogComponent>, private formBuilder: FormBuilder, private profileManagementService: ProfileManagementService) {}
 
   ngOnInit(): void {
     this.picture = this.formBuilder.group({
-      coverImageSource: '',
+      img: '',
     });
   }
 
@@ -36,7 +36,7 @@ export class UploadPictureDialogComponent implements OnInit {
         this.url = (event.currentTarget as any).result;
       };
       this.picture.patchValue({
-        coverImageSource: file,
+        img: file,
       });
     }
   }
@@ -47,7 +47,8 @@ export class UploadPictureDialogComponent implements OnInit {
     }
 
     this.loading = true;
-    this.uploadService.uploadPicture();
-    this.dialogRef.close();
+    this.profileManagementService.uploadPicture(this.f.img.value).subscribe(() => {
+      this.dialogRef.close();
+    });
   }
 }

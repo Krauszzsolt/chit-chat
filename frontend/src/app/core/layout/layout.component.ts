@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { InviteManagementService } from '@src/app/feature/profile/service/invite-management.service';
+import { ProfileManagementService } from '@src/app/feature/profile/service/profile-management.service';
 import { InviteDto } from '@src/app/shared/model/invite.model';
 import { Observable } from 'rxjs';
 import { InviteDialogComponent } from 'src/app/feature/profile/invite-dialog/invite-dialog.component';
@@ -13,7 +13,7 @@ import { AuthService } from '../service/auth.service';
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
-  constructor(private authService: AuthService, public dialog: MatDialog, private inviteManagementService: InviteManagementService) {}
+  constructor(private authService: AuthService, public dialog: MatDialog, private profileManagementService: ProfileManagementService) {}
   public user: Observable<ApplicationUserDto> = new Observable();
   public showFiller = false;
   public search = '';
@@ -26,7 +26,7 @@ export class LayoutComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: InviteDto) => {
       console.log(`Dialog result: ${result}`);
-      this.inviteManagementService.invite(result.email, result.name).subscribe();
+      this.profileManagementService.invite(result.email, result.name).subscribe();
     });
   }
   public logout() {

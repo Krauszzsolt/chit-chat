@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace BLL.Services.Helper
 {
@@ -24,9 +25,9 @@ namespace BLL.Services.Helper
 
             if (!Directory.Exists(uploadPath))
                 Directory.CreateDirectory(uploadPath);
-
-            var fileName = Guid.NewGuid().ToString();
-            var filePath = Path.Combine(uploadPath, fileName + ".png");
+            var fileName = filename;
+            var type = file.FileName.Split(".").Last();
+            var filePath = Path.Combine(uploadPath, fileName + "." + type);
 
             using (var strem = File.Create(filePath))
             {
