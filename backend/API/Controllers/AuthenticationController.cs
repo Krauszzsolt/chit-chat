@@ -1,4 +1,5 @@
-﻿using BLL.DTOs.Authentication;
+﻿using API.Controllers.Base;
+using BLL.DTOs.Authentication;
 using BLL.Exceptions;
 using BLL.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -9,11 +10,12 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UsersController : ControllerBase
+    public class AuthenticationController : BaseController
+
     {
         private readonly IAuthenticationService _authenticationService;
 
-        public UsersController(IAuthenticationService authenticationService)
+        public AuthenticationController(IAuthenticationService authenticationService)
         {
             _authenticationService = authenticationService;
         }
