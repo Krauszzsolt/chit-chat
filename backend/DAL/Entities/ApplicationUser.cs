@@ -5,7 +5,7 @@ namespace DAL.Entities
 {
     public class ApplicationUser : IdentityUser
     {
-        public Guid PictureUrl  { get; set; }
+        public string PictureUrl { get; set; }
 
     }
 }

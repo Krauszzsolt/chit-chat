@@ -1,5 +1,5 @@
-<div #scrollMe [scrollTop]="scrollMe.scrollHeight" class="row height-middle">
-  <div *ngIf="messageList.messages; else noMessage" class="width-90">
+<div #scrollMe class="row height-middle">
+  <div *ngIf="messageList.messages; else noMessage" class="w-100 mr-4">
     <div class="incoming-message-container color-primary" *ngFor="let message of messageList.messages">
       <div class="incoming-message-field">{{ message.content }}</div>
       <div class="right-side">

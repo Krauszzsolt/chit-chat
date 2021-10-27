@@ -71,11 +71,12 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((chatroom: ChatroomDto) => {
       this.chatroomManagementService.addChatroom(chatroom).subscribe();
-      console.log(`Dialog result: ${chatroom}`);
     });
   }
 
   public deleteChatroom(id: string) {
-    this.chatroomManagementService.deleteChatroom(id).subscribe();
+    this.chatroomManagementService.deleteChatroom(id).subscribe(() => {
+      this.$chatrooms = this.messagePagingService.getChatRooms();
+    });
   }
 }

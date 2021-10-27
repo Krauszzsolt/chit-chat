@@ -14,6 +14,7 @@ namespace BLL.DTOs.Authentication
         {
             Id = applicationUser.Id;
             UserName = applicationUser.UserName;
+            PictureUrl = applicationUser.PictureUrl;
         }
 
         public string Id { get; set; }
@@ -23,6 +24,8 @@ namespace BLL.DTOs.Authentication
         public string Role { get; set; }
 
         public string Token { get; set; }
+
+        public string? PictureUrl { get; set; }
 
     }
 }

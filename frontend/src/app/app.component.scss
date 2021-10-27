@@ -19,21 +19,6 @@ $primary: #ffffffe7;
 $secondary-backgorund: #fc507b;
 $secondary: #ffffffe7;
 
-.flex-list {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin: 2rem;
-}
-
-.column {
-  flex-direction: column;
-}
-
-.column-reverse {
-  flex-direction: column-reverse;
-}
-
 .dark-color {
   color: $dark-color-1;
 }
@@ -46,8 +31,4 @@ $secondary: #ffffffe7;
 .color-secondary {
   background-color: $secondary-backgorund;
   color: $secondary;
-}
-
-.width-90 {
-  width: 90%;
 }

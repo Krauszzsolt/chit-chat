@@ -61,8 +61,8 @@ namespace DAL.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("PictureUrl")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("PictureUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -88,25 +88,25 @@ namespace DAL.Migrations
 
                     b.HasData(
                         new
-                        {                           
-                            Id = "e87a50b7 - ce6b - 4eb9 - b99c - a7a4b01e80db",
+                        {
+                            Id = "e87a50b7-ce6b-4eb9-b99c-a7a4b01e80db",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f3a98140-8e1e-483f-b564-b34f0dbd38b4",
+                            ConcurrencyStamp = "ce89fdb5-cdcc-4209-b658-ec8dabc8575e",
                             Email = "test@test.test",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@TEST.TEST",
                             NormalizedUserName = "TEST@TEST.TEST",
-                            PasswordHash = "AQAAAAEAACcQAAAAEG5fK0M9N+ywDsF5cV7Yey4y7ZYeDeglPQDukQ8bHn2xRiZ8KxbLlq2ZDdg1CKNJtg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMmukXqvtHZlJPTfntbG+7JtIvLRXaRb2/zz2W9rp8OFRnS/XnotS9jdW3liG3rFYQ==",
                             PhoneNumberConfirmed = false,
-                            PictureUrl = new Guid("00000000-0000-0000-0000-000000000000"),
+                            PictureUrl = "",
                             SecurityStamp = "string",
                             TwoFactorEnabled = false,
                             UserName = "test@test.test"
                         });
                 });
 
-            modelBuilder.Entity("DAL.Entities.ChatRoom", b =>
+            modelBuilder.Entity("DAL.Entities.Chatroom", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -309,7 +309,7 @@ namespace DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("DAL.Entities.ChatRoom", b =>
+            modelBuilder.Entity("DAL.Entities.Chatroom", b =>
                 {
                     b.HasOne("DAL.Entities.ApplicationUser", "OwnerUser")
                         .WithMany()
@@ -318,7 +318,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entities.Message", b =>
                 {
-                    b.HasOne("DAL.Entities.ChatRoom", "ChatRoom")
+                    b.HasOne("DAL.Entities.Chatroom", "Chatroom")
                         .WithMany()
                         .HasForeignKey("ChatRoomId")
                         .OnDelete(DeleteBehavior.Cascade)

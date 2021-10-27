@@ -1,6 +1,5 @@
 ﻿using API.Attributes;
 using API.Controllers.Base;
-using BLL.DTOs.Authentication;
 using BLL.DTOs.Message;
 using BLL.Services.ES;
 using BLL.Services.Interfaces;
@@ -8,10 +7,8 @@ using Bogus;
 using DAL.Entities.ES;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Nest;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -52,6 +49,7 @@ namespace API.Controllers
 
         // PUT api/<MessageController>/5
         [HttpPut("{id}")]
+        [Authorize(Role: "Administrator")]
         public async Task Put([FromRoute] Guid id, [FromBody] MessageDto messageDto)
         {
             messageDto.User.UserId = GetCurrentUser().Id;
@@ -60,6 +58,7 @@ namespace API.Controllers
 
         // DELETE api/<MessageController>/5
         [HttpDelete("{id}")]
+        [Authorize(Role: "Administrator")]
         public async Task Delete([FromRoute] Guid messageId)
         {
             var userid = GetCurrentUser().Id;
@@ -81,6 +80,7 @@ namespace API.Controllers
         }
 
         [HttpGet("fakeimportmessages/{count}")]
+        [Authorize(Role: "Administrator")]
         public async Task<ActionResult> Import(int count = 0)
         {
             var messageFaker = new Faker<MessageES>()

@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MessageListModel } from '../../../shared/model/message-list.model';
 
 @Component({
@@ -8,7 +8,7 @@ import { MessageListModel } from '../../../shared/model/message-list.model';
 })
 export class MessageListComponent implements OnInit, AfterViewInit {
   public messageInput = '';
-
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   @Input()
   public messageList: MessageListModel;
   @Output()
@@ -20,6 +20,12 @@ export class MessageListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.changeDetectorRef.detectChanges();
+    this.scrollToBottom();
+  }
+  scrollToBottom(): void {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) {}
   }
 
   public sendMessage() {

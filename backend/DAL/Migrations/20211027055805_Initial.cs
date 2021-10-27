@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +40,7 @@ namespace DAL.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    PictureUrl = table.Column<Guid>(nullable: false)
+                    PictureUrl = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -204,8 +204,8 @@ namespace DAL.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PictureUrl", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "e87a50b7-ce6b-4eb9-b99c-a7a4b01e80db", 0, "f3a98140-8e1e-483f-b564-b34f0dbd38b4", "test@test.test", false, false, null, "TEST@TEST.TEST", "TEST@TEST.TEST", "AQAAAAEAACcQAAAAEG5fK0M9N+ywDsF5cV7Yey4y7ZYeDeglPQDukQ8bHn2xRiZ8KxbLlq2ZDdg1CKNJtg==", null, false, new Guid("00000000-0000-0000-0000-000000000000"), "string", false, "test@test.test" });
-            
+                values: new object[] { "e87a50b7-ce6b-4eb9-b99c-a7a4b01e80db", 0, "ce89fdb5-cdcc-4209-b658-ec8dabc8575e", "test@test.test", false, false, null, "TEST@TEST.TEST", "TEST@TEST.TEST", "AQAAAAEAACcQAAAAEMmukXqvtHZlJPTfntbG+7JtIvLRXaRb2/zz2W9rp8OFRnS/XnotS9jdW3liG3rFYQ==", null, false, "", "string", false, "test@test.test" });
+
             migrationBuilder.InsertData(
                 table: "Chatrooms",
                 columns: new[] { "Id", "Date", "Details", "Name", "OwnerUserId" },

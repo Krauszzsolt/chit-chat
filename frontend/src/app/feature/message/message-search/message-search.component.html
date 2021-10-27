@@ -4,7 +4,7 @@
     <mat-button-toggle class="w-100 m-1" [value]="true">Search globally</mat-button-toggle>
   </mat-button-toggle-group>
   <mat-card class="m-2 color-primary">
-    <mat-form-field class="search-bar" appearance="fill">
+    <mat-form-field class="w-100" appearance="fill">
       <mat-label>Search</mat-label>
       <mat-icon matSuffix (click)="search()">search</mat-icon>
       <input matInput [(ngModel)]="searchTerm" (keyup.enter)="search()" />
