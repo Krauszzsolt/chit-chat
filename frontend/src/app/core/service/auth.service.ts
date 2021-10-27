@@ -23,6 +23,10 @@ export class AuthService {
     return this.currentUserSubject.asObservable();
   }
 
+  public setUser(applicationUserDto: ApplicationUserDto) {
+    this.currentUserSubject.next({ ...applicationUserDto });
+  }
+
   public getToken(): string {
     return localStorage.getItem('token');
   }

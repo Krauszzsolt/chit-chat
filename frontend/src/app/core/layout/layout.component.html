@@ -6,7 +6,11 @@
   <span class="example-spacer"></span>
 
   <button *ngIf="user | async" mat-button (click)="invite()">Invite a Friend</button>
-  <img class="profile-picture" *ngIf="user | async" mat-button src="../assets/img/base-profile.png" />
+  <img class="profile-picture" *ngIf="(user | async).pictureUrl; else basePicture" mat-button [src]="(user | async).pictureUrl" />
+  <ng-template #basePicture>
+    <img class="profile-picture" *ngIf="user | async" mat-button src="../assets/img/base-profile.png" />
+  </ng-template>
+
   <button *ngIf="user | async" mat-button (click)="logout()">Logout</button>
 
   <button *ngIf="!(user | async)" mat-button [routerLink]="['/login']">Login</button>

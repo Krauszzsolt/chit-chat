@@ -32,12 +32,9 @@ namespace BLL.Services
         {
             var user = await _context.Users.FirstAsync(user => user.Id == id);
             var fileName = await _fileService.Upload(file, id.ToString());
-            var picture = "https://localhost:44364/profilepicture" + fileName;
-            //user.PictureUrl = "dasf";
+            user.PictureUrl = "https://localhost:44364/profilepicture" + fileName;
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
-
-
         }
     }
 }

@@ -15,8 +15,6 @@ import { AuthService } from '../service/auth.service';
 export class LayoutComponent implements OnInit {
   constructor(private authService: AuthService, public dialog: MatDialog, private profileManagementService: ProfileManagementService) {}
   public user: Observable<ApplicationUserDto> = new Observable();
-  public showFiller = false;
-  public search = '';
   ngOnInit() {
     this.user = this.authService.getUser();
   }
@@ -25,7 +23,6 @@ export class LayoutComponent implements OnInit {
     const dialogRef = this.dialog.open(InviteDialogComponent);
 
     dialogRef.afterClosed().subscribe((result: InviteDto) => {
-      console.log(`Dialog result: ${result}`);
       this.profileManagementService.invite(result.email, result.name).subscribe();
     });
   }
@@ -34,10 +31,6 @@ export class LayoutComponent implements OnInit {
   }
 
   public uploadPicture() {
-    const dialogRef = this.dialog.open(UploadPictureDialogComponent);
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
+    this.dialog.open(UploadPictureDialogComponent);
   }
 }
