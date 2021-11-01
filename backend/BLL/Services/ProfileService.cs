@@ -30,9 +30,9 @@ namespace BLL.Services
         }
         public async Task Upload(IFormFile file, string id)
         {
-            var user = await _context.Users.FirstAsync(user => user.Id == id);
+            var user = await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
             var fileName = await _fileService.Upload(file, id.ToString());
-            user.PictureUrl = "https://localhost:44364/profilepicture" + fileName;
+            user.PictureUrl ="https://localhost:44364/profilepicture" + fileName;
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
         }

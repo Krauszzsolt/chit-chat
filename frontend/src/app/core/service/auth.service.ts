@@ -25,6 +25,7 @@ export class AuthService {
 
   public setUser(applicationUserDto: ApplicationUserDto) {
     this.currentUserSubject.next({ ...applicationUserDto });
+    localStorage.setItem('currentUser', JSON.stringify(applicationUserDto));
   }
 
   public getToken(): string {

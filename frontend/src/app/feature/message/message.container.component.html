@@ -2,7 +2,9 @@
   <div class="row">
     <div class="col height-full">
       <app-chatroom-list [chatrooms]="$chatrooms | async" [SelectedChatroom]="$selectedChatroom | async" (selectedChatroomEmit)="selectChatroom($event)"></app-chatroom-list>
-      <button class="color-secondary add-chatroom" mat-fab (click)="addChatroom()"><mat-icon>add</mat-icon></button>
+      <ng-container *ngIf="($user | async).role === 'Administrator'">
+        <button class="color-secondary add-chatroom" mat-fab (click)="addChatroom()"><mat-icon>add</mat-icon></button>
+      </ng-container>
     </div>
 
     <div
@@ -18,7 +20,10 @@
       <app-message-list (messageInputEmit)="sendMessage($event)" [messageList]="$messages | async"></app-message-list>
     </div>
     <div class="col height-full">
-      <button *ngIf="$selectedChatroom | async as chatroom" mat-button class="color-secondary w-100 m-2 py-1" (click)="deleteChatroom(chatroom.id)">Delete this chatroom</button>
+      <ng-container *ngIf="($user | async).role === 'Administrator'">
+        <button *ngIf="$selectedChatroom | async as chatroom" mat-button class="color-secondary w-100 m-2 py-1" (click)="deleteChatroom(chatroom.id)">Delete this chatroom</button>
+      </ng-container>
+
       <div *ngIf="$selectedChatroom | async as chatroom" class="color-primary m-2 chatroom-desc">
         <h1>Chatroom details</h1>
         {{ chatroom.details }}

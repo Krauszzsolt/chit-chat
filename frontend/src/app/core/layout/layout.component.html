@@ -1,15 +1,17 @@
 <mat-toolbar>
   <span [routerLink]="['/chatroom']">Chit-Chat</span>
   <span *ngIf="user | async" class="user-name">{{ (user | async).userName }}</span>
-  <button *ngIf="user | async" mat-button (click)="uploadPicture()">Upload picture</button>
+  <button *ngIf="user | async" class="mx-2" mat-button (click)="uploadPicture()">Upload picture</button>
 
-  <span class="example-spacer"></span>
+  <span class="spacer"></span>
 
   <button *ngIf="user | async" mat-button (click)="invite()">Invite a Friend</button>
-  <img class="profile-picture" *ngIf="(user | async).pictureUrl; else basePicture" mat-button [src]="(user | async).pictureUrl" />
-  <ng-template #basePicture>
-    <img class="profile-picture" *ngIf="user | async" mat-button src="../assets/img/base-profile.png" />
-  </ng-template>
+  <ng-container *ngIf="user | async">
+    <img class="profile-picture" *ngIf="(user | async).pictureUrl; else basePicture" mat-button [src]="(user | async).pictureUrl" />
+    <ng-template #basePicture>
+      <img class="profile-picture mx-2" *ngIf="user | async" mat-button src="../assets/img/base-profile.png" />
+    </ng-template>
+  </ng-container>
 
   <button *ngIf="user | async" mat-button (click)="logout()">Logout</button>
 

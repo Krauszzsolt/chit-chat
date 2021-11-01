@@ -185,7 +185,7 @@ namespace BLL.Services
 
         public async Task DeleteMessage(Guid id, string userId)
         {
-            var message = await _context.Messages.Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
+            var message = await _context.Messages.Include(x => x.User).Include(x => x.Chatroom).FirstOrDefaultAsync(x => x.Id == id);
 
             if (message == null)
             {

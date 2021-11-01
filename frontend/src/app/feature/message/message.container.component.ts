@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { ChatroomDto, MessageES, MessageListDto } from 'src/app/shared/client';
+import { ApplicationUserDto, ChatroomDto, MessageES, MessageListDto } from 'src/app/shared/client';
 import { AddChatroomDialogComponent } from './add-chatroom-dialog/add-chatroom-dialog.component';
 import { MessageListModel } from '../../shared/model/message-list.model';
 import { ScrollState } from '../../shared/model/scroll-state.model';
@@ -10,6 +10,7 @@ import { ChatroomManagementService } from './service/chatroom-management.service
 import { MessageManagementService } from './service/message-management.service';
 import { MessagePagingService } from './service/message-paging.service';
 import { SearchService } from './service/search.service';
+import { AuthService } from '@src/app/core/service/auth.service';
 
 @Component({
   selector: 'app-message.container',
@@ -21,7 +22,7 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
   public $selectedChatroom: Observable<ChatroomDto>;
   public $messages: Observable<MessageListModel>;
   public $searchResult: Observable<MessageES[]>;
-  // public messageInput = '';
+  public $user: Observable<ApplicationUserDto>;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -29,6 +30,7 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
     private messageManagementService: MessageManagementService,
     private chatroomManagementService: ChatroomManagementService,
     private searchService: SearchService,
+    private authService: AuthService,
     public dialog: MatDialog
   ) {}
 
@@ -36,7 +38,8 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
     this.$chatrooms = this.messagePagingService.getChatRooms();
     this.$messages = this.messagePagingService.getMessages();
     this.$searchResult = this.searchService.search('');
-    this.$selectedChatroom = this.chatroomManagementService.getSelectedChatRooms(); // Leiratkozás
+    this.$selectedChatroom = this.chatroomManagementService.getSelectedChatRooms();
+    this.$user = this.authService.getUser();
   }
   ngAfterViewInit() {
     this.changeDetectorRef.detectChanges();

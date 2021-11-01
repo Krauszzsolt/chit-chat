@@ -23,7 +23,7 @@ export class LayoutComponent implements OnInit {
     const dialogRef = this.dialog.open(InviteDialogComponent);
 
     dialogRef.afterClosed().subscribe((result: InviteDto) => {
-      this.profileManagementService.invite(result.email, result.name).subscribe();
+      if (result) this.profileManagementService.invite(result.email, result.name).subscribe();
     });
   }
   public logout() {

@@ -25,9 +25,8 @@ namespace BLL.Services.Helper
 
             if (!Directory.Exists(uploadPath))
                 Directory.CreateDirectory(uploadPath);
-            var fileName = filename;
-            var type = file.FileName.Split(".").Last();
-            var filePath = Path.Combine(uploadPath, fileName + "." + type);
+            var fileName = filename + "." + file.FileName.Split(".").Last();
+            var filePath = Path.Combine(uploadPath, fileName);
 
             using (var strem = File.Create(filePath))
             {
