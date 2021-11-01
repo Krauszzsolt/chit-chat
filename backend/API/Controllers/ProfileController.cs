@@ -35,8 +35,7 @@ namespace API.Controllers
         [HttpPost("Upload")]
         public async Task Upload([FromForm] FileDTO fileDTO)
         {
-            //var userId = GetCurrentUser().Id;
-            var userId = "asd";
+            var userId = GetCurrentUser().Id;
             await _profileService.Upload(fileDTO.File, userId);
         }
 

@@ -57,7 +57,7 @@ namespace API.Controllers
         }
 
         // DELETE api/<MessageController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{messageId}")]
         [Authorize(Role: "Administrator")]
         public async Task Delete([FromRoute] Guid messageId)
         {
