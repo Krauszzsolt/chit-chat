@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { openSnackBar } from '@src/app/shared/utils/snack';
 import { ProfileManagementService } from '../service/profile-management.service';
 
 @Component({
@@ -14,7 +16,12 @@ export class UploadPictureDialogComponent implements OnInit {
   public url: string | ArrayBuffer = '';
   public succes = false;
 
-  constructor(public dialogRef: MatDialogRef<UploadPictureDialogComponent>, private formBuilder: FormBuilder, private profileManagementService: ProfileManagementService) {}
+  constructor(
+    public dialogRef: MatDialogRef<UploadPictureDialogComponent>,
+    private formBuilder: FormBuilder,
+    private profileManagementService: ProfileManagementService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.picture = this.formBuilder.group({
@@ -48,6 +55,7 @@ export class UploadPictureDialogComponent implements OnInit {
 
     this.loading = true;
     this.profileManagementService.uploadPicture(this.f.img.value).subscribe(() => {
+      openSnackBar('Succesful upload', this.snackBar);
       this.dialogRef.close();
     });
   }

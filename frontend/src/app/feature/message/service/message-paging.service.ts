@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import { MessageES, MessageListDto } from 'src/app/shared/client';
 import { MessageListModel } from '../../../shared/model/message-list.model';
 import { ScrollState } from '../../../shared/model/scroll-state.model';
@@ -33,7 +33,7 @@ export class MessagePagingService {
     });
 
     chatroomManagementService.getSelectedChatRooms().subscribe((chatroom) => {
-      this.currenRoomId = chatroom.id;
+      if (chatroom.id) this.currenRoomId = chatroom.id;
     });
 
     this.getMessagesInit().subscribe();
@@ -78,6 +78,7 @@ export class MessagePagingService {
 
   private getMessagesInit() {
     return this.scrollStateSubject.pipe(
+      filter(() => this.currenRoomId !== ''),
       switchMap((scrollState): Observable<unknown> => {
         switch (scrollState) {
           case ScrollState.init: {

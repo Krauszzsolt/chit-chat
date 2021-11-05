@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProfileManagementService } from '@src/app/feature/profile/service/profile-management.service';
 import { InviteDto } from '@src/app/shared/model/invite.model';
+import { openSnackBar } from '@src/app/shared/utils/snack';
 import { Observable } from 'rxjs';
 import { InviteDialogComponent } from 'src/app/feature/profile/invite-dialog/invite-dialog.component';
 import { UploadPictureDialogComponent } from 'src/app/feature/profile/upload-picture-dialog/upload-picture-dialog.component';
@@ -13,7 +15,7 @@ import { AuthService } from '../service/auth.service';
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
-  constructor(private authService: AuthService, public dialog: MatDialog, private profileManagementService: ProfileManagementService) {}
+  constructor(private authService: AuthService, public dialog: MatDialog, private profileManagementService: ProfileManagementService, private snackBar: MatSnackBar) {}
   public user: Observable<ApplicationUserDto> = new Observable();
   ngOnInit() {
     this.user = this.authService.getUser();
@@ -23,7 +25,10 @@ export class LayoutComponent implements OnInit {
     const dialogRef = this.dialog.open(InviteDialogComponent);
 
     dialogRef.afterClosed().subscribe((result: InviteDto) => {
-      if (result) this.profileManagementService.invite(result.email, result.name).subscribe();
+      if (result) {
+        this.profileManagementService.invite(result.email, result.name).subscribe();
+        openSnackBar('Succesful invite', this.snackBar);
+      }
     });
   }
   public logout() {

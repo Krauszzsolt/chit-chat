@@ -18,6 +18,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
   declarations: [SpinnerComponent, SearchComponent],
   imports: [
@@ -39,6 +40,7 @@ import { MatRippleModule } from '@angular/material/core';
     MatToolbarModule,
     MatRippleModule,
     MatInputModule,
+    MatSnackBarModule,
   ],
   exports: [
     MatSidenavModule,
@@ -59,6 +61,7 @@ import { MatRippleModule } from '@angular/material/core';
     MatMenuModule,
     MatToolbarModule,
     MatRippleModule,
+    MatSnackBarModule,
   ],
 })
 export class SharedModule {}

@@ -11,6 +11,8 @@ import { MessageManagementService } from './service/message-management.service';
 import { MessagePagingService } from './service/message-paging.service';
 import { SearchService } from './service/search.service';
 import { AuthService } from '@src/app/core/service/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { openSnackBar } from '@src/app/shared/utils/snack';
 
 @Component({
   selector: 'app-message.container',
@@ -31,6 +33,7 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
     private chatroomManagementService: ChatroomManagementService,
     private searchService: SearchService,
     private authService: AuthService,
+    private snackBar: MatSnackBar,
     public dialog: MatDialog
   ) {}
 
@@ -73,12 +76,16 @@ export class MessageContainerComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(AddChatroomDialogComponent);
 
     dialogRef.afterClosed().subscribe((chatroom: ChatroomDto) => {
-      this.chatroomManagementService.addChatroom(chatroom).subscribe();
+      this.chatroomManagementService.addChatroom(chatroom).subscribe(() => {
+        openSnackBar('Succesful create', this.snackBar);
+        this.$chatrooms = this.messagePagingService.getChatRooms();
+      });
     });
   }
 
   public deleteChatroom(id: string) {
     this.chatroomManagementService.deleteChatroom(id).subscribe(() => {
+      openSnackBar('Succesful delete', this.snackBar);
       this.$chatrooms = this.messagePagingService.getChatRooms();
     });
   }

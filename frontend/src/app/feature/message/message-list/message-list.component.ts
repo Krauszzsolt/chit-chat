@@ -1,9 +1,10 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MessageListModel } from '../../../shared/model/message-list.model';
 
 @Component({
   selector: 'app-message-list',
   templateUrl: './message-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./message-list.component.scss'],
 })
 export class MessageListComponent implements OnInit, AfterViewInit {
@@ -29,7 +30,9 @@ export class MessageListComponent implements OnInit, AfterViewInit {
   }
 
   public sendMessage() {
-    this.messageInputEmit.emit(this.messageInput);
-    this.messageInput = '';
+    if (this.messageInput.replace(/\s/g, '').length) {
+      this.messageInputEmit.emit(this.messageInput);
+      this.messageInput = '';
+    }
   }
 }
