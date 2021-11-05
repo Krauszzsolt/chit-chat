@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { debounceTime, filter, map } from 'rxjs/operators';
 import { ChatroomDto, MessageES, MessageService } from 'src/app/shared/client';
 import { ChatroomManagementService } from './chatroom-management.service';
 
@@ -15,8 +15,11 @@ export class SearchService {
   }
 
   public search(searchTerm: string, isGlobal?: boolean) {
-    if (searchTerm.length > 1)
-      return this.messageService.apiMessageSearchGet(searchTerm, 100, isGlobal ? undefined : this.currenRoom.id).pipe(map((result) => result.slice(0, 15)));
+    return this.messageService.apiMessageSearchGet(searchTerm, 100, isGlobal ? undefined : this.currenRoom.id || '').pipe(
+      debounceTime(500),
+      filter((x) => searchTerm.length > 3),
+      map((result) => result.slice(0, 15))
+    );
   }
 
   public getSearchResult(messageId: string, chatroomId: string, pageSize: number) {
