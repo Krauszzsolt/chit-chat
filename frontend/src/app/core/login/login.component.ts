@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.authService.login(this.loginDto).subscribe(
       (resp) => {
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/chatroom');
       },
       (error) => {
         console.log(error);

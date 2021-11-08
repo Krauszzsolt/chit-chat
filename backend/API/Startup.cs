@@ -39,14 +39,14 @@ namespace Backend
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 8;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireDigit = false;
-                
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireDigit = true;
+
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
-            // ass CORS for dev
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder
@@ -58,35 +58,36 @@ namespace Backend
 
             services.AddControllers();
 
-            // configure DI for application services
-            services.AddScoped<IAuthenticationService, AuthenticationService>(); 
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IChatroomService, ChatroomService>();
             services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IProfileService, ProfileService>();
+
             services.AddSingleton<IElasticsearchService, ElasticsearchService>();
             services.AddSingleton<IPageService, PageService>();
-            //services.AddSingleton<IElasticClient, ElasticClient>();
+            services.AddSingleton<IEmailSenderService, EmailSenderService>();
+            services.AddSingleton<IFileService, FileService>();
+
             services.AddSignalR();
-            // configure strongly typed settings object
+
             services.Configure<JWTSettings>(Configuration.GetSection("JWTSettings"));
 
-            // register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                // set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
+
             services.AddElasticsearch(Configuration);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                // global cors policy
                 app.UseCors("CorsPolicy");
             }
             else
@@ -97,7 +98,6 @@ namespace Backend
 
             app.UseRouting();
 
-            // custom jwt auth middleware
             app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
@@ -107,18 +107,14 @@ namespace Backend
             });
 
 
-            // enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
-
-
-            // enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
             });
 
+            app.UseStaticFiles();
 
             CreateRoles(serviceProvider);
 
@@ -126,15 +122,11 @@ namespace Backend
 
         private void CreateRoles(IServiceProvider serviceProvider)
         {
-            // roles
             var adminRole = "Administrator";
             var userRole = "User";
 
-            // managers
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-
-            // check that there is an Administrator role and create if not
 
             var hasAdminRole = roleManager.RoleExistsAsync(adminRole);
             hasAdminRole.Wait();
@@ -151,8 +143,6 @@ namespace Backend
                 var roleResult = roleManager.CreateAsync(new IdentityRole(userRole));
                 roleResult.Wait();
             }
-
-            // add to the Administrator role
 
             string userName = "admin";
             var testUser = userManager.FindByNameAsync(userName);

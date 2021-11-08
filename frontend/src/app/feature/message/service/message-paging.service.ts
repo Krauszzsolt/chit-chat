@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import { MessageES, MessageListDto } from 'src/app/shared/client';
-import { MessageListModel } from '../model/message-list.model';
-import { ScrollState } from '../model/scroll-state.model';
+import { MessageListModel } from '../../../shared/model/message-list.model';
+import { ScrollState } from '../../../shared/model/scroll-state.model';
 import { ChatroomManagementService } from './chatroom-management.service';
 import { MessageManagementService } from './message-management.service';
 import { SearchService } from './search.service';
@@ -32,8 +32,8 @@ export class MessagePagingService {
       }
     });
 
-    chatroomManagementService.getSelectedChatRooms().subscribe((roomId) => {
-      this.currenRoomId = roomId;
+    chatroomManagementService.getSelectedChatRooms().subscribe((chatroom) => {
+      if (chatroom.id) this.currenRoomId = chatroom.id;
     });
 
     this.getMessagesInit().subscribe();
@@ -62,7 +62,7 @@ export class MessagePagingService {
 
   public getSearchResult(selectedMessage: MessageES) {
     this.searchService.getSearchResult(selectedMessage.id, selectedMessage.chatRoomId, 10).subscribe((newMessages) => {
-      this.chatroomManagementService.setChatRoom(selectedMessage.chatRoomId);
+      this.chatroomManagementService.setChatRoom(newMessages.chatRoom);
       this.maxPage = newMessages.messages.pagingInfo.totalPages;
       this.currentPages = [newMessages.messages.pagingInfo.pageNumber];
       this.messagesListModelSubject.next({ chatRoom: newMessages.chatRoom, messages: newMessages.messages.results });
@@ -78,6 +78,7 @@ export class MessagePagingService {
 
   private getMessagesInit() {
     return this.scrollStateSubject.pipe(
+      filter(() => this.currenRoomId !== ''),
       switchMap((scrollState): Observable<unknown> => {
         switch (scrollState) {
           case ScrollState.init: {
@@ -113,6 +114,7 @@ export class MessagePagingService {
   private mappingMessages(newMessages: MessageListDto, scrollState: ScrollState) {
     if (newMessages.messages) {
       const oldMessageList = this.messagesListModelSubject.value;
+      if (!oldMessageList.messages) oldMessageList.messages = [];
       this.maxPage = newMessages.messages.pagingInfo.totalPages;
       switch (scrollState) {
         case ScrollState.init: {

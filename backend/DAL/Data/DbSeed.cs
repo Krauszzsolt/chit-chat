@@ -9,14 +9,14 @@ namespace DAL.Data
 {
     public class DbSeed
     {
-        public void seed(ModelBuilder builder)
+        public void Seed(ModelBuilder builder)
         {
-            applicationUserSeed(builder);
-            chatRoomSeed(builder);
-            messageSeed(builder);
+            ApplicationUserSeed(builder);
+            ChatRoomSeed(builder);
+            MessageSeed(builder);
         }
 
-        private void applicationUserSeed(ModelBuilder builder)
+        private void ApplicationUserSeed(ModelBuilder builder)
         {
             var testUser = new ApplicationUser
             {
@@ -26,7 +26,7 @@ namespace DAL.Data
                 UserName = "test@test.test",
                 NormalizedUserName = "TEST@TEST.TEST",
                 SecurityStamp = "string",
-                PictureUrl =new Guid()
+                PictureUrl = ""
             };
 
             var password = new PasswordHasher<ApplicationUser>();
@@ -36,7 +36,7 @@ namespace DAL.Data
             builder.Entity<ApplicationUser>().HasData(testUser);
         }
 
-        private void chatRoomSeed(ModelBuilder builder)
+        private void ChatRoomSeed(ModelBuilder builder)
         {
             builder.Entity<Chatroom>().HasData(new Chatroom
             {
@@ -47,11 +47,11 @@ namespace DAL.Data
                 OwnerUserId = "e87a50b7-ce6b-4eb9-b99c-a7a4b01e80db"
             });
         }
-        private void messageSeed(ModelBuilder builder)
+        private void MessageSeed(ModelBuilder builder)
         {
             builder.Entity<Message>().HasData(new Message
             {
-                Id = new Guid("fe1ee058-9e79-4544-bf93-026f477fe843"),              
+                Id = new Guid("fe1ee058-9e79-4544-bf93-026f477fe843"),
                 Date = new DateTime(),
                 ChatRoomId = new Guid("fe1ee058-9e79-4544-bf93-026f477fe843"),
                 UserId = "e87a50b7-ce6b-4eb9-b99c-a7a4b01e80db",

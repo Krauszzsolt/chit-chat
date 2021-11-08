@@ -3,9 +3,9 @@ $white: #fff;
 $light-grey: #f1f1f1;
 $background-color: #fff;
 $orange: #ff6600;
-$primary-backgorund: #5f260080;
+$primary-backgorund: #976745;
 $primary: #ffffffe7;
-$secondary-backgorund: #3a020280;
+$secondary-backgorund: #f38a00;
 $secondary: #ffffffe7;
 $dark-grey: #212121;
 $dark-grey-1: #424242;
@@ -14,20 +14,10 @@ $dark-grey-3: #858585;
 $dark-grey-4: #515151;
 $dark-color-1: black;
 
-.flex-list {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin: 2rem;
-}
-
-.column {
-  flex-direction: column;
-}
-
-.column-reverse {
-  flex-direction: column-reverse;
-}
+$primary-backgorund: #e7ab7f;
+$primary: #ffffffe7;
+$secondary-backgorund: #fc507b;
+$secondary: #ffffffe7;
 
 .dark-color {
   color: $dark-color-1;
@@ -41,8 +31,4 @@ $dark-color-1: black;
 .color-secondary {
   background-color: $secondary-backgorund;
   color: $secondary;
-}
-
-.width-90 {
-  width: 90%;
 }

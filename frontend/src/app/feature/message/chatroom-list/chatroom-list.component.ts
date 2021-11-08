@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ChatroomDto } from 'src/app/shared/client';
 
 @Component({
   selector: 'app-chatroom-list',
   templateUrl: './chatroom-list.component.html',
   styleUrls: ['./chatroom-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatroomListComponent implements OnInit {
   constructor() {}
@@ -13,10 +14,10 @@ export class ChatroomListComponent implements OnInit {
   public chatrooms: ChatroomDto[];
 
   @Input()
-  public SelectedChatroomId: string = '';
+  public SelectedChatroom: ChatroomDto;
 
   @Output()
-  public selectedChatroomEmit: EventEmitter<string> = new EventEmitter();
+  public selectedChatroomEmit: EventEmitter<ChatroomDto> = new EventEmitter();
 
   ngOnInit() {}
 

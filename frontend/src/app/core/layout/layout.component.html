@@ -1,13 +1,20 @@
 <mat-toolbar>
   <span [routerLink]="['/chatroom']">Chit-Chat</span>
   <span *ngIf="user | async" class="user-name">{{ (user | async).userName }}</span>
-  <span class="example-spacer"></span>
+  <button *ngIf="user | async" class="mx-2" mat-button (click)="uploadPicture()">Upload picture</button>
 
-  <!-- Bejelentkezett felhasználó esetén -->
-  <mat-search-bar [(ngModel)]="search" (keyup)="searchEvetn()"></mat-search-bar>
+  <span class="spacer"></span>
+
+  <button *ngIf="user | async" mat-button (click)="invite()">Invite a Friend</button>
+  <ng-container *ngIf="user | async">
+    <img class="profile-picture" *ngIf="(user | async).pictureUrl; else basePicture" mat-button [src]="(user | async).pictureUrl" />
+    <ng-template #basePicture>
+      <img class="profile-picture mx-2" *ngIf="user | async" mat-button src="../assets/img/base-profile.png" />
+    </ng-template>
+  </ng-container>
+
   <button *ngIf="user | async" mat-button (click)="logout()">Logout</button>
 
-  <!-- Anonim felhasználó esetén -->
   <button *ngIf="!(user | async)" mat-button [routerLink]="['/login']">Login</button>
   <button *ngIf="!(user | async)" mat-button [routerLink]="['/registration']">Registration</button>
 </mat-toolbar>

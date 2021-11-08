@@ -15,10 +15,23 @@
   .height-full {
     height: calc(100vh - 64px);
     overflow: auto;
+    overflow-x: hidden;
   }
 
   .height-middle {
     height: calc(100vh - 164px);
     overflow: auto;
+  }
+
+  .add-chatroom {
+    position: fixed;
+    left: 16.5vw;
+    bottom: 30px;
+  }
+
+  .chatroom-desc {
+    height: 30vh;
+    padding: 15px;
+    border-radius: 10px;
   }
 }

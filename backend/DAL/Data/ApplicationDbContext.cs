@@ -10,7 +10,7 @@ namespace DAL.Data
         static DbSeed _DbSeed = new DbSeed();
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
@@ -20,7 +20,7 @@ namespace DAL.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            _DbSeed.seed(builder);
+            _DbSeed.Seed(builder);
         }
 
     }

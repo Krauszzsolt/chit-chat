@@ -1,20 +1,6 @@
 @import 'src/app/app.component.scss';
 
-.search-bar-container {
-  display: flex;
-  padding: 15px 30px;
-  width: 80%;
-  margin: 30px;
-  border-radius: 15px;
-  justify-content: end;
-}
-
-.search-bar {
-  width: 100%;
-}
-
-.mat-card {
-  text-align: center;
+mat-icon {
   cursor: pointer;
 }
 
@@ -25,6 +11,7 @@
 .mat-button-toggle {
   background-color: $primary-backgorund;
   color: $primary;
+  border-radius: 5px;
 }
 
 .mat-button-toggle-checked {

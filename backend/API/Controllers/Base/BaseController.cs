@@ -13,5 +13,6 @@ namespace API.Controllers.Base
         {
             return (ApplicationUserDto)HttpContext.Items["User"];
         }
+
     }
 }

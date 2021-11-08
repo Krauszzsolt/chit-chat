@@ -61,14 +61,14 @@ namespace BLL.Services
                 throw new ArgumentException($"Chatroom not found");
             }
 
-            var messagesCount = await _context.Messages.Include(x => x.User).Where(x => x.ChatRoomId == chatroomId).CountAsync();
+            var messagesCount = await _context.Messages.Where(x => x.ChatRoomId == chatroomId).CountAsync();
 
             if (messagesCount == 0)
             {
                 throw new ArgumentException($"There is no message yet.");
             }
 
-            var pageMessagesEntity = await _pageService.PagingList(_context.Messages.Where(x => x.ChatRoomId == chatroomId), pageNumber, pageSize);
+            var pageMessagesEntity = await _pageService.PagingList(_context.Messages.Include(x => x.User).Where(x => x.ChatRoomId == chatroomId), pageNumber, pageSize);
 
             return mapMessageEntityToDto(chatroom, pageMessagesEntity);
         }
@@ -185,7 +185,7 @@ namespace BLL.Services
 
         public async Task DeleteMessage(Guid id, string userId)
         {
-            var message = await _context.Messages.Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
+            var message = await _context.Messages.Include(x => x.User).Include(x => x.Chatroom).FirstOrDefaultAsync(x => x.Id == id);
 
             if (message == null)
             {

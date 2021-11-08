@@ -1,14 +1,15 @@
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
-import { MessageListModel } from '../model/message-list.model';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { MessageListModel } from '../../../shared/model/message-list.model';
 
 @Component({
   selector: 'app-message-list',
   templateUrl: './message-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./message-list.component.scss'],
 })
 export class MessageListComponent implements OnInit, AfterViewInit {
   public messageInput = '';
-
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   @Input()
   public messageList: MessageListModel;
   @Output()
@@ -20,10 +21,18 @@ export class MessageListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.changeDetectorRef.detectChanges();
+    this.scrollToBottom();
+  }
+  scrollToBottom(): void {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) {}
   }
 
   public sendMessage() {
-    this.messageInputEmit.emit(this.messageInput);
-    this.messageInput = '';
+    if (this.messageInput.replace(/\s/g, '').length) {
+      this.messageInputEmit.emit(this.messageInput);
+      this.messageInput = '';
+    }
   }
 }

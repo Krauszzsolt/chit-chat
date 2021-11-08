@@ -3,64 +3,65 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule, MatDialogModule, MatProgressSpinnerModule, MatSelectModule, MatToolbarModule } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatDialogWrapperComponent } from './dialog/mat-dialog-wrapper.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SpinnerComponent } from './component/spinner/spinner.component';
 import { SearchComponent } from './component/search/search.component';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatRippleModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
-  declarations: [MatDialogWrapperComponent, SpinnerComponent, SearchComponent],
+  declarations: [SpinnerComponent, SearchComponent],
   imports: [
     CommonModule,
+    MatDialogModule,
     MatSidenavModule,
-    MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatToolbarModule,
-    MatCardModule,
     LayoutModule,
-    MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSelectModule,
     FlexLayoutModule,
-    MatProgressSpinnerModule,
     MatGridListModule,
-    MatListModule,
     InfiniteScrollModule,
     MatIconModule,
     MatButtonToggleModule,
+    MatCardModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatRippleModule,
+    MatInputModule,
+    MatSnackBarModule,
   ],
   exports: [
     MatSidenavModule,
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatToolbarModule,
-    MatCardModule,
     LayoutModule,
     MatDialogModule,
-    MatDialogWrapperComponent,
     FormsModule,
     ReactiveFormsModule,
-    MatSelectModule,
     FlexLayoutModule,
-    MatProgressSpinnerModule,
     SpinnerComponent,
     MatGridListModule,
-    MatListModule,
     InfiniteScrollModule,
     MatIconModule,
     MatButtonToggleModule,
+    MatCardModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatRippleModule,
+    MatSnackBarModule,
   ],
-  entryComponents: [MatDialogWrapperComponent],
 })
 export class SharedModule {}

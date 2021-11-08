@@ -12,7 +12,7 @@ namespace BLL.Services.Interfaces
 
         public Task<List<ChatroomDto>> GetChatrooms();
 
-        public Task PostChatRoom(ChatroomDto chatroomDto);
+        public Task PostChatRoom(ChatroomDto chatroomDto, Guid UserId);
 
         public Task PutChatRoom(ChatroomDto chatroomDto);
 

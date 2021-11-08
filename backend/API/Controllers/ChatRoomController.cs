@@ -2,11 +2,9 @@
 using API.Controllers.Base;
 using BLL.DTOs.Chatroom;
 using BLL.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -41,19 +39,23 @@ namespace API.Controllers
 
         // POST api/<MessageController>
         [HttpPost]
+        [Authorize(Role: "Administrator")]
         public async Task Post([FromBody] ChatroomDto chatroom)
         {
-            await _chatroomService.PostChatRoom(chatroom);
+            var userId = new Guid(GetCurrentUser().Id);
+            await _chatroomService.PostChatRoom(chatroom, userId);
         }
 
         // PUT api/<MessageController>/5
         [HttpPut]
+        [Authorize(Role: "Administrator")]
         public async Task Put([FromBody] ChatroomDto chatroom)
         {
             await _chatroomService.PutChatRoom(chatroom);
         }
 
         // DELETE api/<MessageController>/5
+        [Authorize(Role: "Administrator")]
         [HttpDelete("{id}")]
         public async Task Delete(Guid id)
         {

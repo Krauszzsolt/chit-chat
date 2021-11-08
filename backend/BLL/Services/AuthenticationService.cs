@@ -38,10 +38,10 @@ namespace BLL.Services
 
                 if (result.Succeeded)
                 {
-                    // get user roles
+
                     var role = await GetRoleAsync(appUser);
 
-                    // authentication successful so generate jwt token
+
                     var token = GenerateJwtToken(appUser, role);
 
                     var userDto = new ApplicationUserDto(appUser)
@@ -72,7 +72,6 @@ namespace BLL.Services
 
                 var role = await GetRoleAsync(newUser);
 
-                // authentication successful so generate jwt token
                 var token = GenerateJwtToken(newUser, role);
 
                 var userDto = new ApplicationUserDto(newUser)
@@ -102,13 +101,13 @@ namespace BLL.Services
 
         private string GenerateJwtToken(ApplicationUser user, string role)
         {
-            // generate token that is valid for 7 days
+
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] 
-                { 
+                Subject = new ClaimsIdentity(new[]
+                {
                     new Claim("id", user.Id),
                     new Claim("role", role)
                 }),
@@ -121,7 +120,7 @@ namespace BLL.Services
 
         private async Task<string> GetRoleAsync(ApplicationUser user)
         {
-            // get user roles
+
             var roles = await _userManager.GetRolesAsync(user);
 
             if (roles.Any())
