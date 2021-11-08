@@ -2,7 +2,7 @@
   <h2>Invite one of your friends!</h2>
 
   <form class="w-100 d-flex flex-column my-3">
-    <mat-form-field class="my-1 mr-5 w-50" appearance="fill">
+    <mat-form-field class="my-1 mr-5 w-50 mb-3" appearance="fill">
       <mat-label>Name</mat-label>
       <input matInput [formControl]="nameFormControl" />
       <mat-error *ngIf="nameFormControl.hasError('required')"> Name is <strong>required</strong> </mat-error>

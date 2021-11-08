@@ -5,6 +5,6 @@ namespace BLL.Services.Helper
 {
     public interface IEmailSenderService
     {
-        public Task sendEmail(string emailAdress, string name, string subject, string body);
+        public Task sendEmail(string emailAdress, string subject, string body);
     }
 }

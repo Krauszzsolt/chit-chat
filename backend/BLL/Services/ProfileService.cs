@@ -26,13 +26,13 @@ namespace BLL.Services
         {
             var subject = "Chit-Chat invention";
             var body = "<p>Hey " + name + "<p> <p> <b>Seems like one of your friends wanna chat with you here</b></p> <p>Have a good day, <br> The Chit-Chat team</p>";
-            await _emailSenderService.sendEmail(emailAdress, name, subject, body);
+            await _emailSenderService.sendEmail(emailAdress, subject, body);
         }
         public async Task Upload(IFormFile file, string id)
         {
             var user = await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
             var fileName = await _fileService.Upload(file, id.ToString());
-            user.PictureUrl ="https://localhost:44364/profilepicture" + fileName;
+            user.PictureUrl = "https://localhost:44364/profilepicture/" + fileName;
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
         }

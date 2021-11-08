@@ -8,7 +8,7 @@ namespace BLL.Services.Helper
 {
     public class EmailSenderService : IEmailSenderService
     {
-        public async Task sendEmail(string emailAdress, string name, string subject, string body)
+        public async Task sendEmail(string emailAdress, string subject, string body)
         {
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse("tesztchitchat@gmail.com"));
