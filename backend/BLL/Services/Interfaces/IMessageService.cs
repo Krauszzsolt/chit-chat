@@ -17,6 +17,8 @@ namespace BLL.Services.Interfaces
 
         public Task PutMessage(MessageDto messageDto);
 
+        public Task PostMessages(List<MessageDto> messageDtos);
+
         public Task DeleteMessage(Guid id, string userId);
 
     }

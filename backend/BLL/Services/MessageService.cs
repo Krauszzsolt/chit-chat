@@ -144,6 +144,50 @@ namespace BLL.Services
 
         }
 
+        public async Task PostMessages(List<MessageDto> messageDtos)
+        {
+            var isChatroom = await _context.Chatrooms.FirstOrDefaultAsync(x => x.Id == messageDtos[0].ChatroomId.Value);
+
+            if (isChatroom == null)
+            {
+                throw new ArgumentException($"There is no chatroom yet."); ;
+            }
+
+            var messages = new List<Message>(messageDtos.Select(messageDto => new Message()
+            {
+                Id = new Guid(),
+                ChatRoomId = messageDto.ChatroomId.Value,
+                Content = messageDto.Content,
+                UserId = messageDto.User.UserId,
+                Date = DateTime.Now
+            }).ToList());
+
+            _context.Messages.AddRange(messages);
+            await _context.SaveChangesAsync();
+
+            #region ES Service
+
+            var ids = messages.Select(x => x.Id);
+
+            var messageEntities = await _context.Messages.Include(x => x.User)
+                .Where(messageDAO => ids.Contains(messageDAO.Id)).ToListAsync();
+
+            var messageES = messageEntities.Select(messageEntity => new MessageES()
+            {
+                Id = messageEntity.Id,
+                ChatRoomId = messageEntity.ChatRoomId,
+                Content = messageEntity.Content,
+                UserId = messageEntity.UserId,
+                UserName = messageEntity.User.UserName,
+                Date = messageEntity.Date,
+                ChatRoomName = messageEntity.Chatroom.Name
+            }).ToArray();
+
+            await _elasticsearchService.SaveManyAsync(messageES);
+            #endregion
+
+        }
+
         public async Task PutMessage(MessageDto messageDto)
         {
             var message = await _context.Messages.Include(x => x.User).FirstOrDefaultAsync(x => x.Id == messageDto.Id.Value);

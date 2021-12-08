@@ -1,5 +1,6 @@
 ﻿using API.Attributes;
 using API.Controllers.Base;
+using BLL.DTOs.Authentication;
 using BLL.DTOs.Message;
 using BLL.Services.ES;
 using BLL.Services.Interfaces;
@@ -83,19 +84,27 @@ namespace API.Controllers
         [Authorize(Role: "Administrator")]
         public async Task<ActionResult> Import(int count = 0)
         {
-            var messageFaker = new Faker<MessageES>()
-                   .CustomInstantiator(f => new MessageES())
+            var id = GetCurrentUser().Id;
+            var user = new PublicUserDto()
+            {
+                UserId = id
+            };
+            var messageFaker = new Faker<MessageDto>()
+                   .CustomInstantiator(f => new MessageDto())
                    .RuleFor(p => p.Id, f => Guid.NewGuid())
-                   .RuleFor(p => p.ChatRoomId, f => Guid.NewGuid())
-                   .RuleFor(p => p.UserId, f => f.Commerce.ProductName())
-                   .RuleFor(p => p.UserName, f => f.Commerce.ProductName())
-                   .RuleFor(p => p.ChatRoomName, f => f.Commerce.ProductName())
+                   .RuleFor(p => p.ChatroomId, f => (new Guid("5cde4fe2-da18-45f9-70fd-08d9a443dcb9")))
+                   .RuleFor(p => p.User, f => user)
                    .RuleFor(p => p.Content, f => f.Lorem.Sentence(f.Random.Int(5, 20)))
                    .RuleFor(p => p.Date, f => f.Date.Past(2));
 
 
             var products = messageFaker.Generate(count);
-            await _elasticsearchService.SaveManyAsync(products.ToArray());
+            await _messageService.PostMessages(products);
+            //products.ForEach(action: async x => await _messageService.PostMessage(x));
+
+
+
+            //await _elasticsearchService.SaveManyAsync(products.ToArray());
 
             return Ok();
         }

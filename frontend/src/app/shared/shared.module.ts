@@ -6,8 +6,6 @@ import { MatInputModule } from '@angular/material/input';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { SpinnerComponent } from './component/spinner/spinner.component';
-import { SearchComponent } from './component/search/search.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -20,7 +18,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
-  declarations: [SpinnerComponent, SearchComponent],
   imports: [
     CommonModule,
     MatDialogModule,
@@ -52,7 +49,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    SpinnerComponent,
     MatGridListModule,
     InfiniteScrollModule,
     MatIconModule,
